@@ -1,8 +1,14 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
 
 class NoPermisson extends StatelessWidget {
-  const NoPermisson({super.key});
+  final void Function() onCallClose;
+  const NoPermisson({
+    super.key,
+    required this.onCallClose,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +110,8 @@ class NoPermisson extends StatelessWidget {
                 color: Colors.grey,
                 size: 20,
               ),
-            ),Text(
+            ),
+            Text(
               '您的设备型号',
               style: getStyle(
                 color: Colors.grey,
@@ -123,6 +130,31 @@ class NoPermisson extends StatelessWidget {
               style: getStyle(
                 color: Colors.grey,
                 size: 20,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              '如果你确定已经给予权限，请按下面的按钮',
+              style: getStyle(
+                color: Colors.grey,
+                size: 20,
+              ),
+            ),
+            XButton(
+              width: 140,
+              height: 50,
+              backgroundColor: const Color(0xFF2d2a31),
+              hoverColor: const Color(0xFF2d2a31),
+              padding: const EdgeInsetsDirectional.all(12),
+              onTap: onCallClose,
+              child: Center(
+                child: AutoSizeText(
+                  'Ensure',
+                  style: getStyle(
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
               ),
             ),
           ],

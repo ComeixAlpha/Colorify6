@@ -1,4 +1,6 @@
+import 'package:colorify/main.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<bool> _requestPermission(
   Permission permission,
@@ -19,9 +21,19 @@ Future<bool> _requestPermission(
 }
 
 Future<bool> requestStorage() async {
+  pref = await SharedPreferences.getInstance();
+
+  if (pref!.getBool('ensure_permissions') ?? false) {
+    return true;
+  }
+
   final mes = await _requestPermission(Permission.manageExternalStorage);
   final sto = await _requestPermission(Permission.storage);
   final pho = await _requestPermission(Permission.photos);
 
-  return mes && sto && pho;
+  if (mes || sto) {
+    return true;
+  }
+
+  return pho;
 }
