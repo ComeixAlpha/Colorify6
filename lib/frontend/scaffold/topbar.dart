@@ -1,4 +1,7 @@
+import 'package:colorify/frontend/pages/about/about.dart';
+import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/util/text_style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Topbar extends StatelessWidget {
@@ -12,13 +15,25 @@ class Topbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tp = TextPainter(
+      text: TextSpan(
+        text: 'COLORIFY v6',
+        style: getStyle(
+          color: Colors.white,
+          size: 30,
+          weight: FontWeight.w700,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+
     return Container(
       width: width,
       height: height,
       color: const Color(0xFF26232a),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
@@ -27,6 +42,29 @@ class Topbar extends StatelessWidget {
               color: Colors.white,
               size: 30,
               weight: FontWeight.w700,
+            ),
+          ),
+          XButton(
+            width: tp.height,
+            height: tp.height,
+            backgroundColor: Colors.transparent,
+            hoverColor: Colors.white.withOpacity(0.2),
+            onTap: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (BuildContext ctx) {
+                    return const About();
+                  },
+                ),
+              );
+            },
+            borderRadius: BorderRadius.circular(tp.height / 2),
+            child: const Center(
+              child: Icon(
+                Icons.book,
+                color: Colors.white,
+              ),
             ),
           ),
         ],
