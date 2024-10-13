@@ -32,7 +32,7 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
               height: h,
               child: Row(
                 children: [
-                  const SizedBox(width: 14),
+                  const SizedBox(width: 4),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Material(
@@ -46,14 +46,17 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
                             throw Exception();
                           }
                         },
-                        child: Text(
-                          link,
-                          overflow: TextOverflow.ellipsis,
-                          style: getStyle(
-                            color: const Color(0xFFb9acc9),
-                            fontStyle: FontStyle.italic,
-                            decoration: TextDecoration.underline,
-                            size: 16,
+                        child: SizedBox(
+                          width: w - 4,
+                          child: Text(
+                            link,
+                            overflow: TextOverflow.ellipsis,
+                            style: getStyle(
+                              color: const Color(0xFFb9acc9),
+                              fontStyle: FontStyle.italic,
+                              decoration: TextDecoration.underline,
+                              size: 16,
+                            ),
                           ),
                         ),
                       ),
@@ -75,49 +78,76 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
     final w = mqs.width / 6;
     return Column(
       children: [
-        const SizedBox(height: 24),
-        SizedBox(
-          width: mqs.width - 16,
-          height: mqs.width / 6,
-          child: Row(
+        Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF2d2a31).withOpacity(0.5),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                width: w,
-                height: w,
-                child: CircleAvatar(
-                  radius: w,
-                  backgroundColor: Colors.transparent,
-                  child: ClipOval(
-                    child: Image.asset(widget.assetPath),
-                  ),
+                width: mqs.width - 16,
+                height: mqs.width / 6,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: w,
+                      height: w,
+                      child: CircleAvatar(
+                        radius: w,
+                        backgroundColor: Colors.transparent,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: Image.asset(widget.assetPath),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.title,
+                          overflow: TextOverflow.ellipsis,
+                          style: getStyle(
+                            color: Colors.white,
+                            size: 22,
+                          ),
+                        ),
+                        Text(
+                          widget.subtitle,
+                          overflow: TextOverflow.ellipsis,
+                          style: getStyle(
+                            color: Colors.grey,
+                            size: 18,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(width: 12),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.title,
-                    style: getStyle(
-                      color: Colors.white,
-                      size: 22,
-                    ),
-                  ),
-                  Text(
-                    widget.subtitle,
-                    style: getStyle(
-                      color: Colors.grey,
-                      size: 18,
-                    ),
-                  ),
-                ],
+              LayoutBuilder(
+                builder: (_, __) {
+                  if (widget.links == null) {
+                    return const SizedBox();
+                  } else {
+                    return Column(
+                      children: [
+                        const SizedBox(height: 8),
+                        ..._buildLink(mqs.width - 40, 22, widget.links ?? []),
+                      ],
+                    );
+                  }
+                },
               ),
             ],
           ),
         ),
-        const SizedBox(height: 8),
-        ..._buildLink(mqs.width - 16, 22, widget.links ?? []),
+        const SizedBox(height: 20),
       ],
     );
   }

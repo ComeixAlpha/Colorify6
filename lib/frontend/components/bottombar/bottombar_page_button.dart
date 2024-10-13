@@ -26,13 +26,14 @@ class _BottombarPageButtonState extends State<BottombarPageButton> {
       children: [
         BottombarButton(
           icon: widget.icon,
-          hoverColor: Colors.white.withOpacity(0.3),
+          hoverColor: Colors.white.withOpacity(0.1),
+          splashColor: Colors.white.withOpacity(0.1),
           onTap: () {
             pageprov.update(widget.index);
           },
         ),
         Positioned(
-          bottom: 14,
+          bottom: 10,
           child: AnimatedOpacity(
             opacity: isSelected ? 1 : 0,
             duration: const Duration(milliseconds: 240),
@@ -40,7 +41,7 @@ class _BottombarPageButtonState extends State<BottombarPageButton> {
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 240),
               curve: Curves.ease,
-              width: isSelected ? 14 : 6,
+              width: isSelected ? 20 : 6,
               height: 6,
               decoration: BoxDecoration(
                 color: const Color(0xFF736b7d),

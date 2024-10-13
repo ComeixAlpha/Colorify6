@@ -12,7 +12,7 @@ class ICheckBoxTile extends StatefulWidget {
     required this.value,
     required this.title,
     required this.width,
-     this.height,
+    this.height,
     required this.onCheck,
   });
 
@@ -66,22 +66,30 @@ class _ICheckBoxTileState extends State<ICheckBoxTile> {
                             ),
                           ),
                           const SizedBox(width: 10),
-                          Text(
-                            widget.title,
-                            style: getStyle(
-                              color: Colors.white,
-                              size: 22,
+                          SizedBox(
+                            width: widget.width - 80,
+                            child: Text(
+                              widget.title,
+                              overflow: TextOverflow.ellipsis,
+                              style: getStyle(
+                                color: Colors.white,
+                                size: 22,
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      Transform.scale(
-                        scale: 1.2,
-                        child: Checkbox(
-                          value: widget.value,
-                          activeColor: const Color(0xFFAED581),
-                          tristate: false,
-                          onChanged: (v) => widget.onCheck(v!),
+                      SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: Transform.scale(
+                          scale: 1.2,
+                          child: Checkbox(
+                            value: widget.value,
+                            activeColor: const Color(0xFFAED581),
+                            tristate: false,
+                            onChanged: (v) => widget.onCheck(v!),
+                          ),
                         ),
                       ),
                     ],

@@ -82,7 +82,7 @@ class _IPackageInfoTileState extends State<IPackageInfoTile> {
                         width: singleTextfieldWidth,
                         height: singleTextfieldHeight,
                         style: XTextfieldStyle(
-                          hintText: 'Name',
+                          hintText: '包名',
                           hintStyle: getStyle(
                             color: Colors.grey,
                             size: 18,
@@ -94,7 +94,7 @@ class _IPackageInfoTileState extends State<IPackageInfoTile> {
                         width: singleTextfieldWidth,
                         height: singleTextfieldHeight,
                         style: XTextfieldStyle(
-                          hintText: 'Author',
+                          hintText: '作者',
                           hintStyle: getStyle(
                             color: Colors.grey,
                             size: 18,
@@ -106,7 +106,7 @@ class _IPackageInfoTileState extends State<IPackageInfoTile> {
                         width: singleTextfieldWidth,
                         height: singleTextfieldHeight,
                         style: XTextfieldStyle(
-                          hintText: 'Description',
+                          hintText: '描述',
                           hintStyle: getStyle(
                             color: Colors.grey,
                             size: 18,

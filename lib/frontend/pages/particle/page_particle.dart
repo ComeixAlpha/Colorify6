@@ -69,7 +69,7 @@ class _PageParticleState extends State<PageParticle> {
                       height: 40,
                       child: Center(
                         child: Text(
-                          'ARGUMENTS',
+                          'ARGUMENTS 参数表',
                           style: getStyle(
                             color: Colors.white,
                             size: 14,
@@ -91,7 +91,7 @@ class _PageParticleState extends State<PageParticle> {
                       height: 40,
                       child: Center(
                         child: Text(
-                          'MAPPINGS',
+                          'MAPPINGS 映射表',
                           style: getStyle(
                             color: Colors.white,
                             size: 14,

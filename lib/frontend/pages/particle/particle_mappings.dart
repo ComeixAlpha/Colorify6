@@ -76,7 +76,7 @@ class _ParticleMappingsState extends State<ParticleMappings> {
       padding: const EdgeInsets.all(12),
       child: Center(
         child: AutoSizeText(
-          'New Mapping',
+          '新建映射',
           style: getStyle(
             color: Colors.white,
             size: 20,
@@ -94,7 +94,7 @@ class _ParticleMappingsState extends State<ParticleMappings> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'No mapping yet?',
+              '还没有映射?',
               style: getStyle(
                 color: Colors.white,
                 size: 24,

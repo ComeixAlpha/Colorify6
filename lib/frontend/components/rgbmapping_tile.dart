@@ -49,7 +49,7 @@ class RGBMappingTile extends StatelessWidget {
                         '${mapping.r}, ${mapping.g}, ${mapping.b}',
                         style: getStyle(
                           color: contrastColor,
-                          size: 20,
+                          size: 16,
                         ),
                       ),
                     ),

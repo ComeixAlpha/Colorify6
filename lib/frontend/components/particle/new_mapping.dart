@@ -81,7 +81,7 @@ class _NewMappingState extends State<NewMapping> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Mapping Args',
+              '映射参数',
               style: getStyle(
                 color: Colors.white,
                 size: 22,
@@ -122,7 +122,7 @@ class _NewMappingState extends State<NewMapping> {
               height: singleFieldHeight,
               controller: tecp,
               style: XTextfieldStyle(
-                hintText: 'Particle ID',
+                hintText: '粒子 ID',
                 hintStyle: getStyle(color: Colors.grey, size: 18),
               ),
             ),
@@ -141,7 +141,7 @@ class _NewMappingState extends State<NewMapping> {
                   },
                   child: Center(
                     child: Text(
-                      'Cancel',
+                      '取消',
                       style: getStyle(color: Colors.black, size: 20),
                     ),
                   ),
@@ -157,19 +157,19 @@ class _NewMappingState extends State<NewMapping> {
                     final pid = tecp.text;
 
                     if (r == null) {
-                      error('Invalid R', 'Not an int');
+                      error('不合法的 R', '非整型');
                       return;
                     }
                     if (g == null) {
-                      error('Invalid G', 'Not an int');
+                      error('不合法的 G', '非整型');
                       return;
                     }
                     if (b == null) {
-                      error('Invalid B', 'Not an int');
+                      error('不合法的 B', '非整型');
                       return;
                     }
                     if (pid.isEmpty) {
-                      error('Invalid PID', 'Empty particle ID');
+                      error('不合法的 PID', 'ID 为空');
                       return;
                     }
 
@@ -187,7 +187,7 @@ class _NewMappingState extends State<NewMapping> {
                   },
                   child: Center(
                     child: Text(
-                      'OK',
+                      '确定',
                       style: getStyle(color: Colors.black, size: 20),
                     ),
                   ),

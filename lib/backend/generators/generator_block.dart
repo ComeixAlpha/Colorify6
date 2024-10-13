@@ -135,18 +135,18 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
             minmdRecord = minmd;
 
             final ormxEntry = ormx.orm[rx][ry];
-            final basey = ormxEntry.basey == -132 ? 0 : ormxEntry.basey;
-            final offset = ormxEntry.offset == -132 ? 0 : ormxEntry.offset;
+            final basey = ormxEntry.basey;
+            final offset = ormxEntry.offset;
             final offsetedy = basey + offset;
 
             ty = offsetedy;
 
             if (minmd == smd) {
-              ormx.update(rx, ry + 1, OffsetRequest(basey: ty, offset: 2));
+              ormx.update(rx, ry + 1, ty, 2);
             } else if (minmd == pmd) {
-              ormx.update(rx, ry + 1, OffsetRequest(basey: ty, offset: 0));
+              ormx.update(rx, ry + 1, ty, 0);
             } else {
-              ormx.update(rx, ry + 1, OffsetRequest(basey: ty, offset: -2));
+              ormx.update(rx, ry + 1, ty, -2);
             }
           }
 
@@ -154,7 +154,15 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
             throw Exception();
           }
 
-          blmx.push(Block(x: rx, y: ty, z: ry, block: tid));
+          ormx.orm[rx][ry].id = tid;
+        },
+      );
+
+      // ormx.archieve();
+
+      ormx.enumerate(
+        (i, j, entry) {
+          blmx.push(Block(x: i, y: entry.basey + entry.offset, z: j, block: entry.id));
         },
       );
     } else {
@@ -276,14 +284,14 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
       blmx.blocks.enumerate(
         (i, v) {
           if (args.stairType) {
-            commands.add('setblock ~${v.x} ~${v.y} ~${v.z} ${v.block}');
+            commands.add('setblock ~${v.x + 1} ~${v.y} ~${v.z} ${v.block}');
           } else {
             if (args.plane == 0) {
-              commands.add('setblock ~${v.x} ~${v.z} ~0 ${v.block}');
+              commands.add('setblock ~${v.x + 1} ~${v.z} ~0 ${v.block}');
             } else if (args.plane == 1) {
-              commands.add('setblock ~${v.x} ~0 ~${v.z} ${v.block}');
+              commands.add('setblock ~${v.x + 1} ~0 ~${v.z} ${v.block}');
             } else if (args.plane == 2) {
-              commands.add('setblock ~0 ~${v.x} ~${v.z} ${v.block}');
+              commands.add('setblock ~0 ~${v.x + 1} ~${v.z} ${v.block}');
             } else {
               throw Exception();
             }

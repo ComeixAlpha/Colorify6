@@ -46,6 +46,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
       inoSands: _noSands,
       icarpetOnly: _carpetOnly,
     );
+    Provider.of<Blockprov>(context, listen: false).refreshPalette();
     return SizedBox(
       width: widget.width,
       height: widget.height,
@@ -55,7 +56,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
           const SizedBox(height: 20),
           IStringTile(
             title: '采样率',
-            hintText: 'Auto',
+            hintText: '自动',
             hintStyle: getStyle(color: Colors.grey, size: 18),
             width: widget.width - 40,
             height: 110,
@@ -116,7 +117,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
           ),
           ICheckBoxTile(
             value: _dithering,
-            title: '颜色抖动(Floyd-Steinberg)',
+            title: '颜色抖动 (Floyd-Steinberg)',
             width: widget.width - 40,
             onCheck: (v) {
               setState(() {

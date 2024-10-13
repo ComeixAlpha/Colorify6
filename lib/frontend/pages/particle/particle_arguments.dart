@@ -49,7 +49,7 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
             const SizedBox(height: 20),
             IStringTile(
               title: '采样率',
-              hintText: 'Auto',
+              hintText: '自动',
               hintStyle: getStyle(color: Colors.grey, size: 18),
               width: widget.width - 40,
               height: 110,
@@ -74,7 +74,7 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
             ),
             IStringTile(
               title: '高度',
-              hintText: 'Auto',
+              hintText: '自动',
               hintStyle: getStyle(color: Colors.grey, size: 18),
               width: widget.width - 40,
               height: 110,

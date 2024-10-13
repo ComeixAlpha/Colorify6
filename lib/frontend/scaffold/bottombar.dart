@@ -179,7 +179,7 @@ class _BottombarState extends State<Bottombar> {
       height: oh,
       child: Center(
         child: Container(
-          width: ow - 40.0,
+          width: ow - 26.0,
           height: 80.0,
           decoration: BoxDecoration(
             color: const Color(0xFF1d1a1f),

@@ -69,7 +69,7 @@ class _PageBlockState extends State<PageBlock> {
                       height: 40,
                       child: Center(
                         child: Text(
-                          'ARGUMENTS',
+                          'ARGUMENTS 参数表',
                           style: getStyle(
                             color: Colors.white,
                             size: 14,
@@ -91,7 +91,7 @@ class _PageBlockState extends State<PageBlock> {
                       height: 40,
                       child: Center(
                         child: Text(
-                          'PALETTE',
+                          'PALETTE 调色板',
                           style: getStyle(
                             color: Colors.white,
                             size: 14,

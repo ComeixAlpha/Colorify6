@@ -36,13 +36,25 @@ class Topbar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(
-            'COLORIFY v6',
-            style: getStyle(
-              color: Colors.white,
-              size: 30,
-              weight: FontWeight.w700,
-            ),
+          Row(
+            children: [
+              Text(
+                'COLORIFY ',
+                style: getStyle(
+                  color: Colors.white,
+                  size: 30,
+                  weight: FontWeight.w700,
+                ),
+              ),
+              Text(
+                'v6',
+                style: getStyle(
+                  color: Colors.white.withOpacity(0.3),
+                  size: 30,
+                  weight: FontWeight.w700,
+                ),
+              ),
+            ],
           ),
           XButton(
             width: tp.height,
