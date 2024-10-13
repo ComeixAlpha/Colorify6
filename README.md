@@ -2,6 +2,10 @@
 
 Particle/Block Painting Generator for Minecraft BE
 
+## Warning
+
+This app is incompatible with HarmonyOS
+
 ## Usage
 
 - Android
