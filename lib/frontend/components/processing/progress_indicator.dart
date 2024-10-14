@@ -79,7 +79,7 @@ class _ProgressIndicatorState extends State<ProgressIndicator> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Process Error',
+                '生成错误',
                 style: getStyle(color: Colors.white, size: 28),
               ),
               const SizedBox(width: 12.0),

@@ -175,41 +175,59 @@ class _XMenuState extends State<XMenu> {
         if (_onPopup) return;
         _overlayEntry = OverlayEntry(
           builder: (ctx) {
+            final mqs = MediaQuery.of(context).size;
             final renderbox = _key.currentContext!.findRenderObject() as RenderBox;
             final offset = renderbox.localToGlobal(Offset.zero);
-            return Positioned(
-              left: offset.dx,
-              top: offset.dy + renderbox.size.height + (widget.gapHeight ?? 0),
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
-                      blurRadius: 1,
-                      spreadRadius: 1,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: _MenuPopup(
-                  width: widget.width,
-                  height: widget.height,
-                  tiles: widget.tiles,
-                  backgroundColor: widget.backgroundColor,
-                  hoverColor: widget.hoverColor,
-                  splashColor: widget.splashColor,
-                  textStyle: widget.textStyle,
-                  duration: widget.duration,
-                  onSelect: (i) {
-                    widget.onSelect(i);
+            return Stack(
+              children: [
+                GestureDetector(
+                  onTap: () {
                     _overlayEntry?.remove();
                     setState(() {
                       _onPopup = false;
-                      _selected = i;
                     });
                   },
+                  child: Container(
+                    color: Colors.transparent,
+                    width: mqs.width,
+                    height: mqs.height,
+                  ),
                 ),
-              ),
+                Positioned(
+                  left: offset.dx,
+                  top: offset.dy + renderbox.size.height + (widget.gapHeight ?? 0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          blurRadius: 1,
+                          spreadRadius: 1,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: _MenuPopup(
+                      width: widget.width,
+                      height: widget.height,
+                      tiles: widget.tiles,
+                      backgroundColor: widget.backgroundColor,
+                      hoverColor: widget.hoverColor,
+                      splashColor: widget.splashColor,
+                      textStyle: widget.textStyle,
+                      duration: widget.duration,
+                      onSelect: (i) {
+                        widget.onSelect(i);
+                        _overlayEntry?.remove();
+                        setState(() {
+                          _onPopup = false;
+                          _selected = i;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ],
             );
           },
         );

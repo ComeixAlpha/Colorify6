@@ -15,11 +15,25 @@ class Topbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tp = TextPainter(
+    final mqs = MediaQuery.of(context).size;
+
+    final tp1 = TextPainter(
       text: TextSpan(
-        text: 'COLORIFY v6',
+        text: 'COLORIFY',
         style: getStyle(
           color: Colors.white,
+          size: 30,
+          weight: FontWeight.w700,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    final tp2 = TextPainter(
+      text: TextSpan(
+        text: 'v6',
+        style: getStyle(
+          color: Colors.white.withOpacity(0.3),
           size: 30,
           weight: FontWeight.w700,
         ),
@@ -37,47 +51,72 @@ class Topbar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                'COLORIFY ',
-                style: getStyle(
-                  color: Colors.white,
-                  size: 30,
-                  weight: FontWeight.w700,
+              SizedBox(
+                width: tp1.width,
+                height: tp1.height,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'COLORIFY',
+                    overflow: TextOverflow.ellipsis,
+                    style: getStyle(
+                      color: Colors.white,
+                      size: 30,
+                      weight: FontWeight.w700,
+                    ),
+                  ),
                 ),
               ),
-              Text(
-                'v6',
-                style: getStyle(
-                  color: Colors.white.withOpacity(0.3),
-                  size: 30,
-                  weight: FontWeight.w700,
+              SizedBox(
+                width: tp2.width,
+                height: tp2.height,
+                child: Center(
+                  child: Text(
+                    'v6',
+                    overflow: TextOverflow.ellipsis,
+                    style: getStyle(
+                      color: Colors.white.withOpacity(0.3),
+                      size: 30,
+                      weight: FontWeight.w700,
+                    ),
+                  ),
                 ),
               ),
             ],
           ),
-          XButton(
-            width: tp.height,
-            height: tp.height,
-            backgroundColor: Colors.transparent,
-            hoverColor: Colors.white.withOpacity(0.2),
-            onTap: () {
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (BuildContext ctx) {
-                    return const About();
+          LayoutBuilder(
+            builder: (_, __) {
+              final restWidth = mqs.width - 47 - tp1.width - tp2.width;
+              if (restWidth >= tp1.height) {
+                return XButton(
+                  width: tp1.height,
+                  height: tp1.height,
+                  backgroundColor: Colors.transparent,
+                  hoverColor: Colors.white.withOpacity(0.2),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (BuildContext ctx) {
+                          return const About();
+                        },
+                      ),
+                    );
                   },
-                ),
-              );
+                  borderRadius: BorderRadius.circular(tp1.height / 2),
+                  child: const Center(
+                    child: Icon(
+                      Icons.book,
+                      color: Colors.white,
+                    ),
+                  ),
+                );
+              } else {
+                return const SizedBox();
+              }
             },
-            borderRadius: BorderRadius.circular(tp.height / 2),
-            child: const Center(
-              child: Icon(
-                Icons.book,
-                color: Colors.white,
-              ),
-            ),
           ),
         ],
       ),

@@ -7,7 +7,6 @@ import 'package:colorify/frontend/pages/socket/process_line_indicator.dart';
 import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:nil/nil.dart';
 import 'package:provider/provider.dart';
 
 class SocketPage extends StatefulWidget {
@@ -247,7 +246,7 @@ class _SocketPageState extends State<SocketPage> {
         ],
       );
     } else {
-      return nil;
+      return const SizedBox();
     }
   }
 }

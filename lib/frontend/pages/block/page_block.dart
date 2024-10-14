@@ -70,6 +70,7 @@ class _PageBlockState extends State<PageBlock> {
                       child: Center(
                         child: Text(
                           'ARGUMENTS 参数表',
+                          overflow: TextOverflow.ellipsis,
                           style: getStyle(
                             color: Colors.white,
                             size: 14,
@@ -92,6 +93,7 @@ class _PageBlockState extends State<PageBlock> {
                       child: Center(
                         child: Text(
                           'PALETTE 调色板',
+                          overflow: TextOverflow.ellipsis,
                           style: getStyle(
                             color: Colors.white,
                             size: 14,

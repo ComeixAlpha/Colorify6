@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 final progressErrors = {
-  -1: 'File Pick Error: Picked Nothin\'',
+  -1: '文件选择错误：未选中任何文件',
 };
 
 class Progressprov with ChangeNotifier {
