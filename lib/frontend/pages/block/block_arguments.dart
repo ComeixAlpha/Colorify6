@@ -27,25 +27,9 @@ class BlockArguments extends StatefulWidget {
 }
 
 class _BlockArgumentsState extends State<BlockArguments> {
-  int _plane = 0;
-  bool _stairType = false;
-  bool _useStruct = false;
-  bool _dithering = false;
-  bool _noGlasses = false;
-  bool _noSands = false;
-  bool _carpetOnly = false;
-
   @override
   Widget build(BuildContext context) {
-    Provider.of<Blockprov>(context, listen: false).updateAll(
-      iplane: _plane,
-      istairType: _stairType,
-      iuseStruct: _useStruct,
-      idithering: _dithering,
-      inoGlasses: _noGlasses,
-      inoSands: _noSands,
-      icarpetOnly: _carpetOnly,
-    );
+    final blockprov = context.watch<Blockprov>();
     Provider.of<Blockprov>(context, listen: false).refreshPalette();
     return SizedBox(
       width: widget.width,
@@ -73,7 +57,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
               }
             },
             onUpdateAVC: (v) {
-              Provider.of<Blockprov>(context, listen: false).updateAVCState(v);
+              Provider.of<Blockprov>(context, listen: false).avc = v;
             },
           ),
           ISelectionTile(
@@ -82,85 +66,77 @@ class _BlockArgumentsState extends State<BlockArguments> {
             height: 110,
             candidates: const ['xOy', 'xOz', 'yOz'],
             onSelect: (v) {
-              setState(() {
-                _plane = v;
-              });
+              blockprov.plane = v;
             },
           ),
           ICheckBoxTile(
-            value: _stairType,
+            value: blockprov.stairType,
             title: '阶梯式',
             width: widget.width - 40,
             onCheck: (v) {
-              setState(() {
-                _stairType = v;
-                if (v) {
-                  _useStruct = false;
-                  _dithering = false;
-                  _carpetOnly = false;
-                }
-              });
+              blockprov.stairType = v;
+              if (v) {
+                blockprov.useStruct = false;
+                blockprov.dithering = false;
+                blockprov.carpetOnly = false;
+                blockprov.refreshPalette();
+              }
             },
           ),
           ICheckBoxTile(
-            value: _useStruct,
+            value: blockprov.useStruct,
             title: '使用结构',
             width: widget.width - 40,
             onCheck: (v) {
-              setState(() {
-                _useStruct = v;
-                if (v) {
-                  _stairType = false;
-                }
-              });
+              blockprov.useStruct = v;
+              if (v) {
+                blockprov.stairType = false;
+              }
+              blockprov.refreshPalette();
             },
           ),
           ICheckBoxTile(
-            value: _dithering,
+            value: blockprov.dithering,
             title: '颜色抖动 (Floyd-Steinberg)',
             width: widget.width - 40,
             onCheck: (v) {
-              setState(() {
-                _dithering = v;
-                if (v) {
-                  _stairType = false;
-                }
-              });
+              blockprov.dithering = false;
+              if (v) {
+                blockprov.stairType = false;
+              }
+              blockprov.refreshPalette();
             },
           ),
           ICheckBoxTile(
-            value: _carpetOnly,
+            value: blockprov.carpetOnly,
             title: '仅地毯',
             width: widget.width - 40,
             onCheck: (v) {
-              setState(() {
-                _carpetOnly = v;
-                if (v) {
-                  _stairType = false;
-                  _noGlasses = true;
-                  _noSands = true;
-                }
-              });
+              blockprov.carpetOnly = false;
+              if (v) {
+                blockprov.stairType = false;
+                blockprov.noGlasses = false;
+                blockprov.noSands = false;
+              }
+              blockprov.refreshPalette();
             },
           ),
           ICheckBoxTile(
-            value: _noGlasses,
+            value: blockprov.noGlasses,
             title: '去除玻璃',
             width: widget.width - 40,
             onCheck: (v) {
-              setState(() {
-                _noGlasses = v;
-              });
+              blockprov.noGlasses = false;
+              blockprov.refreshPalette();
             },
           ),
           ICheckBoxTile(
-            value: _noSands,
+            value: blockprov.noSands,
             title: '去除沙子与混凝土粉末',
             width: widget.width - 40,
             onCheck: (v) {
-              setState(() {
-                _noSands = v;
-              });
+              blockprov.noSands = false;
+              blockprov.refreshPalette();
             },
           ),
           IPackageInfoTile(

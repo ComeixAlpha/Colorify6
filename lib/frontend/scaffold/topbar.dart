@@ -54,7 +54,7 @@ class Topbar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                width: tp1.width,
+                width: tp1.width + 10,
                 height: tp1.height,
                 child: Align(
                   alignment: Alignment.centerLeft,
@@ -70,9 +70,10 @@ class Topbar extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: tp2.width,
+                width: tp2.width + 10,
                 height: tp2.height,
-                child: Center(
+                child: Align(
+                  alignment: Alignment.centerLeft,
                   child: Text(
                     'v6',
                     overflow: TextOverflow.ellipsis,

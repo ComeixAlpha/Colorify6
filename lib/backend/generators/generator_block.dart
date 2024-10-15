@@ -3,6 +3,7 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:colorify/backend/abstracts/rgbmapping.dart';
 import 'package:colorify/backend/extensions/on_datetime.dart';
 import 'package:colorify/backend/extensions/on_iterable.dart';
 import 'package:colorify/backend/extensions/on_list.dart';
@@ -14,7 +15,6 @@ import 'package:colorify/backend/utils/kdtree.dart';
 import 'package:colorify/backend/utils/matcher.dart';
 import 'package:colorify/backend/utils/offset_request.dart';
 import 'package:colorify/backend/utils/structure.dart';
-import 'package:colorify/frontend/pages/particle/particle_mappings.dart';
 import 'package:colorify/frontend/scaffold/bottombar.dart';
 import 'package:image/image.dart';
 import 'package:uuid/uuid.dart';
@@ -329,5 +329,7 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
         sendPort.send(commands);
       }
     }
+
+    Isolate.exit();
   };
 }

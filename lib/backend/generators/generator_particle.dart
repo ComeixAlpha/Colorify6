@@ -3,6 +3,7 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:colorify/backend/abstracts/rgbmapping.dart';
 import 'package:colorify/backend/extensions/on_dateTime.dart';
 import 'package:colorify/backend/extensions/on_iterable.dart';
 import 'package:colorify/backend/extensions/on_string.dart';
@@ -12,7 +13,6 @@ import 'package:colorify/backend/utils/functionmaker.dart';
 import 'package:colorify/backend/utils/matcher.dart';
 import 'package:colorify/backend/utils/math.dart';
 import 'package:colorify/backend/utils/rotator.dart';
-import 'package:colorify/frontend/pages/particle/particle_mappings.dart';
 import 'package:colorify/frontend/scaffold/bottombar.dart';
 import 'package:image/image.dart';
 import 'package:path/path.dart' as path;
@@ -101,8 +101,6 @@ void Function(SendPort) pArgClosure(GParticleArguments args) {
       }
     }
 
-    print(args.samp);
-
     /// Matches
     final res = match(
       image,
@@ -114,7 +112,7 @@ void Function(SendPort) pArgClosure(GParticleArguments args) {
         num mindis = double.infinity;
         String latest = '';
         for (RGBMapping mapping in args.mappings) {
-          final dis = sqrt([mapping.r - v.r, mapping.g - v.g, mapping.b - v.b].map((e) => pow(e, 2) .toDouble()).sum());
+          final dis = sqrt([mapping.r - v.r, mapping.g - v.g, mapping.b - v.b].map((e) => pow(e, 2).toDouble()).sum());
           if (dis > 30) {
             continue;
           }
@@ -338,5 +336,7 @@ void Function(SendPort) pArgClosure(GParticleArguments args) {
     if (needPack) {
       await pack(zpDir, args.outDir);
     }
+
+    Isolate.exit();
   };
 }

@@ -1,4 +1,4 @@
-import 'package:colorify/frontend/pages/particle/particle_mappings.dart';
+import 'package:colorify/backend/abstracts/rgbmapping.dart';
 import 'package:flutter/foundation.dart';
 
 enum GenerateMode {

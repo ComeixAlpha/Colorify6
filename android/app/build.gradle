@@ -42,6 +42,8 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
+        aaptOptions.cruncherEnabled = false
+        aaptOptions.useNewCruncher = false
     }
 
     buildTypes {

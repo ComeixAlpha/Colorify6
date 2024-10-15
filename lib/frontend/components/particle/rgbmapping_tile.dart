@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:colorify/frontend/pages/particle/particle_mappings.dart';
+import 'package:colorify/backend/abstracts/rgbmapping.dart';
 import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/util/hsv.dart';
 import 'package:colorify/ui/util/text_style.dart';

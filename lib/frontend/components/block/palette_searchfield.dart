@@ -20,7 +20,7 @@ class PaletteSearchfield extends StatelessWidget {
       height: height,
       onChanged: onChanged,
       style: XTextfieldStyle(
-        hintText: '通过 ID 搜索',
+        hintText: '通过名称或 ID 搜索',
         hintStyle: getStyle(color: Colors.grey, size: 18),
       ),
     );

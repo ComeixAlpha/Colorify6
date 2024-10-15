@@ -1,25 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:colorify/backend/abstracts/rgbmapping.dart';
 import 'package:colorify/backend/providers/particle.prov.dart';
 import 'package:colorify/frontend/components/particle/new_mapping.dart';
-import 'package:colorify/frontend/components/rgbmapping_tile.dart';
+import 'package:colorify/frontend/components/particle/rgbmapping_tile.dart';
 import 'package:colorify/ui/basic/xframe.dart';
 import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-class RGBMapping {
-  int r;
-  int g;
-  int b;
-  String id;
-  RGBMapping({
-    required this.r,
-    required this.g,
-    required this.b,
-    required this.id,
-  });
-}
 
 class ParticleMappings extends StatefulWidget {
   final double width;
@@ -114,10 +102,15 @@ class _ParticleMappingsState extends State<ParticleMappings> {
           padding: const EdgeInsets.all(0),
           itemBuilder: (ctx, i) {
             if (i == _mappings.length) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              return Column(
                 children: [
-                  _newMappingButton(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _newMappingButton(),
+                    ],
+                  ),
+                  const SizedBox(height: 100),
                 ],
               );
             }

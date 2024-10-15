@@ -49,9 +49,11 @@ class _MenuPopupState extends State<_MenuPopup> {
           _state = 1;
         });
         Timer(Duration(milliseconds: widget.duration!.inMilliseconds + 10), () {
-          setState(() {
-            _state = 2;
-          });
+          if (mounted) {
+            setState(() {
+              _state = 2;
+            });
+          }
         });
       });
     }

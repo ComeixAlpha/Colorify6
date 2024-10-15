@@ -2,6 +2,7 @@ const blockPalette = [
   {
     "index": 0,
     "id": "amethyst_block",
+    "cn": "紫水晶块",
     "pathId": "amethyst_block",
     "average": [133, 97, 191],
     "hasSemitransparentPixel": false,
@@ -9,6 +10,7 @@ const blockPalette = [
   {
     "index": 1,
     "id": "ancient_debris",
+    "cn": "远古残骸",
     "pathId": "ancient_debris_side",
     "average": [95, 63, 55],
     "hasSemitransparentPixel": false,
@@ -16,6 +18,7 @@ const blockPalette = [
   {
     "index": 3,
     "id": "bamboo_block",
+    "cn": "竹块",
     "pathId": "bamboo_block",
     "average": [127, 144, 57],
     "hasSemitransparentPixel": false,
@@ -23,6 +26,7 @@ const blockPalette = [
   {
     "index": 5,
     "id": "bamboo_mosaic",
+    "cn": "竹马赛克",
     "pathId": "bamboo_mosaic",
     "average": [190, 170, 78],
     "hasSemitransparentPixel": false,
@@ -30,6 +34,7 @@ const blockPalette = [
   {
     "index": 7,
     "id": "bamboo",
+    "cn": "竹子",
     "pathId": "bamboo_stem",
     "average": [93, 144, 19],
     "hasSemitransparentPixel": false,
@@ -37,6 +42,7 @@ const blockPalette = [
   {
     "index": 8,
     "id": "basalt",
+    "cn": "玄武岩",
     "pathId": "basalt_side",
     "average": [73, 72, 77],
     "hasSemitransparentPixel": false,
@@ -44,6 +50,7 @@ const blockPalette = [
   {
     "index": 9,
     "id": "beacon",
+    "cn": "信标",
     "pathId": "beacon",
     "average": [117, 220, 215],
     "hasSemitransparentPixel": false,
@@ -51,6 +58,7 @@ const blockPalette = [
   {
     "index": 10,
     "id": "bedrock",
+    "cn": "基岩",
     "pathId": "bedrock",
     "average": [85, 85, 85],
     "hasSemitransparentPixel": false,
@@ -58,6 +66,7 @@ const blockPalette = [
   {
     "index": 12,
     "id": "blackstone",
+    "cn": "黑石",
     "pathId": "blackstone",
     "average": [42, 35, 40],
     "hasSemitransparentPixel": false,
@@ -65,6 +74,7 @@ const blockPalette = [
   {
     "index": 13,
     "id": "blast_furnace",
+    "cn": "高炉",
     "pathId": "blast_furnace_front_off",
     "average": [107, 107, 107],
     "hasSemitransparentPixel": false,
@@ -72,6 +82,7 @@ const blockPalette = [
   {
     "index": 14,
     "id": "lit_blast_furnace",
+    "cn": "燃烧中的高炉",
     "pathId": "blast_furnace_front_on",
     "average": [115, 110, 105],
     "hasSemitransparentPixel": false,
@@ -79,6 +90,7 @@ const blockPalette = [
   {
     "index": 15,
     "id": "blue_ice",
+    "cn": "蓝冰",
     "pathId": "blue_ice",
     "average": [116, 167, 253],
     "hasSemitransparentPixel": false,
@@ -86,6 +98,7 @@ const blockPalette = [
   {
     "index": 16,
     "id": "bone_block",
+    "cn": "骨块",
     "pathId": "bone_block_side",
     "average": [229, 225, 207],
     "hasSemitransparentPixel": false,
@@ -93,6 +106,7 @@ const blockPalette = [
   {
     "index": 17,
     "id": "bookshelf",
+    "cn": "书架",
     "pathId": "bookshelf",
     "average": [117, 94, 59],
     "hasSemitransparentPixel": false,
@@ -100,6 +114,7 @@ const blockPalette = [
   {
     "index": 20,
     "id": "brick_block",
+    "cn": "红砖块",
     "pathId": "brick",
     "average": [150, 97, 83],
     "hasSemitransparentPixel": false,
@@ -107,6 +122,7 @@ const blockPalette = [
   {
     "index": 21,
     "id": "budding_amethyst",
+    "cn": "紫水晶母岩",
     "pathId": "budding_amethyst",
     "average": [132, 96, 186],
     "hasSemitransparentPixel": false,
@@ -114,6 +130,7 @@ const blockPalette = [
   {
     "index": 22,
     "id": "allow",
+    "cn": "允许方块",
     "pathId": "build_allow",
     "average": [136, 115, 83],
     "hasSemitransparentPixel": false,
@@ -121,6 +138,7 @@ const blockPalette = [
   {
     "index": 23,
     "id": "deny",
+    "cn": "拒绝方块",
     "pathId": "build_deny",
     "average": [111, 111, 111],
     "hasSemitransparentPixel": false,
@@ -128,6 +146,7 @@ const blockPalette = [
   {
     "index": 24,
     "id": "calcite",
+    "cn": "方解石",
     "pathId": "calcite",
     "average": [223, 224, 220],
     "hasSemitransparentPixel": false,
@@ -135,6 +154,7 @@ const blockPalette = [
   {
     "index": 28,
     "id": "cartography_table",
+    "cn": "制图台",
     "pathId": "cartography_table_side1",
     "average": [70, 50, 34],
     "hasSemitransparentPixel": false,
@@ -142,6 +162,7 @@ const blockPalette = [
   {
     "index": 29,
     "id": "cauldron",
+    "cn": "炼药锅",
     "pathId": "cauldron_inner",
     "average": [49, 49, 53],
     "hasSemitransparentPixel": false,
@@ -149,6 +170,7 @@ const blockPalette = [
   {
     "index": 30,
     "id": "chain_command_block",
+    "cn": "连锁型命令方块",
     "pathId": "chain_command_block_back_mipmap",
     "average": [126, 150, 140],
     "hasSemitransparentPixel": false,
@@ -156,6 +178,7 @@ const blockPalette = [
   {
     "index": 31,
     "id": "cherry_log",
+    "cn": "樱花原木",
     "pathId": "cherry_log_side",
     "average": [54, 33, 44],
     "hasSemitransparentPixel": false,
@@ -163,6 +186,7 @@ const blockPalette = [
   {
     "index": 33,
     "id": "chiseled_bookshelf",
+    "cn": "雕纹书架",
     "pathId": "chiseled_bookshelf_side",
     "average": [175, 141, 86],
     "hasSemitransparentPixel": false,
@@ -170,6 +194,7 @@ const blockPalette = [
   {
     "index": 34,
     "id": "chiseled_nether_bricks",
+    "cn": "雕纹下界砖块",
     "pathId": "chiseled_nether_bricks",
     "average": [47, 23, 28],
     "hasSemitransparentPixel": false,
@@ -177,6 +202,7 @@ const blockPalette = [
   {
     "index": 35,
     "id": "chiseled_polished_blackstone",
+    "cn": "雕纹磨制黑石",
     "pathId": "chiseled_polished_blackstone",
     "average": [53, 48, 56],
     "hasSemitransparentPixel": false,
@@ -184,6 +210,7 @@ const blockPalette = [
   {
     "index": 37,
     "id": "clay",
+    "cn": "黏土",
     "pathId": "clay",
     "average": [160, 166, 179],
     "hasSemitransparentPixel": false,
@@ -191,6 +218,7 @@ const blockPalette = [
   {
     "index": 38,
     "id": "coal_block",
+    "cn": "煤炭块",
     "pathId": "coal_block",
     "average": [16, 15, 15],
     "hasSemitransparentPixel": false,
@@ -198,6 +226,7 @@ const blockPalette = [
   {
     "index": 39,
     "id": "coal_ore",
+    "cn": "煤矿石",
     "pathId": "coal_ore",
     "average": [105, 105, 105],
     "hasSemitransparentPixel": false,
@@ -205,6 +234,7 @@ const blockPalette = [
   {
     "index": 41,
     "id": "mossy_cobblestone",
+    "cn": "苔石",
     "pathId": "cobblestone_mossy",
     "average": [110, 118, 94],
     "hasSemitransparentPixel": false,
@@ -212,6 +242,7 @@ const blockPalette = [
   {
     "index": 42,
     "id": "command_block",
+    "cn": "命令方块",
     "pathId": "command_block_back_mipmap",
     "average": [163, 127, 107],
     "hasSemitransparentPixel": false,
@@ -219,6 +250,7 @@ const blockPalette = [
   {
     "index": 44,
     "id": "black_concrete",
+    "cn": "黑色混凝土",
     "pathId": "concrete_black",
     "average": [8, 10, 15],
     "hasSemitransparentPixel": false,
@@ -226,6 +258,7 @@ const blockPalette = [
   {
     "index": 45,
     "id": "blue_concrete",
+    "cn": "蓝色混凝土",
     "pathId": "concrete_blue",
     "average": [44, 46, 143],
     "hasSemitransparentPixel": false,
@@ -233,6 +266,7 @@ const blockPalette = [
   {
     "index": 46,
     "id": "brown_concrete",
+    "cn": "棕色混凝土",
     "pathId": "concrete_brown",
     "average": [96, 59, 31],
     "hasSemitransparentPixel": false,
@@ -240,6 +274,7 @@ const blockPalette = [
   {
     "index": 47,
     "id": "cyan_concrete",
+    "cn": "青色混凝土",
     "pathId": "concrete_cyan",
     "average": [21, 119, 136],
     "hasSemitransparentPixel": false,
@@ -247,6 +282,7 @@ const blockPalette = [
   {
     "index": 48,
     "id": "gray_concrete",
+    "cn": "灰色混凝土",
     "pathId": "concrete_gray",
     "average": [54, 57, 61],
     "hasSemitransparentPixel": false,
@@ -254,6 +290,7 @@ const blockPalette = [
   {
     "index": 49,
     "id": "green_concrete",
+    "cn": "绿色混凝土",
     "pathId": "concrete_green",
     "average": [73, 91, 36],
     "hasSemitransparentPixel": false,
@@ -261,6 +298,7 @@ const blockPalette = [
   {
     "index": 50,
     "id": "light_blue_concrete",
+    "cn": "淡蓝色混凝土",
     "pathId": "concrete_light_blue",
     "average": [35, 137, 198],
     "hasSemitransparentPixel": false,
@@ -268,6 +306,7 @@ const blockPalette = [
   {
     "index": 51,
     "id": "lime_concrete",
+    "cn": "黄绿色混凝土",
     "pathId": "concrete_lime",
     "average": [94, 168, 24],
     "hasSemitransparentPixel": false,
@@ -275,6 +314,7 @@ const blockPalette = [
   {
     "index": 52,
     "id": "magenta_concrete",
+    "cn": "品红色混凝土",
     "pathId": "concrete_magenta",
     "average": [169, 48, 159],
     "hasSemitransparentPixel": false,
@@ -282,6 +322,7 @@ const blockPalette = [
   {
     "index": 53,
     "id": "orange_concrete",
+    "cn": "橙色混凝土",
     "pathId": "concrete_orange",
     "average": [224, 97, 0],
     "hasSemitransparentPixel": false,
@@ -289,6 +330,7 @@ const blockPalette = [
   {
     "index": 54,
     "id": "pink_concrete",
+    "cn": "粉红色混凝土",
     "pathId": "concrete_pink",
     "average": [213, 101, 142],
     "hasSemitransparentPixel": false,
@@ -296,6 +338,7 @@ const blockPalette = [
   {
     "index": 55,
     "id": "black_concrete_powder",
+    "cn": "黑色混凝土粉末",
     "pathId": "concrete_powder_black",
     "average": [25, 26, 31],
     "hasSemitransparentPixel": false,
@@ -303,6 +346,7 @@ const blockPalette = [
   {
     "index": 56,
     "id": "blue_concrete_powder",
+    "cn": "蓝色混凝土粉末",
     "pathId": "concrete_powder_blue",
     "average": [70, 73, 166],
     "hasSemitransparentPixel": false,
@@ -310,6 +354,7 @@ const blockPalette = [
   {
     "index": 57,
     "id": "brown_concrete_powder",
+    "cn": "棕色混凝土粉末",
     "pathId": "concrete_powder_brown",
     "average": [125, 84, 53],
     "hasSemitransparentPixel": false,
@@ -317,6 +362,7 @@ const blockPalette = [
   {
     "index": 58,
     "id": "cyan_concrete_powder",
+    "cn": "青色混凝土粉末",
     "pathId": "concrete_powder_cyan",
     "average": [36, 147, 157],
     "hasSemitransparentPixel": false,
@@ -324,6 +370,7 @@ const blockPalette = [
   {
     "index": 59,
     "id": "gray_concrete_powder",
+    "cn": "灰色混凝土粉末",
     "pathId": "concrete_powder_gray",
     "average": [76, 81, 84],
     "hasSemitransparentPixel": false,
@@ -331,6 +378,7 @@ const blockPalette = [
   {
     "index": 60,
     "id": "green_concrete_powder",
+    "cn": "绿色混凝土粉末",
     "pathId": "concrete_powder_green",
     "average": [97, 119, 44],
     "hasSemitransparentPixel": false,
@@ -338,6 +386,7 @@ const blockPalette = [
   {
     "index": 61,
     "id": "light_blue_concrete_powder",
+    "cn": "淡蓝色混凝土粉末",
     "pathId": "concrete_powder_light_blue",
     "average": [74, 180, 213],
     "hasSemitransparentPixel": false,
@@ -345,6 +394,7 @@ const blockPalette = [
   {
     "index": 62,
     "id": "lime_concrete_powder",
+    "cn": "黄绿色混凝土粉末",
     "pathId": "concrete_powder_lime",
     "average": [125, 189, 41],
     "hasSemitransparentPixel": false,
@@ -352,6 +402,7 @@ const blockPalette = [
   {
     "index": 63,
     "id": "magenta_concrete_powder",
+    "cn": "品红色混凝土粉末",
     "pathId": "concrete_powder_magenta",
     "average": [192, 83, 184],
     "hasSemitransparentPixel": false,
@@ -359,6 +410,7 @@ const blockPalette = [
   {
     "index": 64,
     "id": "orange_concrete_powder",
+    "cn": "橙色混凝土粉末",
     "pathId": "concrete_powder_orange",
     "average": [227, 131, 31],
     "hasSemitransparentPixel": false,
@@ -366,6 +418,7 @@ const blockPalette = [
   {
     "index": 65,
     "id": "pink_concrete_powder",
+    "cn": "粉红色混凝土粉末",
     "pathId": "concrete_powder_pink",
     "average": [228, 153, 181],
     "hasSemitransparentPixel": false,
@@ -373,6 +426,7 @@ const blockPalette = [
   {
     "index": 66,
     "id": "purple_concrete_powder",
+    "cn": "紫色混凝土粉末",
     "pathId": "concrete_powder_purple",
     "average": [131, 55, 177],
     "hasSemitransparentPixel": false,
@@ -380,6 +434,7 @@ const blockPalette = [
   {
     "index": 67,
     "id": "red_concrete_powder",
+    "cn": "红色混凝土粉末",
     "pathId": "concrete_powder_red",
     "average": [168, 54, 50],
     "hasSemitransparentPixel": false,
@@ -387,6 +442,7 @@ const blockPalette = [
   {
     "index": 68,
     "id": "light_gray_concrete_powder",
+    "cn": "淡灰色混凝土粉末",
     "pathId": "concrete_powder_silver",
     "average": [154, 154, 148],
     "hasSemitransparentPixel": false,
@@ -394,6 +450,7 @@ const blockPalette = [
   {
     "index": 69,
     "id": "white_concrete_powder",
+    "cn": "白色混凝土粉末",
     "pathId": "concrete_powder_white",
     "average": [225, 227, 227],
     "hasSemitransparentPixel": false,
@@ -401,6 +458,7 @@ const blockPalette = [
   {
     "index": 70,
     "id": "yellow_concrete_powder",
+    "cn": "黄色混凝土粉末",
     "pathId": "concrete_powder_yellow",
     "average": [232, 199, 54],
     "hasSemitransparentPixel": false,
@@ -408,6 +466,7 @@ const blockPalette = [
   {
     "index": 71,
     "id": "purple_concrete",
+    "cn": "紫色混凝土",
     "pathId": "concrete_purple",
     "average": [100, 31, 156],
     "hasSemitransparentPixel": false,
@@ -415,6 +474,7 @@ const blockPalette = [
   {
     "index": 72,
     "id": "red_concrete",
+    "cn": "红色混凝土",
     "pathId": "concrete_red",
     "average": [142, 32, 32],
     "hasSemitransparentPixel": false,
@@ -422,6 +482,7 @@ const blockPalette = [
   {
     "index": 73,
     "id": "light_gray_concrete",
+    "cn": "淡灰色混凝土",
     "pathId": "concrete_silver",
     "average": [125, 125, 115],
     "hasSemitransparentPixel": false,
@@ -429,6 +490,7 @@ const blockPalette = [
   {
     "index": 74,
     "id": "white_concrete",
+    "cn": "白色混凝土",
     "pathId": "concrete_white",
     "average": [207, 213, 214],
     "hasSemitransparentPixel": false,
@@ -436,6 +498,7 @@ const blockPalette = [
   {
     "index": 75,
     "id": "yellow_concrete",
+    "cn": "黄色混凝土",
     "pathId": "concrete_yellow",
     "average": [240, 175, 21],
     "hasSemitransparentPixel": false,
@@ -443,6 +506,7 @@ const blockPalette = [
   {
     "index": 76,
     "id": "copper_block",
+    "cn": "铜块",
     "pathId": "copper_block",
     "average": [192, 107, 79],
     "hasSemitransparentPixel": false,
@@ -450,6 +514,7 @@ const blockPalette = [
   {
     "index": 77,
     "id": "copper_ore",
+    "cn": "铜矿石",
     "pathId": "copper_ore",
     "average": [124, 125, 120],
     "hasSemitransparentPixel": false,
@@ -457,6 +522,7 @@ const blockPalette = [
   {
     "index": 78,
     "id": "cracked_nether_bricks",
+    "cn": "裂纹下界砖块",
     "pathId": "cracked_nether_bricks",
     "average": [40, 20, 23],
     "hasSemitransparentPixel": false,
@@ -464,6 +530,7 @@ const blockPalette = [
   {
     "index": 79,
     "id": "cracked_polished_blackstone_bricks",
+    "cn": "裂纹磨制黑石砖",
     "pathId": "cracked_polished_blackstone_bricks",
     "average": [44, 37, 43],
     "hasSemitransparentPixel": false,
@@ -471,6 +538,7 @@ const blockPalette = [
   {
     "index": 80,
     "id": "crafting_table",
+    "cn": "工作台",
     "pathId": "crafting_table_front",
     "average": [129, 105, 70],
     "hasSemitransparentPixel": false,
@@ -478,6 +546,7 @@ const blockPalette = [
   {
     "index": 81,
     "id": "crimson_nylium",
+    "cn": "绯红菌岩",
     "pathId": "crimson_nylium_side",
     "average": [107, 26, 26],
     "hasSemitransparentPixel": false,
@@ -485,6 +554,7 @@ const blockPalette = [
   {
     "index": 82,
     "id": "crying_obsidian",
+    "cn": "哭泣的黑曜石",
     "pathId": "crying_obsidian",
     "average": [32, 10, 60],
     "hasSemitransparentPixel": false,
@@ -492,6 +562,7 @@ const blockPalette = [
   {
     "index": 83,
     "id": "cut_copper",
+    "cn": "切制铜块",
     "pathId": "cut_copper",
     "average": [191, 106, 80],
     "hasSemitransparentPixel": false,
@@ -499,6 +570,7 @@ const blockPalette = [
   {
     "index": 85,
     "id": "chiseled_deepslate",
+    "cn": "雕纹深板岩",
     "pathId": "chiseled_deepslate",
     "average": [54, 54, 54],
     "hasSemitransparentPixel": false,
@@ -506,6 +578,7 @@ const blockPalette = [
   {
     "index": 86,
     "id": "cobbled_deepslate",
+    "cn": "深板岩圆石",
     "pathId": "cobbled_deepslate",
     "average": [77, 77, 80],
     "hasSemitransparentPixel": false,
@@ -513,6 +586,7 @@ const blockPalette = [
   {
     "index": 87,
     "id": "cracked_deepslate_bricks",
+    "cn": "裂纹深板岩砖",
     "pathId": "cracked_deepslate_bricks",
     "average": [64, 64, 65],
     "hasSemitransparentPixel": false,
@@ -520,6 +594,7 @@ const blockPalette = [
   {
     "index": 88,
     "id": "cracked_deepslate_tiles",
+    "cn": "裂纹深板岩瓦",
     "pathId": "cracked_deepslate_tiles",
     "average": [52, 52, 52],
     "hasSemitransparentPixel": false,
@@ -527,6 +602,7 @@ const blockPalette = [
   {
     "index": 89,
     "id": "deepslate",
+    "cn": "深板岩",
     "pathId": "deepslate",
     "average": [80, 80, 82],
     "hasSemitransparentPixel": false,
@@ -534,6 +610,7 @@ const blockPalette = [
   {
     "index": 90,
     "id": "deepslate_brick_double_slab",
+    "cn": "深板岩砖双层台阶",
     "pathId": "deepslate_bricks",
     "average": [70, 70, 71],
     "hasSemitransparentPixel": false,
@@ -541,6 +618,7 @@ const blockPalette = [
   {
     "index": 91,
     "id": "deepslate_coal_ore",
+    "cn": "深层煤矿石",
     "pathId": "deepslate_coal_ore",
     "average": [74, 74, 76],
     "hasSemitransparentPixel": false,
@@ -548,6 +626,7 @@ const blockPalette = [
   {
     "index": 92,
     "id": "deepslate_copper_ore",
+    "cn": "深层铜矿石",
     "pathId": "deepslate_copper_ore",
     "average": [92, 93, 89],
     "hasSemitransparentPixel": false,
@@ -555,6 +634,7 @@ const blockPalette = [
   {
     "index": 93,
     "id": "deepslate_diamond_ore",
+    "cn": "深层钻石矿石",
     "pathId": "deepslate_diamond_ore",
     "average": [83, 106, 106],
     "hasSemitransparentPixel": false,
@@ -562,6 +642,7 @@ const blockPalette = [
   {
     "index": 94,
     "id": "deepslate_emerald_ore",
+    "cn": "深层绿宝石矿石",
     "pathId": "deepslate_emerald_ore",
     "average": [78, 104, 87],
     "hasSemitransparentPixel": false,
@@ -569,6 +650,7 @@ const blockPalette = [
   {
     "index": 95,
     "id": "deepslate_gold_ore",
+    "cn": "深层金矿石",
     "pathId": "deepslate_gold_ore",
     "average": [115, 102, 78],
     "hasSemitransparentPixel": false,
@@ -576,6 +658,7 @@ const blockPalette = [
   {
     "index": 96,
     "id": "deepslate_iron_ore",
+    "cn": "深层铁矿石",
     "pathId": "deepslate_iron_ore",
     "average": [106, 99, 94],
     "hasSemitransparentPixel": false,
@@ -583,6 +666,7 @@ const blockPalette = [
   {
     "index": 97,
     "id": "deepslate_lapis_ore",
+    "cn": "深层青金石矿石",
     "pathId": "deepslate_lapis_ore",
     "average": [79, 90, 115],
     "hasSemitransparentPixel": false,
@@ -590,6 +674,7 @@ const blockPalette = [
   {
     "index": 98,
     "id": "deepslate_redstone_ore",
+    "cn": "深层红石矿石",
     "pathId": "deepslate_redstone_ore",
     "average": [104, 73, 74],
     "hasSemitransparentPixel": false,
@@ -597,6 +682,7 @@ const blockPalette = [
   {
     "index": 99,
     "id": "deepslate_tile_double_slab",
+    "cn": "深板岩瓦双层台阶",
     "pathId": "deepslate_tiles",
     "average": [54, 54, 55],
     "hasSemitransparentPixel": false,
@@ -604,6 +690,7 @@ const blockPalette = [
   {
     "index": 100,
     "id": "polished_deepslate",
+    "cn": "磨制深板岩",
     "pathId": "polished_deepslate",
     "average": [72, 72, 73],
     "hasSemitransparentPixel": false,
@@ -611,6 +698,7 @@ const blockPalette = [
   {
     "index": 101,
     "id": "diamond_block",
+    "cn": "钻石块",
     "pathId": "diamond_block",
     "average": [98, 237, 228],
     "hasSemitransparentPixel": false,
@@ -618,6 +706,7 @@ const blockPalette = [
   {
     "index": 102,
     "id": "diamond_ore",
+    "cn": "钻石矿石",
     "pathId": "diamond_ore",
     "average": [121, 141, 140],
     "hasSemitransparentPixel": false,
@@ -625,6 +714,7 @@ const blockPalette = [
   {
     "index": 103,
     "id": "podzol",
+    "cn": "灰化土",
     "pathId": "dirt_podzol_side",
     "average": [122, 87, 57],
     "hasSemitransparentPixel": false,
@@ -632,6 +722,7 @@ const blockPalette = [
   {
     "index": 104,
     "id": "dirt_with_roots",
+    "cn": "缠根泥土",
     "pathId": "dirt_with_roots",
     "average": [144, 103, 76],
     "hasSemitransparentPixel": false,
@@ -639,6 +730,7 @@ const blockPalette = [
   {
     "index": 105,
     "id": "dispenser",
+    "cn": "发射器",
     "pathId": "dispenser_front_horizontal",
     "average": [122, 121, 121],
     "hasSemitransparentPixel": false,
@@ -646,6 +738,7 @@ const blockPalette = [
   {
     "index": 107,
     "id": "dried_kelp_block",
+    "cn": "干海带块",
     "pathId": "dried_kelp_side_a",
     "average": [38, 48, 29],
     "hasSemitransparentPixel": false,
@@ -653,6 +746,7 @@ const blockPalette = [
   {
     "index": 108,
     "id": "dripstone_block",
+    "cn": "滴水石块",
     "pathId": "dripstone_block",
     "average": [134, 107, 92],
     "hasSemitransparentPixel": false,
@@ -660,6 +754,7 @@ const blockPalette = [
   {
     "index": 109,
     "id": "dropper",
+    "cn": "投掷器",
     "pathId": "dropper_front_horizontal",
     "average": [122, 121, 121],
     "hasSemitransparentPixel": false,
@@ -667,6 +762,7 @@ const blockPalette = [
   {
     "index": 110,
     "id": "emerald_block",
+    "cn": "绿宝石块",
     "pathId": "emerald_block",
     "average": [42, 203, 87],
     "hasSemitransparentPixel": false,
@@ -674,6 +770,7 @@ const blockPalette = [
   {
     "index": 111,
     "id": "emerald_ore",
+    "cn": "绿宝石矿石",
     "pathId": "emerald_ore",
     "average": [108, 136, 115],
     "hasSemitransparentPixel": false,
@@ -681,6 +778,7 @@ const blockPalette = [
   {
     "index": 112,
     "id": "enchanting_table",
+    "cn": "附魔台",
     "pathId": "enchanting_table_bottom",
     "average": [15, 10, 24],
     "hasSemitransparentPixel": false,
@@ -688,6 +786,7 @@ const blockPalette = [
   {
     "index": 113,
     "id": "end_portal_frame",
+    "cn": "末地传送门框架",
     "pathId": "endframe_top",
     "average": [91, 120, 97],
     "hasSemitransparentPixel": false,
@@ -695,6 +794,7 @@ const blockPalette = [
   {
     "index": 115,
     "id": "exposed_copper",
+    "cn": "斑驳的铜块",
     "pathId": "exposed_copper",
     "average": [161, 125, 103],
     "hasSemitransparentPixel": false,
@@ -702,6 +802,7 @@ const blockPalette = [
   {
     "index": 116,
     "id": "exposed_cut_copper",
+    "cn": "斑驳的切制铜块",
     "pathId": "exposed_cut_copper",
     "average": [154, 121, 101],
     "hasSemitransparentPixel": false,
@@ -709,6 +810,7 @@ const blockPalette = [
   {
     "index": 117,
     "id": "fletching_table",
+    "cn": "制箭台",
     "pathId": "fletcher_table_side1",
     "average": [191, 167, 129],
     "hasSemitransparentPixel": false,
@@ -716,6 +818,7 @@ const blockPalette = [
   {
     "index": 119,
     "id": "furnace",
+    "cn": "熔炉",
     "pathId": "furnace_front_off",
     "average": [91, 91, 91],
     "hasSemitransparentPixel": false,
@@ -723,6 +826,7 @@ const blockPalette = [
   {
     "index": 120,
     "id": "lit_furnace",
+    "cn": "燃烧中的熔炉",
     "pathId": "furnace_front_on",
     "average": [121, 112, 93],
     "hasSemitransparentPixel": false,
@@ -730,6 +834,7 @@ const blockPalette = [
   {
     "index": 121,
     "id": "gilded_blackstone",
+    "cn": "镶金黑石",
     "pathId": "gilded_blackstone",
     "average": [55, 42, 38],
     "hasSemitransparentPixel": false,
@@ -737,6 +842,7 @@ const blockPalette = [
   {
     "index": 122,
     "id": "glass_pane",
+    "cn": "玻璃板",
     "pathId": "glass_pane_top",
     "average": [170, 210, 217],
     "hasSemitransparentPixel": false,
@@ -744,6 +850,7 @@ const blockPalette = [
   {
     "index": 123,
     "id": "black_glazed_terracotta",
+    "cn": "黑色带釉陶瓦",
     "pathId": "glazed_terracotta_black",
     "average": [67, 30, 32],
     "hasSemitransparentPixel": false,
@@ -751,6 +858,7 @@ const blockPalette = [
   {
     "index": 124,
     "id": "blue_glazed_terracotta",
+    "cn": "蓝色带釉陶瓦",
     "pathId": "glazed_terracotta_blue",
     "average": [47, 64, 139],
     "hasSemitransparentPixel": false,
@@ -758,6 +866,7 @@ const blockPalette = [
   {
     "index": 125,
     "id": "brown_glazed_terracotta",
+    "cn": "棕色带釉陶瓦",
     "pathId": "glazed_terracotta_brown",
     "average": [119, 106, 85],
     "hasSemitransparentPixel": false,
@@ -765,6 +874,7 @@ const blockPalette = [
   {
     "index": 126,
     "id": "cyan_glazed_terracotta",
+    "cn": "青色带釉陶瓦",
     "pathId": "glazed_terracotta_cyan",
     "average": [52, 118, 125],
     "hasSemitransparentPixel": false,
@@ -772,6 +882,7 @@ const blockPalette = [
   {
     "index": 127,
     "id": "gray_glazed_terracotta",
+    "cn": "灰色带釉陶瓦",
     "pathId": "glazed_terracotta_gray",
     "average": [83, 90, 93],
     "hasSemitransparentPixel": false,
@@ -779,6 +890,7 @@ const blockPalette = [
   {
     "index": 128,
     "id": "green_glazed_terracotta",
+    "cn": "绿色带釉陶瓦",
     "pathId": "glazed_terracotta_green",
     "average": [117, 142, 67],
     "hasSemitransparentPixel": false,
@@ -786,6 +898,7 @@ const blockPalette = [
   {
     "index": 129,
     "id": "light_blue_glazed_terracotta",
+    "cn": "淡蓝色带釉陶瓦",
     "pathId": "glazed_terracotta_light_blue",
     "average": [94, 164, 208],
     "hasSemitransparentPixel": false,
@@ -793,6 +906,7 @@ const blockPalette = [
   {
     "index": 130,
     "id": "lime_glazed_terracotta",
+    "cn": "黄绿色带釉陶瓦",
     "pathId": "glazed_terracotta_lime",
     "average": [162, 197, 55],
     "hasSemitransparentPixel": false,
@@ -800,6 +914,7 @@ const blockPalette = [
   {
     "index": 131,
     "id": "magenta_glazed_terracotta",
+    "cn": "品红色带釉陶瓦",
     "pathId": "glazed_terracotta_magenta",
     "average": [208, 100, 191],
     "hasSemitransparentPixel": false,
@@ -807,6 +922,7 @@ const blockPalette = [
   {
     "index": 132,
     "id": "orange_glazed_terracotta",
+    "cn": "橙色带釉陶瓦",
     "pathId": "glazed_terracotta_orange",
     "average": [154, 147, 91],
     "hasSemitransparentPixel": false,
@@ -814,6 +930,7 @@ const blockPalette = [
   {
     "index": 133,
     "id": "pink_glazed_terracotta",
+    "cn": "粉红色带釉陶瓦",
     "pathId": "glazed_terracotta_pink",
     "average": [235, 154, 181],
     "hasSemitransparentPixel": false,
@@ -821,6 +938,7 @@ const blockPalette = [
   {
     "index": 134,
     "id": "purple_glazed_terracotta",
+    "cn": "紫色带釉陶瓦",
     "pathId": "glazed_terracotta_purple",
     "average": [109, 48, 152],
     "hasSemitransparentPixel": false,
@@ -828,6 +946,7 @@ const blockPalette = [
   {
     "index": 135,
     "id": "red_glazed_terracotta",
+    "cn": "红色带釉陶瓦",
     "pathId": "glazed_terracotta_red",
     "average": [181, 59, 53],
     "hasSemitransparentPixel": false,
@@ -835,6 +954,7 @@ const blockPalette = [
   {
     "index": 136,
     "id": "silver_glazed_terracotta",
+    "cn": "淡灰色带釉陶瓦",
     "pathId": "glazed_terracotta_silver",
     "average": [144, 166, 167],
     "hasSemitransparentPixel": false,
@@ -842,6 +962,7 @@ const blockPalette = [
   {
     "index": 137,
     "id": "white_glazed_terracotta",
+    "cn": "白色带釉陶瓦",
     "pathId": "glazed_terracotta_white",
     "average": [188, 212, 202],
     "hasSemitransparentPixel": false,
@@ -849,6 +970,7 @@ const blockPalette = [
   {
     "index": 138,
     "id": "yellow_glazed_terracotta",
+    "cn": "黄色带釉陶瓦",
     "pathId": "glazed_terracotta_yellow",
     "average": [234, 192, 88],
     "hasSemitransparentPixel": false,
@@ -856,6 +978,7 @@ const blockPalette = [
   {
     "index": 139,
     "id": "crying_obsidian",
+    "cn": "哭泣的黑曜石",
     "pathId": "glowingobsidian",
     "average": [80, 2, 12],
     "hasSemitransparentPixel": false,
@@ -863,6 +986,7 @@ const blockPalette = [
   {
     "index": 140,
     "id": "glowstone",
+    "cn": "荧石",
     "pathId": "glowstone",
     "average": [171, 131, 84],
     "hasSemitransparentPixel": false,
@@ -870,6 +994,7 @@ const blockPalette = [
   {
     "index": 142,
     "id": "gold_block",
+    "cn": "金块",
     "pathId": "gold_block",
     "average": [246, 208, 61],
     "hasSemitransparentPixel": false,
@@ -877,6 +1002,7 @@ const blockPalette = [
   {
     "index": 143,
     "id": "gold_ore",
+    "cn": "金矿石",
     "pathId": "gold_ore",
     "average": [145, 133, 106],
     "hasSemitransparentPixel": false,
@@ -884,6 +1010,7 @@ const blockPalette = [
   {
     "index": 144,
     "id": "gravel",
+    "cn": "沙砾",
     "pathId": "gravel",
     "average": [131, 127, 126],
     "hasSemitransparentPixel": false,
@@ -891,6 +1018,7 @@ const blockPalette = [
   {
     "index": 145,
     "id": "hardened_clay",
+    "cn": "陶瓦",
     "pathId": "hardened_clay",
     "average": [152, 94, 67],
     "hasSemitransparentPixel": false,
@@ -898,6 +1026,7 @@ const blockPalette = [
   {
     "index": 146,
     "id": "black_terracotta",
+    "cn": "黑色陶瓦",
     "pathId": "hardened_clay_stained_black",
     "average": [37, 22, 16],
     "hasSemitransparentPixel": false,
@@ -905,6 +1034,7 @@ const blockPalette = [
   {
     "index": 147,
     "id": "blue_terracotta",
+    "cn": "蓝色陶瓦",
     "pathId": "hardened_clay_stained_blue",
     "average": [74, 59, 91],
     "hasSemitransparentPixel": false,
@@ -912,6 +1042,7 @@ const blockPalette = [
   {
     "index": 148,
     "id": "brown_terracotta",
+    "cn": "棕色陶瓦",
     "pathId": "hardened_clay_stained_brown",
     "average": [77, 51, 35],
     "hasSemitransparentPixel": false,
@@ -919,6 +1050,7 @@ const blockPalette = [
   {
     "index": 149,
     "id": "cyan_terracotta",
+    "cn": "青色陶瓦",
     "pathId": "hardened_clay_stained_cyan",
     "average": [86, 91, 91],
     "hasSemitransparentPixel": false,
@@ -926,6 +1058,7 @@ const blockPalette = [
   {
     "index": 150,
     "id": "gray_terracotta",
+    "cn": "灰色陶瓦",
     "pathId": "hardened_clay_stained_gray",
     "average": [57, 42, 35],
     "hasSemitransparentPixel": false,
@@ -933,6 +1066,7 @@ const blockPalette = [
   {
     "index": 151,
     "id": "green_terracotta",
+    "cn": "绿色陶瓦",
     "pathId": "hardened_clay_stained_green",
     "average": [76, 83, 42],
     "hasSemitransparentPixel": false,
@@ -940,6 +1074,7 @@ const blockPalette = [
   {
     "index": 152,
     "id": "light_blue_terracotta",
+    "cn": "淡蓝色陶瓦",
     "pathId": "hardened_clay_stained_light_blue",
     "average": [113, 108, 137],
     "hasSemitransparentPixel": false,
@@ -947,6 +1082,7 @@ const blockPalette = [
   {
     "index": 153,
     "id": "lime_terracotta",
+    "cn": "黄绿色陶瓦",
     "pathId": "hardened_clay_stained_lime",
     "average": [103, 117, 52],
     "hasSemitransparentPixel": false,
@@ -954,6 +1090,7 @@ const blockPalette = [
   {
     "index": 154,
     "id": "magenta_terracotta",
+    "cn": "品红色陶瓦",
     "pathId": "hardened_clay_stained_magenta",
     "average": [149, 88, 108],
     "hasSemitransparentPixel": false,
@@ -961,6 +1098,7 @@ const blockPalette = [
   {
     "index": 155,
     "id": "orange_terracotta",
+    "cn": "橙色陶瓦",
     "pathId": "hardened_clay_stained_orange",
     "average": [161, 83, 37],
     "hasSemitransparentPixel": false,
@@ -968,6 +1106,7 @@ const blockPalette = [
   {
     "index": 156,
     "id": "pink_terracotta",
+    "cn": "粉红色陶瓦",
     "pathId": "hardened_clay_stained_pink",
     "average": [161, 78, 78],
     "hasSemitransparentPixel": false,
@@ -975,6 +1114,7 @@ const blockPalette = [
   {
     "index": 157,
     "id": "purple_terracotta",
+    "cn": "紫色陶瓦",
     "pathId": "hardened_clay_stained_purple",
     "average": [118, 70, 86],
     "hasSemitransparentPixel": false,
@@ -982,6 +1122,7 @@ const blockPalette = [
   {
     "index": 158,
     "id": "red_terracotta",
+    "cn": "红色陶瓦",
     "pathId": "hardened_clay_stained_red",
     "average": [143, 61, 46],
     "hasSemitransparentPixel": false,
@@ -989,6 +1130,7 @@ const blockPalette = [
   {
     "index": 159,
     "id": "light_gray_terracotta",
+    "cn": "淡灰色陶瓦",
     "pathId": "hardened_clay_stained_silver",
     "average": [135, 106, 97],
     "hasSemitransparentPixel": false,
@@ -996,6 +1138,7 @@ const blockPalette = [
   {
     "index": 160,
     "id": "white_terracotta",
+    "cn": "白色陶瓦",
     "pathId": "hardened_clay_stained_white",
     "average": [209, 178, 161],
     "hasSemitransparentPixel": false,
@@ -1003,6 +1146,7 @@ const blockPalette = [
   {
     "index": 161,
     "id": "yellow_terracotta",
+    "cn": "黄色陶瓦",
     "pathId": "hardened_clay_stained_yellow",
     "average": [186, 133, 35],
     "hasSemitransparentPixel": false,
@@ -1010,6 +1154,7 @@ const blockPalette = [
   {
     "index": 162,
     "id": "hay_block",
+    "cn": "干草捆",
     "pathId": "hay_block_side",
     "average": [166, 136, 38],
     "hasSemitransparentPixel": false,
@@ -1017,6 +1162,7 @@ const blockPalette = [
   {
     "index": 165,
     "id": "crimson_hyphae",
+    "cn": "绯红菌核",
     "pathId": "crimson_log_side",
     "average": [92, 25, 29],
     "hasSemitransparentPixel": false,
@@ -1024,6 +1170,7 @@ const blockPalette = [
   {
     "index": 166,
     "id": "crimson_stem",
+    "cn": "绯红菌柄",
     "pathId": "crimson_log_top",
     "average": [112, 49, 70],
     "hasSemitransparentPixel": false,
@@ -1031,6 +1178,7 @@ const blockPalette = [
   {
     "index": 168,
     "id": "stripped_crimson_hyphae",
+    "cn": "去皮绯红菌核",
     "pathId": "stripped_crimson_stem_side",
     "average": [137, 57, 90],
     "hasSemitransparentPixel": false,
@@ -1038,6 +1186,7 @@ const blockPalette = [
   {
     "index": 169,
     "id": "stripped_crimson_stem",
+    "cn": "去皮绯红菌核",
     "pathId": "stripped_crimson_stem_top",
     "average": [121, 56, 82],
     "hasSemitransparentPixel": false,
@@ -1045,6 +1194,7 @@ const blockPalette = [
   {
     "index": 170,
     "id": "stripped_warped_hyphae",
+    "cn": "去皮诡异菌核",
     "pathId": "stripped_warped_stem_side",
     "average": [57, 150, 147],
     "hasSemitransparentPixel": false,
@@ -1052,6 +1202,7 @@ const blockPalette = [
   {
     "index": 171,
     "id": "stripped_warped_stem",
+    "cn": "去皮诡异菌柄",
     "pathId": "stripped_warped_stem_top",
     "average": [52, 128, 124],
     "hasSemitransparentPixel": false,
@@ -1059,6 +1210,7 @@ const blockPalette = [
   {
     "index": 174,
     "id": "warped_hyphae",
+    "cn": "诡异菌核",
     "pathId": "warped_stem_side",
     "average": [58, 58, 77],
     "hasSemitransparentPixel": false,
@@ -1066,6 +1218,7 @@ const blockPalette = [
   {
     "index": 175,
     "id": "warped_stem",
+    "cn": "诡异菌柄",
     "pathId": "warped_stem_top",
     "average": [53, 109, 110],
     "hasSemitransparentPixel": false,
@@ -1073,6 +1226,7 @@ const blockPalette = [
   {
     "index": 176,
     "id": "packed_ice",
+    "cn": "浮冰",
     "pathId": "ice_packed",
     "average": [141, 180, 250],
     "hasSemitransparentPixel": false,
@@ -1080,6 +1234,7 @@ const blockPalette = [
   {
     "index": 178,
     "id": "iron_ore",
+    "cn": "铁矿石",
     "pathId": "iron_ore",
     "average": [136, 129, 122],
     "hasSemitransparentPixel": false,
@@ -1087,6 +1242,7 @@ const blockPalette = [
   {
     "index": 181,
     "id": "jukebox",
+    "cn": "唱片机",
     "pathId": "jukebox_side",
     "average": [88, 58, 40],
     "hasSemitransparentPixel": false,
@@ -1094,6 +1250,7 @@ const blockPalette = [
   {
     "index": 182,
     "id": "lapis_block",
+    "cn": "青金石块",
     "pathId": "lapis_block",
     "average": [30, 67, 140],
     "hasSemitransparentPixel": false,
@@ -1101,6 +1258,7 @@ const blockPalette = [
   {
     "index": 183,
     "id": "lapis_ore",
+    "cn": "青金石矿石",
     "pathId": "lapis_ore",
     "average": [107, 117, 141],
     "hasSemitransparentPixel": false,
@@ -1108,6 +1266,7 @@ const blockPalette = [
   {
     "index": 186,
     "id": "acacia_wood",
+    "cn": "金合欢木",
     "pathId": "log_acacia",
     "average": [103, 96, 86],
     "hasSemitransparentPixel": false,
@@ -1115,6 +1274,7 @@ const blockPalette = [
   {
     "index": 187,
     "id": "acacia_log",
+    "cn": "金合欢原木",
     "pathId": "log_acacia_top",
     "average": [150, 88, 55],
     "hasSemitransparentPixel": false,
@@ -1122,6 +1282,7 @@ const blockPalette = [
   {
     "index": 189,
     "id": "dark_oak_log",
+    "cn": "深色橡木原木",
     "pathId": "log_big_oak_top",
     "average": [67, 45, 22],
     "hasSemitransparentPixel": false,
@@ -1129,6 +1290,7 @@ const blockPalette = [
   {
     "index": 190,
     "id": "birch_wood",
+    "cn": "白桦木",
     "pathId": "log_birch",
     "average": [216, 215, 210],
     "hasSemitransparentPixel": false,
@@ -1136,6 +1298,7 @@ const blockPalette = [
   {
     "index": 191,
     "id": "birch_log",
+    "cn": "白桦原木",
     "pathId": "log_birch_top",
     "average": [193, 179, 135],
     "hasSemitransparentPixel": false,
@@ -1143,6 +1306,7 @@ const blockPalette = [
   {
     "index": 192,
     "id": "jungle_wood",
+    "cn": "丛林木",
     "pathId": "log_jungle",
     "average": [85, 67, 25],
     "hasSemitransparentPixel": false,
@@ -1150,6 +1314,7 @@ const blockPalette = [
   {
     "index": 193,
     "id": "jungle_log",
+    "cn": "丛林原木",
     "pathId": "log_jungle_top",
     "average": [149, 109, 70],
     "hasSemitransparentPixel": false,
@@ -1157,6 +1322,7 @@ const blockPalette = [
   {
     "index": 194,
     "id": "oak_wood",
+    "cn": "橡木",
     "pathId": "log_oak",
     "average": [109, 85, 50],
     "hasSemitransparentPixel": false,
@@ -1164,6 +1330,7 @@ const blockPalette = [
   {
     "index": 195,
     "id": "oak_log",
+    "cn": "橡木原木",
     "pathId": "log_oak_top",
     "average": [151, 121, 73],
     "hasSemitransparentPixel": false,
@@ -1171,6 +1338,7 @@ const blockPalette = [
   {
     "index": 196,
     "id": "spruce_wood",
+    "cn": "云杉木",
     "pathId": "log_spruce",
     "average": [58, 37, 16],
     "hasSemitransparentPixel": false,
@@ -1178,6 +1346,7 @@ const blockPalette = [
   {
     "index": 197,
     "id": "spruce_log",
+    "cn": "云杉原木",
     "pathId": "log_spruce_top",
     "average": [108, 80, 46],
     "hasSemitransparentPixel": false,
@@ -1185,6 +1354,7 @@ const blockPalette = [
   {
     "index": 198,
     "id": "loom",
+    "cn": "织布机",
     "pathId": "loom_bottom",
     "average": [76, 60, 36],
     "hasSemitransparentPixel": false,
@@ -1192,6 +1362,7 @@ const blockPalette = [
   {
     "index": 199,
     "id": "magma",
+    "cn": "岩浆块",
     "pathId": "magma",
     "average": [142, 63, 31],
     "hasSemitransparentPixel": false,
@@ -1199,6 +1370,7 @@ const blockPalette = [
   {
     "index": 201,
     "id": "mangrove_log",
+    "cn": "红树原木",
     "pathId": "mangrove_log_side",
     "average": [83, 66, 41],
     "hasSemitransparentPixel": false,
@@ -1206,6 +1378,7 @@ const blockPalette = [
   {
     "index": 203,
     "id": "melon_block",
+    "cn": "西瓜",
     "pathId": "melon_side",
     "average": [114, 146, 30],
     "hasSemitransparentPixel": false,
@@ -1213,6 +1386,7 @@ const blockPalette = [
   {
     "index": 205,
     "id": "moss_block",
+    "cn": "苔藓块",
     "pathId": "moss_block",
     "average": [89, 109, 45],
     "hasSemitransparentPixel": false,
@@ -1220,6 +1394,7 @@ const blockPalette = [
   {
     "index": 206,
     "id": "mud",
+    "cn": "泥巴",
     "pathId": "mud",
     "average": [60, 57, 60],
     "hasSemitransparentPixel": false,
@@ -1227,6 +1402,7 @@ const blockPalette = [
   {
     "index": 207,
     "id": "muddy_mangrove_roots",
+    "cn": "沾泥的红树根",
     "pathId": "muddy_mangrove_roots_side",
     "average": [68, 58, 48],
     "hasSemitransparentPixel": false,
@@ -1234,6 +1410,7 @@ const blockPalette = [
   {
     "index": 208,
     "id": "mud_brick_double_slab",
+    "cn": "泥砖双层台阶",
     "pathId": "mud_bricks",
     "average": [137, 103, 79],
     "hasSemitransparentPixel": false,
@@ -1241,6 +1418,7 @@ const blockPalette = [
   {
     "index": 209,
     "id": "netherite_block",
+    "cn": "下界合金块",
     "pathId": "netherite_block",
     "average": [66, 61, 63],
     "hasSemitransparentPixel": false,
@@ -1248,6 +1426,7 @@ const blockPalette = [
   {
     "index": 210,
     "id": "nether_brick",
+    "cn": "下界砖块",
     "pathId": "nether_brick",
     "average": [44, 21, 26],
     "hasSemitransparentPixel": false,
@@ -1255,6 +1434,7 @@ const blockPalette = [
   {
     "index": 211,
     "id": "nether_gold_ore",
+    "cn": "下界金矿石",
     "pathId": "nether_gold_ore",
     "average": [115, 54, 42],
     "hasSemitransparentPixel": false,
@@ -1262,6 +1442,7 @@ const blockPalette = [
   {
     "index": 212,
     "id": "nether_wart_block",
+    "cn": "下界疣块",
     "pathId": "nether_wart_block",
     "average": [114, 3, 2],
     "hasSemitransparentPixel": false,
@@ -1269,6 +1450,7 @@ const blockPalette = [
   {
     "index": 213,
     "id": "noteblock",
+    "cn": "音符盒",
     "pathId": "noteblock",
     "average": [88, 58, 40],
     "hasSemitransparentPixel": false,
@@ -1276,6 +1458,7 @@ const blockPalette = [
   {
     "index": 214,
     "id": "obsidian",
+    "cn": "黑曜石",
     "pathId": "obsidian",
     "average": [15, 10, 24],
     "hasSemitransparentPixel": false,
@@ -1283,6 +1466,7 @@ const blockPalette = [
   {
     "index": 215,
     "id": "ochre_froglight",
+    "cn": "赭黄蛙明灯",
     "pathId": "ochre_froglight_side",
     "average": [245, 233, 181],
     "hasSemitransparentPixel": false,
@@ -1290,6 +1474,7 @@ const blockPalette = [
   {
     "index": 216,
     "id": "oxidized_copper",
+    "cn": "氧化的铜块",
     "pathId": "oxidized_copper",
     "average": [82, 162, 132],
     "hasSemitransparentPixel": false,
@@ -1297,6 +1482,7 @@ const blockPalette = [
   {
     "index": 217,
     "id": "oxidized_cut_copper",
+    "cn": "氧化的切制铜块",
     "pathId": "oxidized_cut_copper",
     "average": [79, 153, 126],
     "hasSemitransparentPixel": false,
@@ -1304,6 +1490,7 @@ const blockPalette = [
   {
     "index": 218,
     "id": "packed_mud",
+    "cn": "泥坯",
     "pathId": "packed_mud",
     "average": [142, 106, 79],
     "hasSemitransparentPixel": false,
@@ -1311,6 +1498,7 @@ const blockPalette = [
   {
     "index": 219,
     "id": "pearlescent_froglight",
+    "cn": "珠光蛙明灯",
     "pathId": "pearlescent_froglight_side",
     "average": [235, 224, 228],
     "hasSemitransparentPixel": false,
@@ -1318,6 +1506,7 @@ const blockPalette = [
   {
     "index": 226,
     "id": "polished_basalt",
+    "cn": "磨制玄武岩",
     "pathId": "polished_basalt_side",
     "average": [88, 88, 91],
     "hasSemitransparentPixel": false,
@@ -1325,6 +1514,7 @@ const blockPalette = [
   {
     "index": 227,
     "id": "polished_blackstone",
+    "cn": "磨制黑石",
     "pathId": "polished_blackstone",
     "average": [53, 48, 56],
     "hasSemitransparentPixel": false,
@@ -1332,6 +1522,7 @@ const blockPalette = [
   {
     "index": 228,
     "id": "polished_blackstone_brick_double_slab",
+    "cn": "磨制黑石砖双层台阶",
     "pathId": "polished_blackstone_bricks",
     "average": [48, 42, 49],
     "hasSemitransparentPixel": false,
@@ -1339,6 +1530,7 @@ const blockPalette = [
   {
     "index": 229,
     "id": "powder_snow",
+    "cn": "细雪",
     "pathId": "powder_snow",
     "average": [248, 253, 253],
     "hasSemitransparentPixel": false,
@@ -1346,6 +1538,7 @@ const blockPalette = [
   {
     "index": 233,
     "id": "quartz_bricks",
+    "cn": "石英砖",
     "pathId": "quartz_bricks",
     "average": [234, 229, 221],
     "hasSemitransparentPixel": false,
@@ -1353,6 +1546,7 @@ const blockPalette = [
   {
     "index": 234,
     "id": "quartz_ore",
+    "cn": "下界石英矿石",
     "pathId": "quartz_ore",
     "average": [117, 65, 62],
     "hasSemitransparentPixel": false,
@@ -1360,6 +1554,7 @@ const blockPalette = [
   {
     "index": 235,
     "id": "raw_copper_block",
+    "cn": "粗铜块",
     "pathId": "raw_copper_block",
     "average": [154, 105, 79],
     "hasSemitransparentPixel": false,
@@ -1367,6 +1562,7 @@ const blockPalette = [
   {
     "index": 236,
     "id": "raw_gold_block",
+    "cn": "粗金块",
     "pathId": "raw_gold_block",
     "average": [221, 169, 46],
     "hasSemitransparentPixel": false,
@@ -1374,6 +1570,7 @@ const blockPalette = [
   {
     "index": 237,
     "id": "raw_iron_block",
+    "cn": "粗铁块",
     "pathId": "raw_iron_block",
     "average": [166, 135, 107],
     "hasSemitransparentPixel": false,
@@ -1381,6 +1578,7 @@ const blockPalette = [
   {
     "index": 238,
     "id": "redstone_block",
+    "cn": "红石块",
     "pathId": "redstone_block",
     "average": [175, 24, 5],
     "hasSemitransparentPixel": false,
@@ -1388,6 +1586,7 @@ const blockPalette = [
   {
     "index": 239,
     "id": "redstone_lamp",
+    "cn": "红石灯",
     "pathId": "redstone_lamp_off",
     "average": [95, 54, 30],
     "hasSemitransparentPixel": false,
@@ -1395,6 +1594,7 @@ const blockPalette = [
   {
     "index": 241,
     "id": "lit_redstone_ore",
+    "cn": "点亮的红石矿石",
     "pathId": "redstone_ore",
     "average": [140, 109, 109],
     "hasSemitransparentPixel": false,
@@ -1402,6 +1602,7 @@ const blockPalette = [
   {
     "index": 242,
     "id": "red_nether_brick",
+    "cn": "红色下界砖块",
     "pathId": "red_nether_brick",
     "average": [69, 7, 9],
     "hasSemitransparentPixel": false,
@@ -1409,6 +1610,7 @@ const blockPalette = [
   {
     "index": 244,
     "id": "reinforced_deepslate",
+    "cn": "强化深板岩",
     "pathId": "reinforced_deepslate_bottom",
     "average": [79, 82, 79],
     "hasSemitransparentPixel": false,
@@ -1416,6 +1618,7 @@ const blockPalette = [
   {
     "index": 245,
     "id": "repeating_command_block",
+    "cn": "循环型命令方块",
     "pathId": "repeating_command_block_back_mipmap",
     "average": [121, 105, 162],
     "hasSemitransparentPixel": false,
@@ -1423,13 +1626,15 @@ const blockPalette = [
   {
     "index": 247,
     "id": "sculk",
+    "cn": "幽匿块",
     "pathId": "sculk",
     "average": [12, 29, 36],
     "hasSemitransparentPixel": false,
   },
   {
     "index": 250,
-    "id": "seaLantern",
+    "id": "sea_lantern",
+    "cn": "海晶灯",
     "pathId": "sea_lantern",
     "average": [172, 199, 190],
     "hasSemitransparentPixel": false,
@@ -1437,6 +1642,7 @@ const blockPalette = [
   {
     "index": 251,
     "id": "shroomlight",
+    "cn": "菌光体",
     "pathId": "shroomlight",
     "average": [240, 146, 70],
     "hasSemitransparentPixel": false,
@@ -1444,6 +1650,7 @@ const blockPalette = [
   {
     "index": 269,
     "id": "smithing_table",
+    "cn": "锻造台",
     "pathId": "smithing_table_bottom",
     "average": [64, 28, 23],
     "hasSemitransparentPixel": false,
@@ -1451,6 +1658,7 @@ const blockPalette = [
   {
     "index": 270,
     "id": "smoker",
+    "cn": "烟熏炉",
     "pathId": "smoker_front_off",
     "average": [87, 75, 57],
     "hasSemitransparentPixel": false,
@@ -1458,6 +1666,7 @@ const blockPalette = [
   {
     "index": 271,
     "id": "lit_smoker",
+    "cn": "燃烧中的烟熏炉",
     "pathId": "smoker_front_on",
     "average": [118, 97, 66],
     "hasSemitransparentPixel": false,
@@ -1465,6 +1674,7 @@ const blockPalette = [
   {
     "index": 272,
     "id": "smooth_basalt",
+    "cn": "平滑玄武岩",
     "pathId": "smooth_basalt",
     "average": [72, 72, 78],
     "hasSemitransparentPixel": false,
@@ -1472,6 +1682,7 @@ const blockPalette = [
   {
     "index": 273,
     "id": "snow",
+    "cn": "雪块",
     "pathId": "snow",
     "average": [249, 254, 254],
     "hasSemitransparentPixel": false,
@@ -1479,6 +1690,7 @@ const blockPalette = [
   {
     "index": 275,
     "id": "soul_sand",
+    "cn": "灵魂沙",
     "pathId": "soul_sand",
     "average": [81, 62, 50],
     "hasSemitransparentPixel": false,
@@ -1486,6 +1698,7 @@ const blockPalette = [
   {
     "index": 276,
     "id": "soul_soil",
+    "cn": "灵魂土",
     "pathId": "soul_soil",
     "average": [75, 57, 46],
     "hasSemitransparentPixel": false,
@@ -1493,6 +1706,7 @@ const blockPalette = [
   {
     "index": 288,
     "id": "smooth_stone",
+    "cn": "平滑石头",
     "pathId": "stone_slab_top",
     "average": [158, 158, 158],
     "hasSemitransparentPixel": false,
@@ -1500,6 +1714,7 @@ const blockPalette = [
   {
     "index": 289,
     "id": "stripped_acacia_wood",
+    "cn": "去皮金合欢木",
     "pathId": "stripped_acacia_log",
     "average": [174, 92, 59],
     "hasSemitransparentPixel": false,
@@ -1507,6 +1722,7 @@ const blockPalette = [
   {
     "index": 290,
     "id": "stripped_acacia_log",
+    "cn": "去皮金合欢原木",
     "pathId": "stripped_acacia_log_top",
     "average": [166, 91, 51],
     "hasSemitransparentPixel": false,
@@ -1514,6 +1730,7 @@ const blockPalette = [
   {
     "index": 291,
     "id": "stripped_bamboo_block",
+    "cn": "去皮竹块",
     "pathId": "stripped_bamboo_block",
     "average": [193, 173, 80],
     "hasSemitransparentPixel": false,
@@ -1521,6 +1738,7 @@ const blockPalette = [
   {
     "index": 292,
     "id": "stripped_birch_wood",
+    "cn": "去皮白桦木",
     "pathId": "stripped_birch_log",
     "average": [196, 176, 118],
     "hasSemitransparentPixel": false,
@@ -1528,6 +1746,7 @@ const blockPalette = [
   {
     "index": 293,
     "id": "stripped_birch_log",
+    "cn": "去皮白桦原木",
     "pathId": "stripped_birch_log_top",
     "average": [191, 171, 116],
     "hasSemitransparentPixel": false,
@@ -1535,6 +1754,7 @@ const blockPalette = [
   {
     "index": 294,
     "id": "stripped_cherry_log",
+    "cn": "去皮樱花原木",
     "pathId": "stripped_cherry_log_side",
     "average": [215, 145, 148],
     "hasSemitransparentPixel": false,
@@ -1542,6 +1762,7 @@ const blockPalette = [
   {
     "index": 295,
     "id": "stripped_dark_oak_wood",
+    "cn": "去皮深色橡木",
     "pathId": "stripped_dark_oak_log",
     "average": [72, 56, 36],
     "hasSemitransparentPixel": false,
@@ -1549,6 +1770,7 @@ const blockPalette = [
   {
     "index": 296,
     "id": "stripped_dark_oak_log",
+    "cn": "去皮深色橡木原木",
     "pathId": "stripped_dark_oak_log_top",
     "average": [65, 44, 22],
     "hasSemitransparentPixel": false,
@@ -1556,6 +1778,7 @@ const blockPalette = [
   {
     "index": 297,
     "id": "stripped_jungle_wood",
+    "cn": "去皮丛林木",
     "pathId": "stripped_jungle_log",
     "average": [171, 132, 84],
     "hasSemitransparentPixel": false,
@@ -1563,6 +1786,7 @@ const blockPalette = [
   {
     "index": 298,
     "id": "stripped_jungle_log",
+    "cn": "去皮丛林原木",
     "pathId": "stripped_jungle_log_top",
     "average": [165, 122, 81],
     "hasSemitransparentPixel": false,
@@ -1570,6 +1794,7 @@ const blockPalette = [
   {
     "index": 299,
     "id": "stripped_mangrove_log",
+    "cn": "去皮红树原木",
     "pathId": "stripped_mangrove_log_side",
     "average": [119, 54, 47],
     "hasSemitransparentPixel": false,
@@ -1577,6 +1802,7 @@ const blockPalette = [
   {
     "index": 300,
     "id": "stripped_oak_wood",
+    "cn": "去皮橡木",
     "pathId": "stripped_oak_log",
     "average": [177, 144, 86],
     "hasSemitransparentPixel": false,
@@ -1584,6 +1810,7 @@ const blockPalette = [
   {
     "index": 301,
     "id": "stripped_oak_log",
+    "cn": "去皮橡木原木",
     "pathId": "stripped_oak_log_top",
     "average": [160, 129, 77],
     "hasSemitransparentPixel": false,
@@ -1591,6 +1818,7 @@ const blockPalette = [
   {
     "index": 302,
     "id": "stripped_spruce_wood",
+    "cn": "去皮云杉木",
     "pathId": "stripped_spruce_log",
     "average": [79, 60, 34],
     "hasSemitransparentPixel": false,
@@ -1598,6 +1826,7 @@ const blockPalette = [
   {
     "index": 303,
     "id": "stripped_spruce_log",
+    "cn": "去皮云杉原木",
     "pathId": "stripped_spruce_log_top",
     "average": [105, 80, 46],
     "hasSemitransparentPixel": false,
@@ -1605,6 +1834,7 @@ const blockPalette = [
   {
     "index": 305,
     "id": "tnt",
+    "cn": "TNT",
     "pathId": "tnt_bottom",
     "average": [166, 66, 53],
     "hasSemitransparentPixel": false,
@@ -1612,6 +1842,7 @@ const blockPalette = [
   {
     "index": 306,
     "id": "tuff",
+    "cn": "凝灰岩",
     "pathId": "tuff",
     "average": [108, 109, 102],
     "hasSemitransparentPixel": false,
@@ -1619,6 +1850,7 @@ const blockPalette = [
   {
     "index": 307,
     "id": "verdant_froglight",
+    "cn": "青翠蛙明灯",
     "pathId": "verdant_froglight_side",
     "average": [211, 234, 208],
     "hasSemitransparentPixel": false,
@@ -1626,6 +1858,7 @@ const blockPalette = [
   {
     "index": 308,
     "id": "warped_nylium",
+    "cn": "诡异菌岩",
     "pathId": "warped_nylium_side",
     "average": [72, 61, 59],
     "hasSemitransparentPixel": false,
@@ -1633,6 +1866,7 @@ const blockPalette = [
   {
     "index": 310,
     "id": "waxed_weathered_copper",
+    "cn": "涂蜡的锈蚀铜块",
     "pathId": "weathered_copper",
     "average": [108, 153, 110],
     "hasSemitransparentPixel": false,
@@ -1640,6 +1874,7 @@ const blockPalette = [
   {
     "index": 311,
     "id": "waxed_weathered_cut_copper",
+    "cn": "涂蜡的锈蚀切制铜块",
     "pathId": "weathered_cut_copper",
     "average": [109, 145, 107],
     "hasSemitransparentPixel": false,

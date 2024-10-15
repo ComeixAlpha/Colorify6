@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:archive/archive_io.dart';
+import 'package:colorify/backend/abstracts/rgbmapping.dart';
 import 'package:colorify/backend/generators/generator_particle.dart';
-import 'package:colorify/frontend/pages/particle/particle_mappings.dart';
 import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
 import 'package:path/path.dart' as path;

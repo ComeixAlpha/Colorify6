@@ -52,6 +52,8 @@ class XTextfield extends StatefulWidget {
 }
 
 class _XTextfieldState extends State<XTextfield> {
+  final FocusNode _focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     final style = widget.style ?? XTextfieldStyle();
@@ -66,6 +68,10 @@ class _XTextfieldState extends State<XTextfield> {
             style: style.textStyle,
             onChanged: widget.onChanged,
             keyboardType: widget.textInputType,
+            focusNode: _focusNode,
+            onTapOutside: (v) {
+              _focusNode.unfocus();
+            },
             decoration: InputDecoration(
               hintText: style.hintText,
               hintStyle: style.hintStyle,

@@ -1,7 +1,7 @@
+import 'package:colorify/backend/abstracts/palette_entry.dart';
 import 'package:colorify/backend/providers/block.prov.dart';
+import 'package:colorify/frontend/components/block/block_palette_tile.dart';
 import 'package:colorify/frontend/components/block/palette_searchfield.dart';
-import 'package:colorify/frontend/components/rgbmapping_tile.dart';
-import 'package:colorify/frontend/pages/particle/particle_mappings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,10 +24,11 @@ class _BlockPaletteState extends State<BlockPalette> {
   @override
   Widget build(BuildContext context) {
     final blockprov = context.watch<Blockprov>();
-    List<RGBMapping> palette = blockprov.refreshPalette();
+
+    List<BlockPaletteEntry> palette = [...blockprov.palette];
 
     if (_filter.isNotEmpty) {
-      palette = palette.where((e) => e.id.contains(_filter)).toList();
+      palette = palette.where((e) => e.id.contains(_filter) || e.cn.contains(_filter)).toList();
     }
 
     return SizedBox(
@@ -46,16 +47,16 @@ class _BlockPaletteState extends State<BlockPalette> {
           SizedBox(
             height: widget.height - 100,
             child: ListView.builder(
-              itemCount: palette.length,
+              itemCount: palette.length + 1,
               padding: const EdgeInsets.all(0),
               itemBuilder: (_, i) {
-                return RGBMappingTile(
-                  mapping: palette[i],
+                if (i == palette.length) {
+                  return const SizedBox(height: 100);
+                }
+                final entry = palette[i];
+                return BlockPaletteTile(
                   width: widget.width,
-                  onDelete: () {
-                    blockprov.removeWhichIdIs(palette[i].id);
-                    setState(() {});
-                  },
+                  entry: entry,
                 );
               },
             ),
