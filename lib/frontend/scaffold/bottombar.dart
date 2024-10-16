@@ -106,7 +106,7 @@ class _BottombarState extends State<Bottombar> {
       type: type,
       image: image,
       outDir: docDir,
-      palette: blockprov.palette,
+      palette: blockprov.filteredPalette,
       samp: btecSampling.text.toDouble(),
       pkName: btecpkname.text,
       pkAuth: btecpkauth.text,
