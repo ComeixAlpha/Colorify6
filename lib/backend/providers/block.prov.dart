@@ -129,8 +129,8 @@ class Blockprov with ChangeNotifier {
   }
 
   void enableWhichIdIs(String id) {
-    pref!.setStringList('disabled', _disabled);
     _disabled.remove(id);
+    pref!.setStringList('disabled', _disabled);
   }
 
   void getDisabledHistory() {

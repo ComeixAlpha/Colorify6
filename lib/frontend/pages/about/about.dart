@@ -82,7 +82,7 @@ class AboutTexts extends StatelessWidget {
         children: [
           title('关于 About'),
           tile('应用', 'Colorify'),
-          tile('版本', 'v6.0.3'),
+          tile('版本', 'v6.0.4'),
           tile('开源协议', 'GPL-3.0'),
           const AcknowledgementTile(
             title: 'Comeix Alpha',
