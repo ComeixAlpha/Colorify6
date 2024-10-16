@@ -8,7 +8,7 @@ import 'package:colorify/main.dart';
 import 'package:flutter/material.dart';
 
 class Blockprov with ChangeNotifier {
-  final bool _init = false;
+  bool _init = false;
 
   /// AVC: Arguments Validity Check
   bool _avc = true;
@@ -74,6 +74,7 @@ class Blockprov with ChangeNotifier {
   List<BlockPaletteEntry> get palette {
     if (!_init) {
       _palette = parseBlockPalette(blockPalette);
+      _init = true;
     }
     return _palette;
   }

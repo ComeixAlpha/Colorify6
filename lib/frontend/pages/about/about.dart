@@ -80,7 +80,7 @@ class AboutTexts extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(0),
         children: [
-          title('关于 About'),
+          title('关于'),
           tile('应用', 'Colorify'),
           tile('版本', 'v6.0.4'),
           tile('开源协议', 'GPL-3.0'),
@@ -93,7 +93,7 @@ class AboutTexts extends StatelessWidget {
               'https://space.bilibili.com/1257718729',
             ],
           ),
-          title('特别鸣谢 Acknowledgement'),
+          title('特别鸣谢'),
           const SizedBox(height: 20),
           const AcknowledgementTile(
             title: '静之秋恋 QuietFallHe',

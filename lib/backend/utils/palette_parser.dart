@@ -4,7 +4,7 @@ List<BlockPaletteEntry> parseBlockPalette(List<Map<String, Object>> v) {
   return v.map(
     (e) {
       final rgbs = e['average'] as List<int>;
-      final cn = (e['cn'] ?? '')  as String;
+      final cn = (e['cn'] ?? '未翻译') as String;
       return BlockPaletteEntry(
         r: rgbs[0],
         g: rgbs[1],
@@ -22,7 +22,7 @@ List<BlockPaletteEntry> parseMapPalette(List<Map<String, Object>> v) {
   return v.map(
     (e) {
       final rgbs = e['rgb'] as List<int>;
-      final cn = (e['cn'] ?? '')  as String;
+      final cn = (e['cn'] ?? '未翻译') as String;
       return BlockPaletteEntry(
         r: rgbs[0],
         g: rgbs[1],
