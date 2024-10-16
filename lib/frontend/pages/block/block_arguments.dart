@@ -100,7 +100,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
             title: '颜色抖动 (Floyd-Steinberg)',
             width: widget.width - 40,
             onCheck: (v) {
-              blockprov.dithering = false;
+              blockprov.dithering = v;
               if (v) {
                 blockprov.stairType = false;
               }
@@ -112,7 +112,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
             title: '仅地毯',
             width: widget.width - 40,
             onCheck: (v) {
-              blockprov.carpetOnly = false;
+              blockprov.carpetOnly = v;
               if (v) {
                 blockprov.stairType = false;
                 blockprov.noGlasses = false;
@@ -126,7 +126,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
             title: '去除玻璃',
             width: widget.width - 40,
             onCheck: (v) {
-              blockprov.noGlasses = false;
+              blockprov.noGlasses = v;
               blockprov.refreshPalette();
             },
           ),
@@ -135,7 +135,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
             title: '去除沙子与混凝土粉末',
             width: widget.width - 40,
             onCheck: (v) {
-              blockprov.noSands = false;
+              blockprov.noSands = v;
               blockprov.refreshPalette();
             },
           ),

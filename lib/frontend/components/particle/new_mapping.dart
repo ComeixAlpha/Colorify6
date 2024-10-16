@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:colorify/backend/abstracts/rgbmapping.dart';
 import 'package:colorify/backend/extensions/on_string.dart';
-import 'package:colorify/frontend/pages/particle/particle_mappings.dart';
 import 'package:colorify/ui/basic/xframe.dart';
 import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/basic/xtextfield.dart';

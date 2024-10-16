@@ -776,14 +776,6 @@ const blockPalette = [
     "hasSemitransparentPixel": false,
   },
   {
-    "index": 112,
-    "id": "enchanting_table",
-    "cn": "附魔台",
-    "pathId": "enchanting_table_bottom",
-    "average": [15, 10, 24],
-    "hasSemitransparentPixel": false,
-  },
-  {
     "index": 113,
     "id": "end_portal_frame",
     "cn": "末地传送门框架",
@@ -837,14 +829,6 @@ const blockPalette = [
     "cn": "镶金黑石",
     "pathId": "gilded_blackstone",
     "average": [55, 42, 38],
-    "hasSemitransparentPixel": false,
-  },
-  {
-    "index": 122,
-    "id": "glass_pane",
-    "cn": "玻璃板",
-    "pathId": "glass_pane_top",
-    "average": [170, 210, 217],
     "hasSemitransparentPixel": false,
   },
   {
@@ -973,14 +957,6 @@ const blockPalette = [
     "cn": "黄色带釉陶瓦",
     "pathId": "glazed_terracotta_yellow",
     "average": [234, 192, 88],
-    "hasSemitransparentPixel": false,
-  },
-  {
-    "index": 139,
-    "id": "crying_obsidian",
-    "cn": "哭泣的黑曜石",
-    "pathId": "glowingobsidian",
-    "average": [80, 2, 12],
     "hasSemitransparentPixel": false,
   },
   {

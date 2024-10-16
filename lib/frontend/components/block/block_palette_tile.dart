@@ -56,12 +56,10 @@ class _BlockPaletteTileState extends State<BlockPaletteTile> {
                             if (enabled) {
                               return const SizedBox();
                             } else {
-                              return const Expanded(
-                                child: Icon(
-                                  Icons.block,
-                                  size: 60,
-                                  color: Colors.white,
-                                ),
+                              return const Icon(
+                                Icons.block,
+                                size: 60,
+                                color: Colors.white,
                               );
                             }
                           },
@@ -107,10 +105,10 @@ class _BlockPaletteTileState extends State<BlockPaletteTile> {
                 hoverColor: Colors.white.withOpacity(0.1),
                 onTap: () {
                   if (enabled) {
-                    blockprov.disableWhichIdIs(widget.entry.id);
+                    blockprov.disableWhichIdIs(entry.id);
                     setState(() {});
                   } else {
-                    blockprov.enableWhichIdIs(widget.entry.id);
+                    blockprov.enableWhichIdIs(entry.id);
                     setState(() {});
                   }
                 },

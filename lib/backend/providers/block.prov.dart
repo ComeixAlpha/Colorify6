@@ -4,6 +4,7 @@ import 'package:colorify/backend/palette/palette.block.dart';
 import 'package:colorify/backend/palette/palette.carpet.dart';
 import 'package:colorify/backend/palette/palette.map.dart';
 import 'package:colorify/backend/utils/palette_parser.dart';
+import 'package:colorify/main.dart';
 import 'package:flutter/material.dart';
 
 class Blockprov with ChangeNotifier {
@@ -81,8 +82,11 @@ class Blockprov with ChangeNotifier {
     return palette.where((e) => !_disabled.contains(e.id)).toList();
   }
 
-  final List<String> _disabled = [];
+  List<String> _disabled = [];
   List<String> get disabled => _disabled;
+
+  final List<String> _expandedClasses = [];
+  List<String> get expandedClasses => _expandedClasses;
 
   void refreshPalette() {
     if (_stairType) {
@@ -120,10 +124,27 @@ class Blockprov with ChangeNotifier {
 
   void disableWhichIdIs(String id) {
     _disabled.add(id);
+    pref!.setStringList('disabled', _disabled);
     notifyListeners();
   }
 
   void enableWhichIdIs(String id) {
+    pref!.setStringList('disabled', _disabled);
     _disabled.remove(id);
+  }
+
+  void getDisabledHistory() {
+    final disabledMemory = pref!.getStringList('disabled') ?? [];
+    _disabled = disabledMemory;
+  }
+
+  void expandClass(String className) {
+    _expandedClasses.add(className);
+    notifyListeners();
+  }
+
+  void unexpandClass(String className) {
+    _expandedClasses.remove(className);
+    notifyListeners();
   }
 }
