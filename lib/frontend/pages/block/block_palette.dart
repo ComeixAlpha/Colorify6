@@ -38,11 +38,15 @@ class _BlockPaletteState extends State<BlockPalette> {
     final blockprov = context.watch<Blockprov>();
 
     for (int i = 0; i < classes.keys.length; i++) {
-      final className = classes.keys.toList()[i];
+      final classNameAll = classes.keys.toList()[i];
+      final splited = classNameAll.split(':');
+      final className = splited[0];
+      final classSubname = splited[1];
       children.add(
         BlockPaletteClassHead(
           width: widget.width,
           className: className,
+          classSubname: classSubname,
           onChanged: (v) {
             if (v) {
               blockprov.expandClass(className);
@@ -54,7 +58,7 @@ class _BlockPaletteState extends State<BlockPalette> {
       );
       if (blockprov.expandedClasses.contains(className)) {
         for (BlockPaletteEntry entry in allEntries) {
-          final thisClass = classes[className]!;
+          final thisClass = classes[classNameAll]!;
           if (thisClass.contains(entry.id)) {
             children.add(BlockPaletteTile(width: widget.width, entry: entry));
           }
@@ -65,17 +69,18 @@ class _BlockPaletteState extends State<BlockPalette> {
     children.add(
       BlockPaletteClassHead(
         width: widget.width,
-        className: '其他',
+        className: '其他 Others',
+        classSubname: '未分类或无法明确分类',
         onChanged: (v) {
           if (v) {
-            blockprov.expandClass('其他');
+            blockprov.expandClass('其他 Others');
           } else {
-            blockprov.unexpandClass('其他');
+            blockprov.unexpandClass('其他 Others');
           }
         },
       ),
     );
-    if (blockprov.expandedClasses.contains('其他')) {
+    if (blockprov.expandedClasses.contains('其他 Others')) {
       for (BlockPaletteEntry entry in allEntries) {
         if (!_notAnyClass(entry.id)) {
           children.add(BlockPaletteTile(width: widget.width, entry: entry));

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class ICheckBoxTile extends StatefulWidget {
   final bool value;
   final String title;
+  final String subtitle;
   final double width;
   final double? height;
   final void Function(bool) onCheck;
@@ -11,6 +12,7 @@ class ICheckBoxTile extends StatefulWidget {
     super.key,
     required this.value,
     required this.title,
+    required this.subtitle,
     required this.width,
     this.height,
     required this.onCheck,
@@ -52,6 +54,7 @@ class _ICheckBoxTileState extends State<ICheckBoxTile> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AnimatedContainer(
                             curve: Curves.ease,
@@ -60,22 +63,38 @@ class _ICheckBoxTileState extends State<ICheckBoxTile> {
                             ),
                             width: 10,
                             height: 10,
+                            margin: const EdgeInsets.only(top: 10, right: 10),
                             decoration: BoxDecoration(
                               color: const Color(0xFFAED581),
                               borderRadius: BorderRadius.circular(5),
                             ),
                           ),
-                          const SizedBox(width: 10),
-                          SizedBox(
-                            width: widget.width - 80,
-                            child: Text(
-                              widget.title,
-                              overflow: TextOverflow.ellipsis,
-                              style: getStyle(
-                                color: Colors.white,
-                                size: 22,
+                          // const SizedBox(width: 10),
+                          Column(
+                            children: [
+                              SizedBox(
+                                width: widget.width - 80,
+                                child: Text(
+                                  widget.title,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: getStyle(
+                                    color: Colors.white,
+                                    size: 22,
+                                  ),
+                                ),
                               ),
-                            ),
+                              SizedBox(
+                                width: widget.width - 80,
+                                child: Text(
+                                  widget.subtitle,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: getStyle(
+                                    color: Colors.grey,
+                                    size: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),

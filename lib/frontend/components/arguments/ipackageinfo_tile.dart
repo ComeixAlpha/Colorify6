@@ -6,12 +6,14 @@ class IPackageInfoTile extends StatefulWidget {
   final double width;
   final double height;
   final String title;
+  final String subtitle;
   final List<TextEditingController> controllers;
   const IPackageInfoTile({
     super.key,
     required this.width,
     required this.height,
     required this.title,
+    required this.subtitle,
     required this.controllers,
   });
 
@@ -23,7 +25,7 @@ class _IPackageInfoTileState extends State<IPackageInfoTile> {
   @override
   Widget build(BuildContext context) {
     final double singleTextfieldWidth = widget.width - 20.0;
-    final double singleTextfieldHeight = (widget.height - 22.0) / 3 - 12;
+    final double singleTextfieldHeight = (widget.height - 52.0) / 3 - 12;
     return Column(
       children: [
         Row(
@@ -74,8 +76,23 @@ class _IPackageInfoTileState extends State<IPackageInfoTile> {
                       ),
                     ],
                   ),
+                  SizedBox(
+                    width: widget.width - 20,
+                    height: 30,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        widget.subtitle,
+                        overflow: TextOverflow.ellipsis,
+                        style: getStyle(
+                          color: Colors.grey,
+                          size: 16,
+                        ),
+                      ),
+                    ),
+                  ),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       XTextfield(
                         controller: widget.controllers[0],

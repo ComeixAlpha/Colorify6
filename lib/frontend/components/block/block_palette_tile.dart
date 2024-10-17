@@ -35,35 +35,37 @@ class _BlockPaletteTileState extends State<BlockPaletteTile> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: 80,
-                    height: 80,
-                    child: Center(
-                      child: Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(
-                            255,
-                            entry.r,
-                            entry.g,
-                            entry.b,
-                          ),
-                          borderRadius: BorderRadius.circular(30),
+                  Container(
+                    padding: const EdgeInsets.only(
+                      top: 10,
+                      bottom: 10,
+                      right: 10,
+                      left: 2,
+                    ),
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(
+                          255,
+                          entry.r,
+                          entry.g,
+                          entry.b,
                         ),
-                        child: LayoutBuilder(
-                          builder: (_, __) {
-                            if (enabled) {
-                              return const SizedBox();
-                            } else {
-                              return const Icon(
-                                Icons.block,
-                                size: 60,
-                                color: Colors.white,
-                              );
-                            }
-                          },
-                        ),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: LayoutBuilder(
+                        builder: (_, __) {
+                          if (enabled) {
+                            return const SizedBox();
+                          } else {
+                            return const Icon(
+                              Icons.block,
+                              size: 60,
+                              color: Colors.white,
+                            );
+                          }
+                        },
                       ),
                     ),
                   ),
@@ -102,7 +104,7 @@ class _BlockPaletteTileState extends State<BlockPaletteTile> {
                 width: 80,
                 height: 40,
                 backgroundColor: enabled ? Colors.transparent : const Color(0xFFEF5350),
-                hoverColor: Colors.white.withOpacity(0.1),
+                hoverColor: enabled ? Colors.white.withOpacity(0.1) : const Color(0xFFEF5350),
                 onTap: () {
                   if (enabled) {
                     blockprov.disableWhichIdIs(entry.id);
@@ -125,7 +127,7 @@ class _BlockPaletteTileState extends State<BlockPaletteTile> {
             )
           ],
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
       ],
     );
   }

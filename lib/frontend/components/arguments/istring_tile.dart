@@ -6,6 +6,7 @@ class IStringTile extends StatefulWidget {
   final double width;
   final double height;
   final String title;
+  final String subtitle;
   final TextEditingController controller;
   final bool Function(String) examer;
   final void Function(bool) onUpdateAVC;
@@ -17,6 +18,7 @@ class IStringTile extends StatefulWidget {
     required this.width,
     required this.height,
     required this.title,
+    required this.subtitle,
     required this.controller,
     required this.examer,
     required this.onUpdateAVC,
@@ -84,9 +86,24 @@ class _IStringTileState extends State<IStringTile> {
                       ),
                     ],
                   ),
+                  SizedBox(
+                    width: widget.width - 20,
+                    height: 30,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        widget.subtitle,
+                        overflow: TextOverflow.ellipsis,
+                        style: getStyle(
+                          color: Colors.grey,
+                          size: 16,
+                        ),
+                      ),
+                    ),
+                  ),
                   XTextfield(
                     controller: widget.controller,
-                    width: widget.width - 20.0,
+                    width: widget.width - 20,
                     textInputType: widget.inputType,
                     style: XTextfieldStyle(
                       hintText: widget.hintText,

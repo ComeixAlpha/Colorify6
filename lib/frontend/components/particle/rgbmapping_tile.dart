@@ -34,7 +34,7 @@ class RGBMappingTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                width: width / 6 * 2,
+                width: width / 6 * 1.6,
                 height: 80,
                 child: Center(
                   child: Container(
@@ -42,7 +42,7 @@ class RGBMappingTile extends StatelessWidget {
                     height: 70,
                     decoration: BoxDecoration(
                       color: color,
-                      borderRadius: BorderRadius.circular(4.0),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Center(
                       child: Text(
@@ -57,7 +57,7 @@ class RGBMappingTile extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: width / 6 * 0.75,
+                width: width / 6 * 0.6,
                 height: 80,
                 child: const Center(
                   child: Icon(
@@ -76,7 +76,7 @@ class RGBMappingTile extends StatelessWidget {
                     height: 70,
                     decoration: BoxDecoration(
                       color: const Color(0xFF2d2a31),
-                      borderRadius: BorderRadius.circular(4.0),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     padding: const EdgeInsets.all(12),
                     child: Center(
@@ -99,7 +99,8 @@ class RGBMappingTile extends StatelessWidget {
                   width: width / 6 * 0.75,
                   height: width / 6 * 0.75,
                   backgroundColor: Colors.transparent,
-                  hoverColor: Colors.white.withOpacity(0.3),
+                  hoverColor: Colors.white.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
                   onTap: onDelete,
                   child: const Icon(Icons.delete, color: Colors.white),
                 ),

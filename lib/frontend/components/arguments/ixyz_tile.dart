@@ -6,6 +6,7 @@ class IXYZTile extends StatefulWidget {
   final double width;
   final double height;
   final String title;
+  final String subtitle;
   final List<TextEditingController> controllers;
   final bool Function(String) examer;
   final void Function(bool) onUpdateAVC;
@@ -14,6 +15,7 @@ class IXYZTile extends StatefulWidget {
     required this.width,
     required this.height,
     required this.title,
+    required this.subtitle,
     required this.controllers,
     required this.examer,
     required this.onUpdateAVC,
@@ -79,6 +81,21 @@ class _IXYZTileState extends State<IXYZTile> {
                         ),
                       ),
                     ],
+                  ),
+                  SizedBox(
+                    width: widget.width - 20,
+                    height: 30,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        widget.subtitle,
+                        overflow: TextOverflow.ellipsis,
+                        style: getStyle(
+                          color: Colors.grey,
+                          size: 16,
+                        ),
+                      ),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:colorify/backend/prov.index.dart';
 import 'package:colorify/backend/utils/permisson.dart';
 import 'package:colorify/frontend/components/no_permisson.dart';
@@ -9,11 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:window_manager/window_manager.dart';
 
 SharedPreferences? pref;
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await windowManager.ensureInitialized();
+  if (Platform.isWindows) {
+    windowManager.center();
+  }
 
   requestStorage().then(
     (v) {
@@ -37,8 +44,38 @@ void main() {
   );
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> with WindowListener {
+  @override
+  void initState() {
+    super.initState();
+    windowManager.addListener(this);
+  }
+
+  @override
+  void dispose() {
+    windowManager.removeListener(this);
+    super.dispose();
+  }
+
+  @override
+  void onWindowResized() async {
+    if (Platform.isWindows) {
+      final size = await windowManager.getSize();
+      if (size.width <= 380) {
+        windowManager.setSize(Size(380, size.height));
+      }
+      if (size.height <= 750) {
+        windowManager.setSize(Size(size.width, 750));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

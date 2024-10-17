@@ -1,5 +1,5 @@
 const classes = {
-  "混凝土类": [
+  "混凝土类 Concretes:混凝土与混凝土粉末": [
     "black_concrete",
     "blue_concrete",
     "brown_concrete",
@@ -33,7 +33,7 @@ const classes = {
     "white_concrete_powder",
     "yellow_concrete_powder",
   ],
-  "陶瓦类": [
+  "陶瓦类 Terracottas:陶瓦与带釉陶瓦": [
     "hardened_clay",
     "black_terracotta",
     "blue_terracotta",
@@ -68,7 +68,7 @@ const classes = {
     "white_glazed_terracotta",
     "yellow_glazed_terracotta",
   ],
-  "石与矿类": [
+  "石与矿类 Stones & Ores:石头及其变种与矿石": [
     "amethyst_block",
     "ancient_debris",
     "basalt",
@@ -125,7 +125,7 @@ const classes = {
     "waxed_weathered_copper",
     "waxed_weathered_cut_copper",
   ],
-  "树木植物类": [
+  "树木植物类 Logs & Plants:原木、木板与种植物": [
     "bamboo_block",
     "bamboo_mosaic",
     "bamboo",
@@ -168,7 +168,7 @@ const classes = {
     "stripped_spruce_wood",
     "stripped_spruce_log",
   ],
-  "特殊类": [
+  "特殊类 Specials:生存不可获得或难以获得类": [
     "bedrock",
     "bone_block",
     "allow",

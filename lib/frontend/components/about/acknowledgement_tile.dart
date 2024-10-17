@@ -52,7 +52,7 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
                             link,
                             overflow: TextOverflow.ellipsis,
                             style: getStyle(
-                              color: const Color(0xFFb9acc9),
+                              color: const Color(0xFFC5C4DD).withOpacity(0.3),
                               fontStyle: FontStyle.italic,
                               decoration: TextDecoration.underline,
                               size: 16,
@@ -80,8 +80,8 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: const Color(0xFF2d2a31).withOpacity(0.5),
-            borderRadius: BorderRadius.circular(4),
+            color: const Color(0xFF454559),
+            borderRadius: BorderRadius.circular(24),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
           child: Column(
@@ -98,8 +98,7 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
                       child: CircleAvatar(
                         radius: w,
                         backgroundColor: Colors.transparent,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
+                        child: ClipOval(
                           child: Image.asset(widget.assetPath),
                         ),
                       ),
@@ -113,7 +112,7 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
                           widget.title,
                           overflow: TextOverflow.ellipsis,
                           style: getStyle(
-                            color: Colors.white,
+                            color: const Color(0xFFE2E0F9),
                             size: 22,
                           ),
                         ),
@@ -121,7 +120,7 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
                           widget.subtitle,
                           overflow: TextOverflow.ellipsis,
                           style: getStyle(
-                            color: Colors.grey,
+                            color: const Color(0xFFE2E0F9),
                             size: 18,
                           ),
                         ),
@@ -147,7 +146,7 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
             ],
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
       ],
     );
   }

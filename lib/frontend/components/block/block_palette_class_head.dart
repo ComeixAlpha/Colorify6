@@ -6,11 +6,13 @@ import 'package:provider/provider.dart';
 class BlockPaletteClassHead extends StatefulWidget {
   final double width;
   final String className;
+  final String classSubname;
   final void Function(bool) onChanged;
   const BlockPaletteClassHead({
     super.key,
     required this.width,
     required this.className,
+    required this.classSubname,
     required this.onChanged,
   });
 
@@ -38,7 +40,6 @@ class _BlockPaletteClassHeadState extends State<BlockPaletteClassHead> {
         children: [
           Container(
             width: widget.width - 24,
-            height: 50,
             decoration: BoxDecoration(
               color: const Color(0xFF2d2a31),
               borderRadius: BorderRadius.circular(4),
@@ -51,16 +52,29 @@ class _BlockPaletteClassHeadState extends State<BlockPaletteClassHead> {
                 ),
               ],
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  widget.className,
-                  style: getStyle(
-                    color: Colors.white,
-                    size: 18,
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.className,
+                      style: getStyle(
+                        color: Colors.white.withOpacity(0.8),
+                        size: 18,
+                      ),
+                    ),
+                    Text(
+                      widget.classSubname,
+                      style: getStyle(
+                        color: Colors.grey.withOpacity(0.8),
+                        size: 16,
+                      ),
+                    ),
+                  ],
                 ),
                 AnimatedRotation(
                   turns: _expand ? 0.5 : 0.0,

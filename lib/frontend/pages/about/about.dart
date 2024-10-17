@@ -13,18 +13,18 @@ class AboutTexts extends StatelessWidget {
 
     Widget title(String text) {
       return Container(
-        decoration: BoxDecoration(
-          color: const Color(0xFF2d2a31),
-          borderRadius: BorderRadius.circular(4),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              blurRadius: 1,
-              spreadRadius: 1,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
+        // decoration: BoxDecoration(
+        //   color: const Color(0xFF2d2a31),
+        //   borderRadius: BorderRadius.circular(4),
+        //   boxShadow: [
+        //     BoxShadow(
+        //       color: Colors.black.withOpacity(0.3),
+        //       blurRadius: 1,
+        //       spreadRadius: 1,
+        //       offset: const Offset(0, 3),
+        //     ),
+        //   ],
+        // ),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         child: Row(
           children: [
@@ -57,14 +57,14 @@ class AboutTexts extends StatelessWidget {
             Text(
               text,
               style: getStyle(
-                size: 22,
+                size: 18,
                 color: Colors.white,
               ),
             ),
             Text(
               value ?? '',
               style: getStyle(
-                size: 20,
+                size: 16,
                 color: Colors.white,
               ),
             ),
@@ -80,10 +80,10 @@ class AboutTexts extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(0),
         children: [
-          title('关于'),
-          tile('应用', 'Colorify'),
+          title('关于 Colorify'),
           tile('版本', 'v6.0.4'),
           tile('开源协议', 'GPL-3.0'),
+          const SizedBox(height: 10),
           const AcknowledgementTile(
             title: 'Comeix Alpha',
             subtitle: '作者',
@@ -212,12 +212,12 @@ class About extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 20),
+                const SizedBox(width: 12),
                 Text(
                   'Documents',
                   style: getStyle(
                     color: Colors.white,
-                    size: 26,
+                    size: 28,
                     weight: FontWeight.w300,
                   ),
                 ),

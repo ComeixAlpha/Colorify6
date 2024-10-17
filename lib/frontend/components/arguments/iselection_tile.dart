@@ -6,6 +6,7 @@ class ISelectionTile extends StatefulWidget {
   final double width;
   final double height;
   final String title;
+  final String subtitle;
   final List<String> candidates;
   final void Function(int) onSelect;
   const ISelectionTile({
@@ -13,6 +14,7 @@ class ISelectionTile extends StatefulWidget {
     required this.width,
     required this.height,
     required this.title,
+    required this.subtitle,
     required this.candidates,
     required this.onSelect,
   });
@@ -73,6 +75,21 @@ class _ISelectionTileState extends State<ISelectionTile> {
                         ),
                       ),
                     ],
+                  ),
+                  SizedBox(
+                    width: widget.width - 20,
+                    height: 30,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        widget.subtitle,
+                        overflow: TextOverflow.ellipsis,
+                        style: getStyle(
+                          color: Colors.grey,
+                          size: 16,
+                        ),
+                      ),
+                    ),
                   ),
                   XMenu(
                     tiles: widget.candidates,

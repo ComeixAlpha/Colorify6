@@ -49,10 +49,11 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
             const SizedBox(height: 20),
             IStringTile(
               title: '采样率',
+              subtitle: '对原图的采样率，取值范围为(0, 1]',
               hintText: '自动',
               hintStyle: getStyle(color: Colors.grey, size: 18),
               width: widget.width - 40,
-              height: 110,
+              height: 140,
               controller: ptecSampling,
               inputType: TextInputType.number,
               examer: (v) {
@@ -74,10 +75,11 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
             ),
             IStringTile(
               title: '高度',
+              subtitle: '粒子画的高度，单位：格方块',
               hintText: '自动',
               hintStyle: getStyle(color: Colors.grey, size: 18),
               width: widget.width - 40,
-              height: 110,
+              height: 140,
               controller: ptecHeight,
               inputType: TextInputType.number,
               examer: (v) {
@@ -99,8 +101,9 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
             ),
             ISelectionTile(
               title: '平面',
+              subtitle: '像素画所在平面，Y 为高度轴',
               width: widget.width - 40,
-              height: 110,
+              height: 140,
               candidates: const ['xOy', 'xOz', 'yOz'],
               onSelect: (v) {
                 Provider.of<Particleprov>(context, listen: false).setPlane(v);
@@ -108,8 +111,9 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
             ),
             ISelectionTile(
               title: '模式',
+              subtitle: '生成模式，Dust 需要 1.20.80 及以上',
               width: widget.width - 40,
-              height: 110,
+              height: 140,
               candidates: const ['Match', 'Dust'],
               onSelect: (v) {
                 Provider.of<Particleprov>(context, listen: false).setMode(
@@ -119,8 +123,9 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
             ),
             IXYZTile(
               title: '旋转',
+              subtitle: '使粒子画旋转。XYZ 为旋转后的法向量',
               width: widget.width - 40,
-              height: 120,
+              height: 150,
               controllers: [ptecrx, ptecry, ptecrz],
               examer: (v) {
                 if (v.toDouble() != null) {
@@ -138,8 +143,9 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
             ),
             IPackageInfoTile(
               title: '打包',
+              subtitle: '打包为 .mcaddon 并自动生成清单与图标',
               width: widget.width - 40,
-              height: 280,
+              height: 310,
               controllers: [ptecpkname, ptecpkauth, ptecpkdesc],
             ),
           ],
