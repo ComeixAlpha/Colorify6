@@ -80,7 +80,7 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: const Color(0xFF454559),
+            color: Colors.white.withOpacity(0.1),
             borderRadius: BorderRadius.circular(24),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
