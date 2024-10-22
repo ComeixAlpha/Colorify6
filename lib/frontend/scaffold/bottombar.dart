@@ -111,6 +111,12 @@ class _BottombarState extends State<Bottombar> {
       pkName: btecpkname.text,
       pkAuth: btecpkauth.text,
       pkDesc: btecpkdesc.text,
+      version: btecflattn.text,
+      basicOffset: [
+        btecbox.text.toInt(),
+        btecboy.text.toInt(),
+        btecboz.text.toInt(),
+      ],
       plane: blockprov.plane,
       stairType: blockprov.stairType,
       useStruct: blockprov.useStruct,
@@ -190,11 +196,11 @@ class _BottombarState extends State<Bottombar> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const BottombarPageButton(
-                icon: Icons.bubble_chart,
+                icon: Icons.bubble_chart_rounded,
                 index: 0,
               ),
               const BottombarPageButton(
-                icon: Icons.filter_hdr,
+                icon: Icons.filter_hdr_rounded,
                 index: 1,
               ),
               BottombarButton(
@@ -202,7 +208,7 @@ class _BottombarState extends State<Bottombar> {
                 iconColor: Colors.black,
                 splashColor: const Color(0xFFeadaff),
                 hoverColor: const Color(0xFFe7d3ff),
-                icon: Icons.bolt,
+                icon: Icons.bolt_rounded,
                 onTap: () {
                   final pageprov = Provider.of<Pageprov>(context, listen: false);
                   if (pageprov.page == 0) {
@@ -219,7 +225,7 @@ class _BottombarState extends State<Bottombar> {
                   if (socketprov.connected) {
                     if (pageprov.page == 0) {
                       XFrame.comfirm(
-                        'Start Generate Particle?',
+                        '要通过WS传输粒子画吗?',
                         (v) async {
                           if (v) {
                             await _requestParticleTask(GenerateType.socket);
@@ -228,7 +234,7 @@ class _BottombarState extends State<Bottombar> {
                       );
                     } else if (pageprov.page == 1) {
                       XFrame.comfirm(
-                        'Start Generate Block Painting?',
+                        '要通过WS传输像素画吗?',
                         (v) async {
                           if (v) {
                             await _requestBlockTask(GenerateType.socket);

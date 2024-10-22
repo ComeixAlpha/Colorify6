@@ -133,6 +133,7 @@ class XMenu extends StatefulWidget {
   Duration? duration;
   double? gapHeight;
   TextStyle? textStyle;
+  final int initValue;
   final List<String> tiles;
   final void Function(int) onSelect;
   XMenu({
@@ -145,6 +146,7 @@ class XMenu extends StatefulWidget {
     this.duration,
     this.gapHeight = 20,
     this.textStyle,
+    required this.initValue,
     required this.tiles,
     required this.onSelect,
   });
@@ -159,6 +161,7 @@ class _XMenuState extends State<XMenu> {
   OverlayEntry? _overlayEntry;
 
   bool _onPopup = false;
+  bool _inited = false;
   int _selected = 0;
 
   @override
@@ -166,6 +169,11 @@ class _XMenuState extends State<XMenu> {
     widget.width ??= 200;
     widget.height ??= 60;
     widget.textStyle ??= getStyle(color: Colors.black, size: 18);
+
+    if (!_inited) {
+      _selected = widget.initValue;
+      _inited = true;
+    }
     return XButton(
       key: _key,
       width: widget.width,

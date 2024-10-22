@@ -7,15 +7,29 @@ enum GenerateMode {
 }
 
 class Particleprov with ChangeNotifier {
+  /// AVC: Arguments Validity Check
+  final Map<String, bool> _avcmap = {
+    'sampling': true,
+    'height': true,
+    'rotate': true,
+  };
+  bool avcWhere(String key) {
+    return _avcmap[key]!;
+  }
+
+  bool get avc => _avcmap.values.every((e) => e);
+  void updateAVC(String key, bool v) {
+    _avcmap[key] = v;
+    notifyListeners();
+  }
+
   int _plane = 0;
   GenerateMode _mode = GenerateMode.match;
   List<RGBMapping> _mappings = [RGBMapping(r: 0, g: 0, b: 0, id: 'colorify:endrod')];
-  bool _avc = true;
 
   int get plane => _plane;
   GenerateMode get mode => _mode;
   List<RGBMapping> get mappings => _mappings;
-  bool get avc => _avc;
 
   void setPlane(int v) {
     _plane = v;
@@ -29,11 +43,6 @@ class Particleprov with ChangeNotifier {
 
   void setMappings(List<RGBMapping> v) {
     _mappings = v;
-    notifyListeners();
-  }
-
-  void updateAVCState(bool v) {
-    _avc = v;
     notifyListeners();
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:colorify/backend/utils/flatten_manager.dart';
 import 'package:vector_math/vector_math.dart';
 
 /// Block abstract
@@ -7,7 +8,7 @@ class Block {
   int x;
   int y;
   int z;
-  String block;
+  BlockWithState block;
   Block({
     required this.x,
     required this.y,

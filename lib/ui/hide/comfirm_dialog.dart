@@ -27,32 +27,39 @@ class ComfirmDialog extends StatelessWidget {
           height: h,
           decoration: BoxDecoration(
             color: const Color(0xFF2d2a31),
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(24),
           ),
           padding: const EdgeInsets.all(12),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
+              Container(
                 height: ch,
-                child: Center(
+                padding: const EdgeInsets.all(12),
+                child: Align(
+                  alignment: Alignment.centerLeft,
                   child: Text(
-                    'Need Comfirm',
+                    '需要确认 Comfirm',
+                    overflow: TextOverflow.ellipsis,
                     style: getStyle(
-                      color: Colors.grey,
-                      size: 18,
+                      color: Colors.white,
+                      size: 22,
                     ),
                   ),
                 ),
               ),
-              SizedBox(
+              Container(
                 height: ch,
-                child: Center(
+                padding: const EdgeInsets.all(12),
+                child: Align(
+                  alignment: Alignment.topLeft,
                   child: Text(
                     content,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: getStyle(
-                      color: Colors.white,
-                      size: 18,
+                      color: Colors.white.withOpacity(0.6),
+                      size: 16,
                     ),
                   ),
                 ),
@@ -60,18 +67,21 @@ class ComfirmDialog extends StatelessWidget {
               SizedBox(
                 height: ch,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     XButton(
                       width: mqs.width * 0.7 * 0.3,
                       height: ch < 50 ? ch : 50,
                       onTap: () => onChoose(false),
-                      backgroundColor: const Color(0xFF504a57),
-                      hoverColor: const Color(0xFF2d2a31),
+                      // backgroundColor: const Color(0xFF504a57),
+                      backgroundColor: Colors.transparent,
+                      // hoverColor: const Color(0xFF2d2a31),
+                      hoverColor: Colors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(24),
                       child: Center(
                         child: AutoSizeText(
-                          'Cancel',
+                          '取消',
                           style: getStyle(
                             color: Colors.white,
                             size: 16,
@@ -79,15 +89,19 @@ class ComfirmDialog extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(width: 12),
                     XButton(
                       width: mqs.width * 0.9 * 0.25,
                       height: ch < 50 ? ch : 50,
                       onTap: () => onChoose(true),
-                      backgroundColor: const Color(0xFF504a57),
-                      hoverColor: const Color(0xFF2d2a31),
+                      // backgroundColor: const Color(0xFF504a57).withOpacity(0.6),
+                      backgroundColor: Colors.transparent,
+                      // hoverColor: const Color(0xFF2d2a31),
+                      hoverColor: Colors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(24),
                       child: Center(
                         child: AutoSizeText(
-                          'Comfirm',
+                          '确定',
                           style: getStyle(
                             color: Colors.white,
                             size: 16,

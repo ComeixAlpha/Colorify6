@@ -9,6 +9,7 @@ import 'package:colorify/backend/extensions/on_iterable.dart';
 import 'package:colorify/backend/extensions/on_list.dart';
 import 'package:colorify/backend/generators/generator_package.dart';
 import 'package:colorify/backend/utils/block_matrix.dart';
+import 'package:colorify/backend/utils/flatten_manager.dart';
 import 'package:colorify/backend/utils/floyd_steinberg.dart';
 import 'package:colorify/backend/utils/functionmaker.dart';
 import 'package:colorify/backend/utils/kdtree.dart';
@@ -27,6 +28,8 @@ class GBlockArguments {
   String? pkName;
   String? pkAuth;
   String? pkDesc;
+  String? version;
+  List<int?>? basicOffset;
   final int plane;
   final bool stairType;
   final bool useStruct;
@@ -43,6 +46,8 @@ class GBlockArguments {
     required this.pkName,
     required this.pkAuth,
     required this.pkDesc,
+    required this.version,
+    required this.basicOffset,
     required this.plane,
     required this.stairType,
     required this.useStruct,
@@ -99,6 +104,10 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
       }
     }
 
+    /// Flattening
+    args.version ??= '1.20.80';
+    final fm = FlattenManager.version(args.version!);
+
     final blmx = BlockMatrix();
     if (args.stairType) {
       final step = 1 ~/ args.samp!;
@@ -113,7 +122,7 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
 
           /// T: Target
           final List<int> tRGB = [r as int, g as int, b as int];
-          String? tid;
+          BlockWithState? tblock;
           int? ty;
           double minmdRecord = double.infinity;
           for (RGBMapping entry in args.palette) {
@@ -131,7 +140,14 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
               continue;
             }
 
-            tid = entry.id;
+            final block = fm.getBlockWithStateOf(entry.id);
+
+            /// Not support block states
+            if (args.useStruct || args.type == GenerateType.socket && (block.stateString ?? '').isNotEmpty) {
+              continue;
+            }
+
+            tblock = block;
             minmdRecord = minmd;
 
             final ormxEntry = ormx.orm[rx][ry];
@@ -150,11 +166,11 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
             }
           }
 
-          if (ty == null || tid == null) {
+          if (ty == null || tblock == null) {
             throw Exception();
           }
 
-          ormx.orm[rx][ry].id = tid;
+          ormx.orm[rx][ry].block = tblock;
         },
       );
 
@@ -162,7 +178,7 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
 
       ormx.enumerate(
         (i, j, entry) {
-          blmx.push(Block(x: i, y: entry.basey + entry.offset, z: j, block: entry.id));
+          blmx.push(Block(x: i, y: entry.basey + entry.offset, z: j, block: entry.block));
         },
       );
     } else {
@@ -175,7 +191,11 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
             args.palette[i].b,
             args.palette[i].id,
           ),
-        ),
+        ).where(
+          (e) {
+            return !fm.chs.map((v) => v.flattened).contains(e.id);
+          },
+        ).toList(),
       );
       final step = 1 ~/ args.samp!;
       final rw = image.width ~/ step;
@@ -195,7 +215,8 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
           final tx = rw - rx;
           final ty = rh - ry;
 
-          blmx.push(Block(x: tx, y: 0, z: ty, block: nearest.id));
+          final block = fm.getBlockWithStateOf(nearest.id);
+          blmx.push(Block(x: tx, y: 0, z: ty, block: block));
         },
       );
     }
@@ -270,7 +291,7 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
               v.y.toDouble(),
               v.z.toDouble(),
             ),
-            v.block,
+            v.block.id,
           );
           sendPort.send((i + 1) / blmx.blocks.length);
         },
@@ -281,17 +302,22 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
       await struct.writeFile(outpath);
     } else {
       final List<String> commands = [];
+      final List<int> bo = [
+        args.basicOffset![0] ?? 0,
+        args.basicOffset![1] ?? 0,
+        args.basicOffset![2] ?? 0,
+      ];
       blmx.blocks.enumerate(
         (i, v) {
           if (args.stairType) {
-            commands.add('setblock ~${v.x + 1} ~${v.y} ~${v.z} ${v.block}');
+            commands.add('setblock ~${v.x + bo[0]} ~${v.y + bo[1]} ~${v.z + bo[2]} ${v.block.id} ${v.block.state}');
           } else {
             if (args.plane == 0) {
-              commands.add('setblock ~${v.x + 1} ~${v.z} ~0 ${v.block}');
+              commands.add('setblock ~${v.x + bo[0]} ~${v.z + bo[1]} ~${bo[2]} ${v.block.id} ${v.block.state}');
             } else if (args.plane == 1) {
-              commands.add('setblock ~${v.x + 1} ~0 ~${v.z} ${v.block}');
+              commands.add('setblock ~${v.x + bo[0]} ~${bo[1]} ~${v.z + bo[2]} ${v.block.id} ${v.block.state}');
             } else if (args.plane == 2) {
-              commands.add('setblock ~0 ~${v.x + 1} ~${v.z} ${v.block}');
+              commands.add('setblock ~${bo[0]} ~${v.x + bo[1]} ~${v.z + bo[2]} ${v.block.id} ${v.block.state}');
             } else {
               throw Exception();
             }

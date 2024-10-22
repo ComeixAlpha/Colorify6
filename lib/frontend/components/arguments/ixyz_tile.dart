@@ -32,6 +32,9 @@ class _IXYZTileState extends State<IXYZTile> {
   @override
   Widget build(BuildContext context) {
     final double singleTextfieldWidth = (widget.width - 20.0) / 3 - 12;
+    _avcPassedList[0] = widget.examer(widget.controllers[0].text);
+    _avcPassedList[1] = widget.examer(widget.controllers[1].text);
+    _avcPassedList[2] = widget.examer(widget.controllers[2].text);
     return Column(
       children: [
         Row(

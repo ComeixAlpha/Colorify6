@@ -11,10 +11,18 @@ class Blockprov with ChangeNotifier {
   bool _init = false;
 
   /// AVC: Arguments Validity Check
-  bool _avc = true;
-  bool get avc => _avc;
-  set avc(bool v) {
-    _avc = v;
+  final Map<String, bool> _avcmap = {
+    'sampling': true,
+    'flattening': true,
+    'basicOffset': true,
+  };
+  bool avcWhere(String key) {
+    return _avcmap[key]!;
+  }
+
+  bool get avc => _avcmap.values.every((e) => e);
+  void updateAVC(String key, bool v) {
+    _avcmap[key] = v;
     notifyListeners();
   }
 

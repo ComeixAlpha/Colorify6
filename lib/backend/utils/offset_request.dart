@@ -1,22 +1,23 @@
 import 'package:colorify/backend/extensions/on_iterable.dart';
 import 'package:colorify/backend/extensions/on_list.dart';
+import 'package:colorify/backend/utils/flatten_manager.dart';
 
 /// Records offset request from previous block(north one)
 class OffsetEntry {
   // North block y pos
   late int basey;
   late int offset;
-  late String id;
+  late BlockWithState block;
   OffsetEntry({
     required this.basey,
     required this.offset,
-    required this.id,
+    required this.block,
   });
 
   OffsetEntry.empty() {
     basey = 0;
     offset = 0;
-    id = '';
+    block = BlockWithState(id: '');
   }
 }
 
@@ -47,12 +48,10 @@ class OffsetRequestMatrix {
       return false;
     }
     if (basey != null) {
-
-    orm[x][z].basey = basey;
+      orm[x][z].basey = basey;
     }
     if (offset != null) {
-    orm[x][z].offset = offset;
-
+      orm[x][z].offset = offset;
     }
     return true;
   }

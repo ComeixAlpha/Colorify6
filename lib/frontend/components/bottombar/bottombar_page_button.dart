@@ -24,14 +24,6 @@ class _BottombarPageButtonState extends State<BottombarPageButton> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        BottombarButton(
-          icon: widget.icon,
-          hoverColor: Colors.white.withOpacity(0.1),
-          splashColor: Colors.white.withOpacity(0.1),
-          onTap: () {
-            pageprov.update(widget.index);
-          },
-        ),
         Positioned(
           bottom: 10,
           child: AnimatedOpacity(
@@ -49,6 +41,14 @@ class _BottombarPageButtonState extends State<BottombarPageButton> {
               ),
             ),
           ),
+        ),
+        BottombarButton(
+          icon: widget.icon,
+          hoverColor: Colors.white.withOpacity(0.1),
+          splashColor: Colors.white.withOpacity(0.1),
+          onTap: () {
+            pageprov.update(widget.index);
+          },
         ),
       ],
     );

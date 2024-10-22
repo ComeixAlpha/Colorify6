@@ -4,6 +4,7 @@ import 'package:colorify/frontend/components/arguments/icheckbox_tile.dart';
 import 'package:colorify/frontend/components/arguments/ipackageinfo_tile.dart';
 import 'package:colorify/frontend/components/arguments/iselection_tile.dart';
 import 'package:colorify/frontend/components/arguments/istring_tile.dart';
+import 'package:colorify/frontend/components/arguments/ixyz_tile.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,10 @@ final btecSampling = TextEditingController();
 final btecpkname = TextEditingController();
 final btecpkauth = TextEditingController();
 final btecpkdesc = TextEditingController();
+final btecflattn = TextEditingController();
+final btecbox = TextEditingController();
+final btecboy = TextEditingController();
+final btecboz = TextEditingController();
 
 class BlockArguments extends StatefulWidget {
   final double width;
@@ -30,7 +35,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
   @override
   Widget build(BuildContext context) {
     final blockprov = context.watch<Blockprov>();
-    Provider.of<Blockprov>(context, listen: false).refreshPalette();
+    blockprov.refreshPalette();
     return SizedBox(
       width: widget.width,
       height: widget.height,
@@ -41,6 +46,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
           IStringTile(
             title: '采样率',
             subtitle: '对原图的采样率，取值范围为(0, 1]',
+            avcState: blockprov.avcWhere('sampling'),
             hintText: '自动',
             hintStyle: getStyle(color: Colors.grey, size: 18),
             width: widget.width - 40,
@@ -58,7 +64,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
               }
             },
             onUpdateAVC: (v) {
-              Provider.of<Blockprov>(context, listen: false).avc = v;
+              Provider.of<Blockprov>(context, listen: false).updateAVC('sampling', v);
             },
           ),
           ISelectionTile(
@@ -66,6 +72,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
             subtitle: '像素画所在平面，Y 为高度轴',
             width: widget.width - 40,
             height: 140,
+            initValue: blockprov.plane,
             candidates: const ['xOy', 'xOz', 'yOz'],
             onSelect: (v) {
               blockprov.plane = v;
@@ -149,10 +156,47 @@ class _BlockArgumentsState extends State<BlockArguments> {
           ),
           IPackageInfoTile(
             title: '打包',
-              subtitle: '打包为 .mcpack 并自动生成清单与图标',
+            subtitle: '打包为 .mcpack 并自动生成清单与图标',
             width: widget.width - 40,
             height: 280,
             controllers: [btecpkname, btecpkauth, btecpkdesc],
+          ),
+          IStringTile(
+            title: '版本-扁平化',
+            subtitle: '通过您的游戏版本来影响部分方块 ID 扁平化',
+            avcState: blockprov.avcWhere('flattening'),
+            hintText: '1.20.80',
+            hintStyle: getStyle(color: Colors.grey, size: 18),
+            width: widget.width - 40,
+            height: 140,
+            controller: btecflattn,
+            inputType: TextInputType.number,
+            examer: (v) {
+              return true;
+            },
+            onUpdateAVC: (v) {
+              Provider.of<Blockprov>(context, listen: false).updateAVC('flattening', v);
+            },
+          ),
+          IXYZTile(
+            title: '基础偏移',
+            subtitle: '从玩家坐标偏移基准点以防止被方块挤压',
+            width: widget.width - 40,
+            height: 150,
+            controllers: [btecbox, btecboy, btecboz],
+            examer: (v) {
+              if (v.isEmpty) {
+                return true;
+              }
+              if (v.toInt() != null) {
+                return true;
+              } else {
+                return false;
+              }
+            },
+            onUpdateAVC: (v) {
+              Provider.of<Blockprov>(context, listen: false).updateAVC('basicOffset', v);
+            },
           ),
           const SizedBox(height: 400),
         ],

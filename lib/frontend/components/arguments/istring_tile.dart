@@ -7,6 +7,7 @@ class IStringTile extends StatefulWidget {
   final double height;
   final String title;
   final String subtitle;
+  final bool avcState;
   final TextEditingController controller;
   final bool Function(String) examer;
   final void Function(bool) onUpdateAVC;
@@ -19,6 +20,7 @@ class IStringTile extends StatefulWidget {
     required this.height,
     required this.title,
     required this.subtitle,
+    required this.avcState,
     required this.controller,
     required this.examer,
     required this.onUpdateAVC,
@@ -32,8 +34,6 @@ class IStringTile extends StatefulWidget {
 }
 
 class _IStringTileState extends State<IStringTile> {
-  bool _avcPassed = true;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -72,7 +72,7 @@ class _IStringTileState extends State<IStringTile> {
                         width: 10,
                         height: 10,
                         decoration: BoxDecoration(
-                          color: _avcPassed ? const Color(0xFFAED581) : const Color(0xFFEF5350),
+                          color: widget.avcState ? const Color(0xFFAED581) : const Color(0xFFEF5350),
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
@@ -115,11 +115,6 @@ class _IStringTileState extends State<IStringTile> {
                         res = true;
                       }
                       widget.onUpdateAVC(res);
-                      if (res != _avcPassed) {
-                        setState(() {
-                          _avcPassed = res;
-                        });
-                      }
                     },
                   ),
                 ],

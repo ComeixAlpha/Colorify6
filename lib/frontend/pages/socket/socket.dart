@@ -135,6 +135,7 @@ class _SocketPageState extends State<SocketPage> {
       );
     } else if (socketprov.connected || socketprov.pausing) {
       return ListView(
+        padding: const EdgeInsets.only(top: 20),
         children: [
           Wstile(
             width: mqs.width - 40,
@@ -173,7 +174,7 @@ class _SocketPageState extends State<SocketPage> {
           Wstile(
             width: mqs.width - 40,
             height: mqs.height - 500,
-            title: '日志',
+            title: '日志（最近20条）',
             child: SocketMessages(
               width: mqs.width - 64,
               height: mqs.height - 570,

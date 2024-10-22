@@ -81,7 +81,7 @@ class AboutTexts extends StatelessWidget {
         padding: const EdgeInsets.all(0),
         children: [
           title('关于 Colorify'),
-          tile('版本', 'v6.0.4'),
+          tile('版本', 'v6.0.5'),
           tile('开源协议', 'GPL-3.0'),
           const SizedBox(height: 10),
           const AcknowledgementTile(
@@ -155,7 +155,7 @@ class AboutTexts extends StatelessWidget {
             subtitle: 'Oct 12th 2024',
             assetPath: 'assets/sponsors/hcdyx.jpg',
           ),
-          const SizedBox(height: 200),
+          // const SizedBox(height: 20),
         ],
       ),
     );

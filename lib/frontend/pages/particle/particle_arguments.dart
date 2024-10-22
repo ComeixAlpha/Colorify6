@@ -31,14 +31,9 @@ class ParticleArguments extends StatefulWidget {
 }
 
 class _ParticleArgumentsState extends State<ParticleArguments> {
-  final List<bool> _avc = List.generate(5, (i) => true);
-
-  void notify() {
-    Provider.of<Particleprov>(context, listen: false).updateAVCState(_avc.every((e) => e));
-  }
-
   @override
   Widget build(BuildContext context) {
+    final particleprov = context.watch<Particleprov>();
     return SizedBox(
       width: widget.width,
       height: widget.height,
@@ -50,6 +45,7 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
             IStringTile(
               title: '采样率',
               subtitle: '对原图的采样率，取值范围为(0, 1]',
+              avcState: particleprov.avcWhere('sampling'),
               hintText: '自动',
               hintStyle: getStyle(color: Colors.grey, size: 18),
               width: widget.width - 40,
@@ -67,15 +63,13 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
                 }
               },
               onUpdateAVC: (v) {
-                setState(() {
-                  _avc[0] = v;
-                  notify();
-                });
+                particleprov.updateAVC('sampling', v);
               },
             ),
             IStringTile(
               title: '高度',
               subtitle: '粒子画的高度，单位：格方块',
+              avcState: particleprov.avcWhere('height'),
               hintText: '自动',
               hintStyle: getStyle(color: Colors.grey, size: 18),
               width: widget.width - 40,
@@ -93,10 +87,7 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
                 }
               },
               onUpdateAVC: (v) {
-                setState(() {
-                  _avc[1] = v;
-                  notify();
-                });
+                particleprov.updateAVC('height', v);
               },
             ),
             ISelectionTile(
@@ -104,6 +95,7 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
               subtitle: '像素画所在平面，Y 为高度轴',
               width: widget.width - 40,
               height: 140,
+              initValue: particleprov.plane,
               candidates: const ['xOy', 'xOz', 'yOz'],
               onSelect: (v) {
                 Provider.of<Particleprov>(context, listen: false).setPlane(v);
@@ -114,6 +106,7 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
               subtitle: '生成模式，Dust 需要 1.20.80 及以上',
               width: widget.width - 40,
               height: 140,
+              initValue: particleprov.mode == GenerateMode.match ? 0 : 1,
               candidates: const ['Match', 'Dust'],
               onSelect: (v) {
                 Provider.of<Particleprov>(context, listen: false).setMode(
@@ -128,6 +121,9 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
               height: 150,
               controllers: [ptecrx, ptecry, ptecrz],
               examer: (v) {
+                if (v.isEmpty) {
+                  return true;
+                }
                 if (v.toDouble() != null) {
                   return true;
                 } else {
@@ -135,10 +131,7 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
                 }
               },
               onUpdateAVC: (v) {
-                setState(() {
-                  _avc[3] = v;
-                  notify();
-                });
+                particleprov.updateAVC('rotate', v);
               },
             ),
             IPackageInfoTile(

@@ -72,7 +72,7 @@ class _WebsocketButtonState extends State<WebsocketButton> {
       iconColor: iconColor,
       splashColor: splashColor,
       hoverColor: hoverColor,
-      icon: Icons.wifi_tethering,
+      icon: Icons.sensors_rounded,
       duration: const Duration(milliseconds: 800),
       onTap: widget.onTap,
     );

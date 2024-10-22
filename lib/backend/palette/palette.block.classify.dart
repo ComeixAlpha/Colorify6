@@ -1,4 +1,22 @@
 const classes = {
+  "羊毛类 Wools:各色羊毛": [
+    "black_wool",
+    "blue_wool",
+    "brown_wool",
+    "cyan_wool",
+    "gray_wool",
+    "green_wool",
+    "light_blue_wool",
+    "lime_wool",
+    "magenta_wool",
+    "orange_wool",
+    "pink_wool",
+    "purple_wool",
+    "red_wool",
+    "light_gray_wool",
+    "white_wool",
+    "yellow_wool",
+  ],
   "混凝土类 Concretes:混凝土与混凝土粉末": [
     "black_concrete",
     "blue_concrete",

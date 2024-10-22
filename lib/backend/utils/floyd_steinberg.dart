@@ -1,4 +1,3 @@
-
 import 'package:image/image.dart' as img;
 
 /// Floyd-Steinberg Dithering
