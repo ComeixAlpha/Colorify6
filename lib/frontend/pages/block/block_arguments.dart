@@ -172,7 +172,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
             controller: btecflattn,
             inputType: TextInputType.number,
             examer: (v) {
-              return true;
+              return RegExp(r'\d+\.\d+(\.\d+)?').hasMatch(v);
             },
             onUpdateAVC: (v) {
               Provider.of<Blockprov>(context, listen: false).updateAVC('flattening', v);
