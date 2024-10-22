@@ -285,14 +285,45 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
       final struct = Structure(blmx.size);
       blmx.blocks.enumerate(
         (i, v) {
-          struct.setBlock(
-            Vector3(
-              v.x.toDouble(),
-              v.y.toDouble(),
-              v.z.toDouble(),
-            ),
-            v.block.id,
-          );
+          if (args.stairType) {
+            struct.setBlock(
+              Vector3(
+                v.x.toDouble(),
+                v.y.toDouble(),
+                v.z.toDouble(),
+              ),
+              v.block.id,
+            );
+          } else {
+            if (args.plane == 0) {
+              struct.setBlock(
+                Vector3(
+                  v.x.toDouble(),
+                  v.z.toDouble(),
+                  v.y.toDouble(),
+                ),
+                v.block.id,
+              );
+            } else if (args.plane == 1) {
+              struct.setBlock(
+                Vector3(
+                  v.x.toDouble(),
+                  v.y.toDouble(),
+                  v.z.toDouble(),
+                ),
+                v.block.id,
+              );
+            } else if (args.plane == 2) {
+              struct.setBlock(
+                Vector3(
+                  v.z.toDouble(),
+                  v.x.toDouble(),
+                  v.y.toDouble(),
+                ),
+                v.block.id,
+              );
+            }
+          }
           sendPort.send((i + 1) / blmx.blocks.length);
         },
       );
