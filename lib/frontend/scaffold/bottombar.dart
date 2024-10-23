@@ -147,8 +147,10 @@ class _BottombarState extends State<Bottombar> {
         if (message is double) {
           Provider.of<Progressprov>(context, listen: false).update(message);
         } else if (message is SendPort) {
+          print('Root Isolate: SendPort received');
           isolatePort = message;
         } else if (message is String) {
+          print('Root Isolate: Identicon data received');
           const int isize = 1024;
           const double dsize = 1024;
 
@@ -168,6 +170,7 @@ class _BottombarState extends State<Bottombar> {
           final ByteData? byteData = await fimage.toByteData(format: ui.ImageByteFormat.png);
           final Uint8List pngBytes = byteData!.buffer.asUint8List();
           isolatePort.send(pngBytes);
+          print('Root Isolate: Identicon data sent');
         } else if (message is List<String>) {
           Provider.of<Socketprov>(context, listen: false).startTask(message);
         }
@@ -179,7 +182,7 @@ class _BottombarState extends State<Bottombar> {
   Widget build(BuildContext context) {
     final mqs = MediaQuery.of(context).size;
     final ow = mqs.width;
-    final oh = mqs.height * 0.1;
+    const oh = 80.0; //mqs.height * 0.1;
     return SizedBox(
       width: ow,
       height: oh,

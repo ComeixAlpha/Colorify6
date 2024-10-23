@@ -61,6 +61,9 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
     final ReceivePort receivePort = ReceivePort();
     sendPort.send(receivePort.sendPort);
 
+    /// Record if all tasks has done
+    bool icon = false;
+
     /// Image null error
     Image? image = args.image;
     if (image == null) {
@@ -271,6 +274,7 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
         (message) async {
           if (message is Uint8List) {
             await packIcon(zpdir, message, erp: false);
+            icon = true;
           }
         },
       );
@@ -282,7 +286,32 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
     }
 
     if (args.useStruct) {
-      final struct = Structure(blmx.size);
+      Structure struct;
+      if (args.stairType) {
+        struct = Structure(blmx.size);
+      } else {
+        if (args.plane == 0) {
+          struct = Structure(Vector3(
+            blmx.size.x,
+            blmx.size.z,
+            blmx.size.y,
+          ));
+        } else if (args.plane == 1) {
+          struct = Structure(Vector3(
+            blmx.size.x,
+            blmx.size.y,
+            blmx.size.z,
+          ));
+        } else if (args.plane == 2) {
+          struct = Structure(Vector3(
+            blmx.size.z,
+            blmx.size.x,
+            blmx.size.y,
+          ));
+        } else {
+          throw Exception();
+        }
+      }
       blmx.blocks.enumerate(
         (i, v) {
           if (args.stairType) {
@@ -378,8 +407,6 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
             size.y.toInt(),
             size.z.toInt(),
           );
-
-          await pack(zpdir, args.outDir, suffix: 'mcpack');
         }
       } else {
         /// Send to Root Isolate for WebSocket
@@ -387,6 +414,25 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
       }
     }
 
-    Isolate.exit();
+    if (needPack) {
+      Future<void> runUnless() async {
+        Future.delayed(
+          const Duration(milliseconds: 10),
+          () async {
+            if (!icon) {
+              runUnless();
+            } else {
+              await pack(zpdir, args.outDir, suffix: 'mcpack');
+
+              Isolate.exit();
+            }
+          },
+        );
+      }
+
+      runUnless();
+    } else {
+      Isolate.exit();
+    }
   };
 }

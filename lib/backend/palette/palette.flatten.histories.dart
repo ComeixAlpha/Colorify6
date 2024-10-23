@@ -369,4 +369,57 @@ final flattenHistories = [
       ),
     ],
   ),
+  FlattenHistory(
+    version: [1, 20, 70],
+    histories: [
+      ChangeHistory(
+        statemap: {'wood': '["wood_type"="acacia"]'},
+        flattened: 'acacia_wood',
+      ),
+      ChangeHistory(
+        statemap: {'wood': '["wood_type"="dark_oak"]'},
+        flattened: 'dark_oak_wood',
+      ),
+      ChangeHistory(
+        statemap: {'wood': '["wood_type"="oak"]'},
+        flattened: 'oak_wood',
+      ),
+      ChangeHistory(
+        statemap: {'wood': '["wood_type"="spruce"]'},
+        flattened: 'spruce_wood',
+      ),
+      ChangeHistory(
+        statemap: {'wood': '["wood_type"="birch"]'},
+        flattened: 'birch_wood',
+      ),
+      ChangeHistory(
+        statemap: {'wood': '["wood_type"="jungle"]'},
+        flattened: 'jungle_wood',
+      ),
+      ChangeHistory(
+        statemap: {'wood': '["wood_type"="acacia","stripped_bit"=true]'},
+        flattened: 'stripped_acacia_wood',
+      ),
+      ChangeHistory(
+        statemap: {'wood': '["wood_type"="dark_oak","stripped_bit"=true]'},
+        flattened: 'stripped_dark_oak_wood',
+      ),
+      ChangeHistory(
+        statemap: {'wood': '["wood_type"="oak","stripped_bit"=true]'},
+        flattened: 'stripped_oak_wood',
+      ),
+      ChangeHistory(
+        statemap: {'wood': '["wood_type"="spruce","stripped_bit"=true]'},
+        flattened: 'stripped_spruce_wood',
+      ),
+      ChangeHistory(
+        statemap: {'wood': '["wood_type"="birch","stripped_bit"=true]'},
+        flattened: 'stripped_birch_wood',
+      ),
+      ChangeHistory(
+        statemap: {'wood': '["wood_type"="jungle","stripped_bit"=true]'},
+        flattened: 'stripped_jungle_wood',
+      ),
+    ],
+  ),
 ];

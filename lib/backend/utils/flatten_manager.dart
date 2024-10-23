@@ -9,7 +9,7 @@ class BlockWithState {
     this.stateString,
   });
 
-  String get state  {
+  String get state {
     return stateString ?? '';
   }
 }
@@ -18,6 +18,9 @@ class FlattenManager {
   late final List<int> version;
   List<ChangeHistory> chs = [];
   FlattenManager.version(String versionStr) {
+    if (versionStr.isEmpty) {
+      versionStr = '1.20.80';
+    }
     if (!RegExp(r'\d+\.\d+(\.\d+)?').hasMatch(versionStr)) {
       throw Exception();
     }

@@ -173,11 +173,11 @@ class _SocketPageState extends State<SocketPage> {
           ),
           Wstile(
             width: mqs.width - 40,
-            height: mqs.height - 500,
+            height: 300,
             title: '日志（最近20条）',
             child: SocketMessages(
               width: mqs.width - 64,
-              height: mqs.height - 570,
+              height: 240,
               logs: socketprov.logs,
             ),
           ),
