@@ -172,6 +172,15 @@ class AboutTexts extends StatelessWidget {
             subtitle: '测试人员',
             assetPath: 'assets/acknowledgement/glaze.jpg',
           ),
+          const AcknowledgementTile(
+            title: 'Wn1027',
+            subtitle: '阶梯式高度压缩思路参考',
+            assetPath: 'assets/acknowledgement/wn1027.jpg',
+            links: [
+              'https://www.minebbs.com/resources/authors/10_27.10809/',
+              'https://gitee.com/wn1027',
+            ],
+          ),
           title('赞助 Sponsor'),
           const SizedBox(height: 20),
           const SponsorQrcode(),
