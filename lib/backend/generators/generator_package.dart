@@ -67,7 +67,7 @@ Future<void> manifest(
   "metadata": {
     "authors": ["${args.auth}"],
     "generated_with": {
-      "colorify": ["6.0.6"]
+      "colorify": ["6.0.7"]
     }
   }
 }
@@ -99,7 +99,7 @@ Future<void> manifest(
   "metadata": {
     "authors": ["${args.auth}"],
     "generated_with": {
-      "colorify": ["6.0.6"]
+      "colorify": ["6.0.7"]
     }
   }
 }
@@ -223,7 +223,7 @@ Server.system.runInterval(() => {
 ''';
 
   final scriptDir = dir.concact('scripts');
-  
+
   if (!await scriptDir.exists()) {
     await scriptDir.create();
   }

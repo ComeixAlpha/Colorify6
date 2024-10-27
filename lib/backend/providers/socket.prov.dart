@@ -181,7 +181,7 @@ class Socketprov with ChangeNotifier {
 }
 
 String titleBuilder(List<int> exeLoc, int executed, int len, int speed) {
-  const String line1 = '§bColorify§f - v6.0.6 - Comeix Alpha';
+  const String line1 = '§bColorify§f - v6.0.7 - Comeix Alpha';
   final String line2 = 'Executing at: [§6${exeLoc[0]}§f, §6${exeLoc[1]}§f, §6${exeLoc[2]}§f]';
   final String line3 = 'Executed §6$executed§f / §6$len§f Last §6${((len - executed) / speed).toStringAsFixed(2)}s§f';
   return 'title @s actionbar ${[line1, line2, line3].join('\n')}';
