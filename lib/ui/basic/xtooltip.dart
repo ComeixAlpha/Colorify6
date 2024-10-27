@@ -113,6 +113,11 @@ class _XTooltipState extends State<XTooltip> {
       });
     });
   }
+  
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

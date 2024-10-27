@@ -1,6 +1,8 @@
 import 'dart:isolate';
 
+import 'package:colorify/backend/abstracts/isolate_data_pack.dart';
 import 'package:colorify/backend/extensions/on_string.dart';
+import 'package:colorify/backend/generators/generator.dart';
 import 'package:colorify/backend/generators/generator_block.dart';
 import 'package:colorify/backend/generators/generator_particle.dart';
 import 'package:colorify/backend/providers/block.prov.dart';
@@ -9,6 +11,7 @@ import 'package:colorify/backend/providers/particle.prov.dart';
 import 'package:colorify/backend/providers/progress.prov.dart';
 import 'package:colorify/backend/providers/socket.prov.dart';
 import 'package:colorify/backend/utils/flie_picker.dart';
+import 'package:colorify/backend/utils/identicon.dart';
 import 'package:colorify/backend/utils/path.dart';
 import 'package:colorify/frontend/components/bottombar/bottombar_button.dart';
 import 'package:colorify/frontend/components/bottombar/bottombar_page_button.dart';
@@ -24,6 +27,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
 import 'dart:ui' as ui;
+import 'package:image/image.dart' as img;
 import 'package:provider/provider.dart';
 
 enum GenerateType {
@@ -41,28 +45,46 @@ class Bottombar extends StatefulWidget {
 class _BottombarState extends State<Bottombar> {
   OverlayEntry? _overlayEntry;
 
+  void _alertAVCError() {
+    XFrame.message(
+      '参数错误',
+      subtitle: '参数合法性检查未通过',
+      style: MessageDialogStyle(
+        width: 120,
+        top: 100,
+        right: 10,
+        color: const Color(0xFF2d2a31),
+        borderRadius: 2,
+        titleStyle: getStyle(color: Colors.white, size: 18),
+        subtitleStyle: getStyle(color: Colors.white, size: 14),
+      ),
+    );
+  }
+
+  void _showProgressDialog() {
+    _overlayEntry = OverlayEntry(
+      builder: (ctx) {
+        return ProgressIndicator(onCallClose: () {
+          _overlayEntry?.remove();
+          Provider.of<Progressprov>(context, listen: false).reset();
+        });
+      },
+    );
+    XFrame.insert(_overlayEntry!);
+  }
+
   Future<void> _requestParticleTask(GenerateType type) async {
     final particleprov = Provider.of<Particleprov>(context, listen: false);
     final avc = particleprov.avc;
     if (!avc) {
-      XFrame.message(
-        'AVC ERROR',
-        subtitle: 'Avc failed',
-        style: MessageDialogStyle(
-          width: 120,
-          top: 100,
-          right: 10,
-          color: const Color(0xFF2d2a31),
-          borderRadius: 2,
-          titleStyle: getStyle(color: Colors.white, size: 18),
-          subtitleStyle: getStyle(color: Colors.white, size: 14),
-        ),
-      );
+      _alertAVCError();
       return;
     }
-    final image = await pick();
-    final docDir = await pather();
-    final args = GParticleArguments(
+
+    img.Image? image = await pickImage();
+    final docDir = await getAndCreateColorifyDir();
+
+    final args = GenParticleArguments(
       image: image,
       samp: ptecSampling.text.toDouble(),
       heig: ptecHeight.text.toDouble(),
@@ -79,30 +101,63 @@ class _BottombarState extends State<Bottombar> {
       mappings: particleprov.mappings,
     );
     await _startTask(type, pArgClosure(args));
+    image = null;
+  }
+
+  Future<void> __requestBlockTask(GenerateType type) async {
+    /// 检测参数合法性
+    final blockprov = Provider.of<Blockprov>(context, listen: false);
+    final avc = blockprov.avc;
+    if (!avc) {
+      _alertAVCError();
+      return;
+    }
+
+    /// 参数
+    final image = await pickImage();
+    final docDir = await getAndCreateColorifyDir();
+    final args = GenBlockArguments.from(
+      blockprov,
+      type: type,
+      image: image,
+      outDir: docDir,
+    );
+
+    /// 进度条
+    _showProgressDialog();
+
+    /// 生成线程
+    final generator = ColorifyGenerator(
+      type,
+      args,
+      onProgressUpdate: (v) {
+        Provider.of<Progressprov>(context, listen: false).update(v);
+      },
+      onReceiveIdenticonData: (port, v) async {
+        port.send(
+          IsolateDataPack(
+            type: IsolateDataPackType.identiconUint8List,
+            data: await processIdenticon(v),
+          ),
+        );
+      },
+      onReceiveSocketCommands: (v) {
+        Provider.of<Socketprov>(context, listen: false).startTask(v);
+      },
+    );
+    generator.start();
   }
 
   Future<void> _requestBlockTask(GenerateType type) async {
     final blockprov = Provider.of<Blockprov>(context, listen: false);
     final avc = blockprov.avc;
     if (!avc) {
-      XFrame.message(
-        'AVC ERROR',
-        subtitle: 'Avc failed',
-        style: MessageDialogStyle(
-          width: 120,
-          top: 100,
-          right: 10,
-          color: const Color(0xFF2d2a31),
-          borderRadius: 2,
-          titleStyle: getStyle(color: Colors.white, size: 18),
-          subtitleStyle: getStyle(color: Colors.white, size: 14),
-        ),
-      );
+      _alertAVCError();
       return;
     }
-    final image = await pick();
-    final docDir = await pather();
-    final args = GBlockArguments(
+    final image = await pickImage();
+    final docDir = await getAndCreateColorifyDir();
+    final args = GenBlockArguments(
       type: type,
       image: image,
       outDir: docDir,
@@ -127,15 +182,7 @@ class _BottombarState extends State<Bottombar> {
 
   Future<void> _startTask(GenerateType type, void Function(SendPort) generator) async {
     if (type != GenerateType.socket) {
-      _overlayEntry = OverlayEntry(
-        builder: (ctx) {
-          return ProgressIndicator(onCallClose: () {
-            _overlayEntry?.remove();
-            Provider.of<Progressprov>(context, listen: false).reset();
-          });
-        },
-      );
-      XFrame.insert(_overlayEntry!);
+      _showProgressDialog();
     }
 
     ReceivePort receivePort = ReceivePort();
@@ -145,12 +192,10 @@ class _BottombarState extends State<Bottombar> {
     receivePort.listen(
       (message) async {
         if (message is double) {
-          Provider.of<Progressprov>(context, listen: false).update(message);
+          Provider.of<Progressprov>(context, listen: false).update(ProgressData(state: '', progress: message));
         } else if (message is SendPort) {
-          print('Root Isolate: SendPort received');
           isolatePort = message;
         } else if (message is String) {
-          print('Root Isolate: Identicon data received');
           const int isize = 1024;
           const double dsize = 1024;
 
@@ -170,7 +215,6 @@ class _BottombarState extends State<Bottombar> {
           final ByteData? byteData = await fimage.toByteData(format: ui.ImageByteFormat.png);
           final Uint8List pngBytes = byteData!.buffer.asUint8List();
           isolatePort.send(pngBytes);
-          print('Root Isolate: Identicon data sent');
         } else if (message is List<String>) {
           Provider.of<Socketprov>(context, listen: false).startTask(message);
         }
@@ -217,7 +261,7 @@ class _BottombarState extends State<Bottombar> {
                   if (pageprov.page == 0) {
                     _requestParticleTask(GenerateType.file);
                   } else if (pageprov.page == 1) {
-                    _requestBlockTask(GenerateType.file);
+                    __requestBlockTask(GenerateType.file);
                   } else {}
                 },
               ),
@@ -240,7 +284,7 @@ class _BottombarState extends State<Bottombar> {
                         '要通过WS传输像素画吗?',
                         (v) async {
                           if (v) {
-                            await _requestBlockTask(GenerateType.socket);
+                            await __requestBlockTask(GenerateType.socket);
                           }
                         },
                       );

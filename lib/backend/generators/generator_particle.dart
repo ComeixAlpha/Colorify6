@@ -18,8 +18,8 @@ import 'package:image/image.dart';
 import 'package:path/path.dart' as path;
 import 'package:uuid/uuid.dart';
 
-class GParticleArguments {
-  final Image? image;
+class GenParticleArguments {
+  Image? image;
   double? samp;
   double? heig;
   double? rx;
@@ -34,7 +34,7 @@ class GParticleArguments {
   final Directory outDir;
   final List<RGBMapping> mappings;
 
-  GParticleArguments({
+  GenParticleArguments({
     required this.image,
     required this.samp,
     required this.heig,
@@ -74,7 +74,7 @@ class ParticlePoint {
   });
 }
 
-void Function(SendPort) pArgClosure(GParticleArguments args) {
+void Function(SendPort) pArgClosure(GenParticleArguments args) {
   return (SendPort sendPort) async {
     final ReceivePort receivePort = ReceivePort();
     sendPort.send(receivePort.sendPort);
@@ -331,6 +331,8 @@ void Function(SendPort) pArgClosure(GParticleArguments args) {
       await scriptModeDust(bpOutDir, points);
       sendPort.send(1.0);
     }
+
+    args.image = null;
 
     /// Archive
     if (needPack) {

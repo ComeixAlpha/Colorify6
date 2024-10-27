@@ -1,15 +1,5 @@
+import 'package:colorify/backend/abstracts/rgb.dart';
 import 'package:image/image.dart';
-
-class RGB {
-  int r;
-  int g;
-  int b;
-  RGB({
-    required this.r,
-    required this.g,
-    required this.b,
-  });
-}
 
 class MatchResult {
   int x;
@@ -45,14 +35,21 @@ void readImage(Image image, double samp, void Function(int, int, int, int, num, 
   }
 }
 
-List<MatchResult> match(Image image, double samp, MatchResult? Function(int, int, RGB) matcher) {
+List<MatchResult> match(Image image, double samp, MatchResult? Function(int, int, RGBA) matcher) {
   final List<MatchResult> results = [];
 
-  readImage(image, samp, (x, y, rx, ry, r, g, b, _) {
-    final res = matcher(x, y, RGB(r: r as int, g: g as int, b: b as int));
+  readImage(image, samp, (x, y, rx, ry, r, g, b, a) {
+    RGBA? rgb = RGBA(
+      r: r as int,
+      g: g as int,
+      b: b as int,
+      a: a as int,
+    );
+    final res = matcher(x, y, rgb);
     if (res != null) {
       results.add(res);
     }
+    rgb = null;
   });
 
   return results;

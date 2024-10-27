@@ -33,6 +33,11 @@ class _XButtonState extends State<XButton> {
   bool _onHover = false;
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final borderRadius = widget.borderRadius ?? BorderRadius.circular(4.0);
     final hoverColor = widget.hoverColor ?? Colors.white;

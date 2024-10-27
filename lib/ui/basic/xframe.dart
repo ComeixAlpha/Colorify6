@@ -64,6 +64,12 @@ class XFrame extends StatefulWidget {
 }
 
 class _XFrameState extends State<XFrame> {
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

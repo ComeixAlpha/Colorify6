@@ -14,6 +14,16 @@ enum ProgressState {
   disappear,
 }
 
+class ProgressData {
+  String state;
+  double progress;
+
+  ProgressData({
+    required this.state,
+    required this.progress,
+  });
+}
+
 class ProgressIndicator extends StatefulWidget {
   final void Function() onCallClose;
   const ProgressIndicator({
@@ -47,9 +57,20 @@ class _ProgressIndicatorState extends State<ProgressIndicator> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            progress.progress.toPercentString(),
-            style: getStyle(color: Colors.white, size: 28),
+          LayoutBuilder(
+            builder: (_, __) {
+              if (progress.progress == 2) {
+                return Text(
+                  progress.progressState,
+                  style: getStyle(color: Colors.white, size: 28),
+                );
+              } else {
+                return Text(
+                  '${progress.progressState}\n${progress.progress.toPercentString()}',
+                  style: getStyle(color: Colors.white, size: 22),
+                );
+              }
+            },
           ),
           const SizedBox(width: 12.0),
           const Icon(Icons.bolt, color: Colors.white),
@@ -181,7 +202,7 @@ class _ProgressIndicatorState extends State<ProgressIndicator> {
                                 /// Invisible when on error
                                 visible: _state != ProgressState.error,
                                 child: CircularProgressIndicator(
-                                  value: progressprov.progress,
+                                  value: progressprov.onUnknown ? 0 : progressprov.progress,
                                   strokeWidth: 8,
                                   color: const Color(0xFF2d2a31),
                                   valueColor: const AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 203, 243, 157)),

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:colorify/backend/utils/flatten_manager.dart';
+import 'package:colorify/backend/abstracts/block_with_state.dart';
 import 'package:vector_math/vector_math.dart';
 
 /// Block abstract

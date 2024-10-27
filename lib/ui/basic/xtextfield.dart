@@ -55,6 +55,11 @@ class _XTextfieldState extends State<XTextfield> {
   final FocusNode _focusNode = FocusNode();
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final style = widget.style ?? XTextfieldStyle();
     return Material(

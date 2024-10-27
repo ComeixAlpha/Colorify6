@@ -165,6 +165,11 @@ class _XMenuState extends State<XMenu> {
   int _selected = 0;
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     widget.width ??= 200;
     widget.height ??= 60;

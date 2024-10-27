@@ -31,6 +31,7 @@ class Socketprov with ChangeNotifier {
   List<String> get logs => _logs;
 
   bool _onTask = false;
+  List<int>? _executeLoc;
   int _commandSent = 0;
   int _commandUnsend = 0;
   int _commandSentRecord = 0;
@@ -75,7 +76,12 @@ class Socketprov with ChangeNotifier {
     notifyListeners();
   }
 
-  void startTask(List<String> commands) {
+  void recordExeLoc(List<int> loc) {
+    _executeLoc = loc;
+    notifyListeners();
+  }
+
+  Future<void> startTask(List<String> commands) async {
     if (!connected) return;
 
     resetTaskRecords();
@@ -84,9 +90,24 @@ class Socketprov with ChangeNotifier {
     _commandUnsend = commands.length;
     notifyListeners();
 
-    processTask(commands);
+    await WebSocket().broadcastCommand('testforblock ~ ~ ~ air');
 
-    _recordSpeed();
+    Future<void> runUntilLocGot() async {
+      await Future.delayed(
+        const Duration(milliseconds: 10),
+        () {
+          if (_executeLoc == null) {
+            runUntilLocGot();
+          } else {
+            processTask(commands);
+
+            _recordSpeed();
+          }
+        },
+      );
+    }
+
+    runUntilLocGot();
   }
 
   Future<void> _recordSpeed() async {
@@ -109,8 +130,22 @@ class Socketprov with ChangeNotifier {
         return;
       }
 
-      await WebSocket().broadcastCommand(commands[i]);
-      await WebSocket().broadcastCommand('title @s actionbar ${i + 1} of ${commands.length}');
+      String command;
+      if (_executeLoc != null) {
+        command = 'execute @p ${_executeLoc![0]} ${_executeLoc![1]} ${_executeLoc![2]} ${commands[i]}';
+      } else {
+        command = commands[i];
+      }
+
+      await WebSocket().broadcastCommand(command);
+
+      if (_executeLoc != null) {
+        await WebSocket().broadcastCommand(titleBuilder(_executeLoc!, i, commands.length, speed));
+      } else {
+        await WebSocket().broadcastCommand(
+          'title @s actionbar §bColorify§f: §cPlease dont move§f. ${i + 1} / ${commands.length}',
+        );
+      }
 
       _commandSent++;
       _commandUnsend--;
@@ -139,7 +174,15 @@ class Socketprov with ChangeNotifier {
   void killTask() {
     _cachedCommands = [];
     _onTask = false;
+    _executeLoc = null;
     _socketState = WebSocketState.connected;
     notifyListeners();
   }
+}
+
+String titleBuilder(List<int> exeLoc, int executed, int len, int speed) {
+  const String line1 = '§bColorify§f - v6.0.6 - Comeix Alpha';
+  final String line2 = 'Executing at: [§6${exeLoc[0]}§f, §6${exeLoc[1]}§f, §6${exeLoc[2]}§f]';
+  final String line3 = 'Executed §6$executed§f / §6$len§f Last §6${((len - executed) / speed).toStringAsFixed(2)}s§f';
+  return 'title @s actionbar ${[line1, line2, line3].join('\n')}';
 }

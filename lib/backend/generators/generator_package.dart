@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:archive/archive_io.dart';
 import 'package:colorify/backend/abstracts/rgbmapping.dart';
+import 'package:colorify/backend/extensions/on_directory.dart';
 import 'package:colorify/backend/generators/generator_particle.dart';
 import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
@@ -168,7 +169,7 @@ Server.system.runInterval(() => {
 });
 ''';
 
-  final scriptDir = Directory(path.join(dir.path, 'scripts'));
+  final scriptDir = dir.concact('scripts');
   if (!await scriptDir.exists()) {
     await scriptDir.create();
   }
@@ -221,7 +222,8 @@ Server.system.runInterval(() => {
 });
 ''';
 
-  final scriptDir = Directory(path.join(dir.path, 'scripts'));
+  final scriptDir = dir.concact('scripts');
+  
   if (!await scriptDir.exists()) {
     await scriptDir.create();
   }
@@ -274,7 +276,7 @@ ${systemRun(fileCount - 1, '')}
 });
 ''';
 
-  final scriptDir = Directory(path.join(dir.path, 'scripts'));
+  final scriptDir = dir.concact('scripts');
   if (!await scriptDir.exists()) {
     await scriptDir.create();
   }

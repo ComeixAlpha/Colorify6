@@ -1,18 +1,6 @@
+import 'package:colorify/backend/abstracts/block_with_state.dart';
 import 'package:colorify/backend/abstracts/flatten_history.dart';
 import 'package:colorify/backend/palette/palette.flatten.histories.dart';
-
-class BlockWithState {
-  String id;
-  String? stateString;
-  BlockWithState({
-    required this.id,
-    this.stateString,
-  });
-
-  String get state {
-    return stateString ?? '';
-  }
-}
 
 class FlattenManager {
   late final List<int> version;

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:colorify/backend/providers/socket.prov.dart';
 import 'package:colorify/backend/utils/websocket.dart';
@@ -53,6 +55,18 @@ class _SocketPageState extends State<SocketPage> {
                         },
                         onMessage: (v) {
                           socketprov.appendLog(v);
+
+                          final json = jsonDecode(v);
+                          if (json['body']['position'] != null) {
+                            final value = json['body']['position'];
+                            socketprov.recordExeLoc(
+                              [
+                                value['x'],
+                                value['y'],
+                                value['z'],
+                              ],
+                            );
+                          }
                         },
                         onDone: () {},
                         onError: () {},

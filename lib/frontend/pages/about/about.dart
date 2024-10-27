@@ -3,6 +3,7 @@ import 'package:colorify/frontend/components/about/sponsor_qrcode.dart';
 import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutTexts extends StatelessWidget {
   const AboutTexts({super.key});
@@ -13,18 +14,6 @@ class AboutTexts extends StatelessWidget {
 
     Widget title(String text) {
       return Container(
-        // decoration: BoxDecoration(
-        //   color: const Color(0xFF2d2a31),
-        //   borderRadius: BorderRadius.circular(4),
-        //   boxShadow: [
-        //     BoxShadow(
-        //       color: Colors.black.withOpacity(0.3),
-        //       blurRadius: 1,
-        //       spreadRadius: 1,
-        //       offset: const Offset(0, 3),
-        //     ),
-        //   ],
-        // ),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         child: Row(
           children: [
@@ -73,6 +62,47 @@ class AboutTexts extends StatelessWidget {
       );
     }
 
+    Widget link(String text, String url) {
+      return Container(
+        width: mqs.width,
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              text,
+              style: getStyle(
+                size: 18,
+                color: Colors.white,
+              ),
+            ),
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () async {
+                  final urlp = Uri.parse(url);
+                  if (await canLaunchUrl(urlp)) {
+                    launchUrl(urlp);
+                  } else {
+                    throw Exception();
+                  }
+                },
+                child: Text(
+                  url,
+                  style: getStyle(
+                    color: const Color(0xFFC5C4DD),
+                    fontStyle: FontStyle.italic,
+                    decoration: TextDecoration.underline,
+                    size: 16,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Container(
       width: mqs.width,
       height: mqs.height * 0.9,
@@ -83,6 +113,7 @@ class AboutTexts extends StatelessWidget {
           title('关于 Colorify'),
           tile('版本', 'v6.0.6'),
           tile('开源协议', 'GPL-3.0'),
+          link('文档', 'https://comeixalpha.github.io'),
           const SizedBox(height: 10),
           const AcknowledgementTile(
             title: 'Comeix Alpha',

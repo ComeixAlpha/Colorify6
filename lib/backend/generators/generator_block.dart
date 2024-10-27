@@ -3,11 +3,14 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:colorify/backend/abstracts/block_with_state.dart';
 import 'package:colorify/backend/abstracts/rgbmapping.dart';
 import 'package:colorify/backend/extensions/on_datetime.dart';
 import 'package:colorify/backend/extensions/on_iterable.dart';
 import 'package:colorify/backend/extensions/on_list.dart';
+import 'package:colorify/backend/extensions/on_string.dart';
 import 'package:colorify/backend/generators/generator_package.dart';
+import 'package:colorify/backend/providers/block.prov.dart';
 import 'package:colorify/backend/utils/block_matrix.dart';
 import 'package:colorify/backend/utils/flatten_manager.dart';
 import 'package:colorify/backend/utils/floyd_steinberg.dart';
@@ -16,14 +19,16 @@ import 'package:colorify/backend/utils/kdtree.dart';
 import 'package:colorify/backend/utils/matcher.dart';
 import 'package:colorify/backend/utils/offset_request.dart';
 import 'package:colorify/backend/utils/structure.dart';
+import 'package:colorify/backend/utils/xyzswitcher.dart';
+import 'package:colorify/frontend/pages/block/block_arguments.dart';
 import 'package:colorify/frontend/scaffold/bottombar.dart';
 import 'package:image/image.dart';
 import 'package:uuid/uuid.dart';
 import 'package:vector_math/vector_math.dart';
 import 'package:path/path.dart' as path;
 
-class GBlockArguments {
-  final Image? image;
+class GenBlockArguments {
+  Image? image;
   double? samp;
   String? pkName;
   String? pkAuth;
@@ -32,13 +37,13 @@ class GBlockArguments {
   List<int?>? basicOffset;
   final int plane;
   final bool stairType;
-  final bool useStruct;
+  bool useStruct;
   final bool dithering;
   final Directory outDir;
   final List<RGBMapping> palette;
   final GenerateType type;
 
-  GBlockArguments({
+  GenBlockArguments({
     required this.image,
     required this.outDir,
     required this.palette,
@@ -54,9 +59,37 @@ class GBlockArguments {
     required this.dithering,
     required this.type,
   });
+
+  static GenBlockArguments from(
+    Blockprov provider, {
+    required GenerateType type,
+    required Image? image,
+    required Directory outDir,
+  }) {
+    return GenBlockArguments(
+      type: type,
+      image: image,
+      outDir: outDir,
+      palette: provider.filteredPalette,
+      samp: btecSampling.text.toDouble(),
+      pkName: btecpkname.text,
+      pkAuth: btecpkauth.text,
+      pkDesc: btecpkdesc.text,
+      version: btecflattn.text,
+      basicOffset: [
+        btecbox.text.toInt(),
+        btecboy.text.toInt(),
+        btecboz.text.toInt(),
+      ],
+      plane: provider.plane,
+      stairType: provider.stairType,
+      useStruct: provider.useStruct,
+      dithering: provider.dithering,
+    );
+  }
 }
 
-void Function(SendPort) bArgClosure(GBlockArguments args) {
+void Function(SendPort) bArgClosure(GenBlockArguments args) {
   return (SendPort sendPort) async {
     final ReceivePort receivePort = ReceivePort();
     sendPort.send(receivePort.sendPort);
@@ -81,7 +114,7 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
             (entry.r as num) - rgb[0],
             (entry.r as num) - rgb[1],
             (entry.r as num) - rgb[2],
-          ].map((e) => e.abs() as double).sum();
+          ].map((e) => e.abs().toDouble()).sum();
 
           if (md < mindis) {
             find = [
@@ -196,7 +229,11 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
           ),
         ).where(
           (e) {
-            return !fm.chs.map((v) => v.flattened).contains(e.id);
+            if (args.useStruct) {
+              return !fm.chs.map((v) => v.flattened).contains(e.id);
+            } else {
+              return true;
+            }
           },
         ).toList(),
       );
@@ -290,27 +327,16 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
       if (args.stairType) {
         struct = Structure(blmx.size);
       } else {
-        if (args.plane == 0) {
-          struct = Structure(Vector3(
-            blmx.size.x,
-            blmx.size.z,
-            blmx.size.y,
-          ));
-        } else if (args.plane == 1) {
-          struct = Structure(Vector3(
-            blmx.size.x,
-            blmx.size.y,
-            blmx.size.z,
-          ));
-        } else if (args.plane == 2) {
-          struct = Structure(Vector3(
-            blmx.size.z,
-            blmx.size.x,
-            blmx.size.y,
-          ));
-        } else {
-          throw Exception();
-        }
+        final xyz = xyzswitcher(args.plane, [
+          blmx.size.x,
+          blmx.size.y,
+          blmx.size.z,
+        ]);
+        struct = Structure(Vector3(
+          xyz[0],
+          xyz[1],
+          xyz[2],
+        ));
       }
       blmx.blocks.enumerate(
         (i, v) {
@@ -324,34 +350,15 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
               v.block.id,
             );
           } else {
-            if (args.plane == 0) {
-              struct.setBlock(
-                Vector3(
-                  v.x.toDouble(),
-                  v.z.toDouble(),
-                  v.y.toDouble(),
-                ),
-                v.block.id,
-              );
-            } else if (args.plane == 1) {
-              struct.setBlock(
-                Vector3(
-                  v.x.toDouble(),
-                  v.y.toDouble(),
-                  v.z.toDouble(),
-                ),
-                v.block.id,
-              );
-            } else if (args.plane == 2) {
-              struct.setBlock(
-                Vector3(
-                  v.z.toDouble(),
-                  v.x.toDouble(),
-                  v.y.toDouble(),
-                ),
-                v.block.id,
-              );
-            }
+            final xyz = xyzswitcher(args.plane, [v.x, v.y, v.z]);
+            struct.setBlock(
+              Vector3(
+                xyz[0].toDouble(),
+                xyz[1].toDouble(),
+                xyz[2].toDouble(),
+              ),
+              v.block.id,
+            );
           }
           sendPort.send((i + 1) / blmx.blocks.length);
         },
@@ -367,20 +374,16 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
         args.basicOffset![1] ?? 0,
         args.basicOffset![2] ?? 0,
       ];
+      final List<int> bos = xyzswitcher(args.plane, bo);
       blmx.blocks.enumerate(
         (i, v) {
+          final List<int> xyz = xyzswitcher(args.plane, [v.x, v.y, v.z]);
           if (args.stairType) {
             commands.add('setblock ~${v.x + bo[0]} ~${v.y + bo[1]} ~${v.z + bo[2]} ${v.block.id} ${v.block.state}');
           } else {
-            if (args.plane == 0) {
-              commands.add('setblock ~${v.x + bo[0]} ~${v.z + bo[1]} ~${bo[2]} ${v.block.id} ${v.block.state}');
-            } else if (args.plane == 1) {
-              commands.add('setblock ~${v.x + bo[0]} ~${bo[1]} ~${v.z + bo[2]} ${v.block.id} ${v.block.state}');
-            } else if (args.plane == 2) {
-              commands.add('setblock ~${bo[0]} ~${v.x + bo[1]} ~${v.z + bo[2]} ${v.block.id} ${v.block.state}');
-            } else {
-              throw Exception();
-            }
+            commands.add(
+              'setblock ~${xyz[0] + bos[0]} ~${xyz[1] + bos[1]} ~${xyz[2] + bos[2]} ${v.block.id} ${v.block.state}',
+            );
           }
         },
       );
@@ -414,6 +417,9 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
       }
     }
 
+    args.image = null;
+
+    /// If pack enabled, wait for pack icon to generate
     if (needPack) {
       Future<void> runUnless() async {
         Future.delayed(
@@ -423,7 +429,6 @@ void Function(SendPort) bArgClosure(GBlockArguments args) {
               runUnless();
             } else {
               await pack(zpdir, args.outDir, suffix: 'mcpack');
-
               Isolate.exit();
             }
           },
