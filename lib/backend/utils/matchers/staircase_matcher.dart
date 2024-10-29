@@ -4,6 +4,7 @@ import 'package:colorify/backend/abstracts/block_with_state.dart';
 import 'package:colorify/backend/abstracts/genblockargs.dart';
 import 'package:colorify/backend/abstracts/rgb.dart';
 import 'package:colorify/backend/abstracts/rgbmapping.dart';
+import 'package:colorify/backend/extensions/on_string.dart';
 import 'package:colorify/backend/utils/algo/color_distance.dart';
 import 'package:colorify/backend/utils/minecraft/flatten_manager.dart';
 import 'package:colorify/frontend/scaffold/bottombar.dart';
@@ -21,6 +22,11 @@ class StaircaseMatchResult {
 StaircaseMatchResult staircaseMatcher(RGBA rgba, GenBlockArguments args) {
   final RGBA tRGB = rgba;
   final FlattenManager manager = FlattenManager.version(args.version!);
+
+  /// 间隔设置
+  args.staircaseGap ??= '2';
+  int? gap = args.staircaseGap!.toInt();
+  gap ??= 2;
 
   /// 匹配到的值
   BlockWithState? block;
@@ -67,11 +73,11 @@ StaircaseMatchResult staircaseMatcher(RGBA rgba, GenBlockArguments args) {
     minmdRecord = minmd;
 
     if (minmd == smd) {
-      offset = 2;
+      offset = gap;
     } else if (minmd == pmd) {
       offset = 0;
     } else {
-      offset = -2;
+      offset = -gap;
     }
   }
 

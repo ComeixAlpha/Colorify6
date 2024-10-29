@@ -20,6 +20,11 @@ class GenBlockArguments {
   final bool stairType;
   bool useStruct;
   final bool dithering;
+
+  String? staircaseGap;
+  String? fscoe;
+  String? wsDelay;
+
   final Directory outDir;
   final List<RGBMapping> palette;
   final GenerateType type;
@@ -40,6 +45,9 @@ class GenBlockArguments {
     required this.stairType,
     required this.useStruct,
     required this.dithering,
+    required this.staircaseGap,
+    required this.fscoe,
+    required this.wsDelay,
     required this.type,
   });
 
@@ -73,6 +81,9 @@ class GenBlockArguments {
       stairType: provider.stairType,
       useStruct: provider.useStruct,
       dithering: provider.dithering,
+      staircaseGap: btecstaircasegap.text,
+      fscoe: btecfscoe.text,
+      wsDelay: btecwscommanddelay.text,
     );
   }
 }

@@ -11,6 +11,7 @@ import 'package:colorify/backend/extensions/on_datetime.dart';
 import 'package:colorify/backend/extensions/on_directory.dart';
 import 'package:colorify/backend/extensions/on_list.dart';
 import 'package:colorify/backend/extensions/on_sendport.dart';
+import 'package:colorify/backend/extensions/on_string.dart';
 import 'package:colorify/backend/generators/generator_package.dart';
 import 'package:colorify/backend/utils/algo/color_distance.dart';
 import 'package:colorify/backend/utils/common/block_matrix.dart';
@@ -107,9 +108,12 @@ Future<void> _generate(SendPort sendPort, GenBlockArguments args) async {
   List<List<RGBA>> rgbamat = sampler(image);
 
   /// 抖动
+  args.fscoe ??= '16';
+  int? fscoe = args.fscoe!.toInt();
+  fscoe ??= 16;
   if (args.dithering) {
     _updateProgress(sendPort, '抖动中', 2);
-    rgbamat = ditherList(rgbamat, (rgb) {
+    rgbamat = ditherList(rgbamat, fscoe, (rgb) {
       return _findRGB(rgb, args);
     });
   }
@@ -157,6 +161,17 @@ Future<void> _generate(SendPort sendPort, GenBlockArguments args) async {
       pack(compressDir, args.outDir);
     }
   } else {
+    /// 设置 WebSocket 间隔
+    args.wsDelay ??= '10';
+    int? delay = args.wsDelay!.toInt();
+    delay ??= 10;
+    sendPort.send(
+      IsolateDataPack(
+        type: IsolateDataPackType.socketDelay,
+        data: delay,
+      ),
+    );
+
     /// 用 WebSocket 输出
     sendPort.send(
       IsolateDataPack(

@@ -15,6 +15,7 @@ enum WebSocketState {
 
 class Socketprov with ChangeNotifier {
   WebSocketState _socketState = WebSocketState.unactivated;
+  int _socketDelay = 10;
 
   WebSocketState get socketState => _socketState;
 
@@ -43,6 +44,14 @@ class Socketprov with ChangeNotifier {
     if (!_onTask && !pausing) return 0.0;
     if (_commandSent == 0) return 0.0;
     return _commandSent / (_commandSent + _commandUnsend);
+  }
+
+  void updateDelay(int v) {
+    if (v < 1) {
+      throw Exception();
+    }
+    _socketDelay = v;
+    notifyListeners();
   }
 
   void updateState(WebSocketState v) {
@@ -94,7 +103,7 @@ class Socketprov with ChangeNotifier {
 
     Future<void> runUntilLocGot() async {
       await Future.delayed(
-        const Duration(milliseconds: 10),
+        Duration(milliseconds: _socketDelay),
         () {
           if (_executeLoc == null) {
             runUntilLocGot();

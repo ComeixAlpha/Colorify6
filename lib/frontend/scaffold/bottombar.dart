@@ -140,6 +140,9 @@ class _BottombarState extends State<Bottombar> {
           ),
         );
       },
+      onReceiveSocketDelay: (v) {
+        Provider.of<Socketprov>(context, listen: false).updateDelay(v);
+      },
       onReceiveSocketCommands: (v) {
         Provider.of<Socketprov>(context, listen: false).startTask(v);
       },

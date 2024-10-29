@@ -2,7 +2,6 @@ import 'package:colorify/backend/abstracts/palette_entry.dart';
 import 'package:colorify/backend/extensions/on_list.dart';
 import 'package:colorify/backend/palette/palette.block.dart';
 import 'package:colorify/backend/palette/palette.carpet.dart';
-import 'package:colorify/backend/palette/palette.map.dart';
 import 'package:colorify/backend/palette/palette.map2.dart';
 import 'package:colorify/backend/utils/common/palette_parser.dart';
 import 'package:colorify/main.dart';
@@ -16,6 +15,9 @@ class Blockprov with ChangeNotifier {
     'resize': true,
     'flattening': true,
     'basicOffset': true,
+    'staircasegap': true,
+    'fscoe': true,
+    'wsgap': true,
   };
   bool avcWhere(String key) {
     return _avcmap[key]!;

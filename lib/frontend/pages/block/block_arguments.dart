@@ -13,7 +13,6 @@ import 'package:provider/provider.dart';
 
 final btecresizew = TextEditingController();
 final btecresizeh = TextEditingController();
-// final btecSampling = TextEditingController();
 final btecpkname = TextEditingController();
 final btecpkauth = TextEditingController();
 final btecpkdesc = TextEditingController();
@@ -22,8 +21,8 @@ final btecbox = TextEditingController();
 final btecboy = TextEditingController();
 final btecboz = TextEditingController();
 final btecstaircasegap = TextEditingController();
-final btecdithercoe = TextEditingController();
-final btecwscommandgap = TextEditingController();
+final btecfscoe = TextEditingController();
+final btecwscommanddelay = TextEditingController();
 
 class BlockArguments extends StatefulWidget {
   final double width;
@@ -69,11 +68,13 @@ class _BlockArgumentsState extends State<BlockArguments> {
               }
               return true;
             },
-            onUpdateAVC: (v) {},
+            onUpdateAVC: (v) {
+              blockprov.updateAVC('resize', v);
+            },
           ),
           ISelectionTile(
             title: '裁剪插值法',
-            subtitle: '无描述',
+            subtitle: 'Resize 的插值函数',
             width: widget.width - 40,
             height: 140,
             initValue: blockprov.interpolation,
@@ -95,7 +96,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
           ),
           ISelectionTile(
             title: '色差公式',
-            subtitle: '无描述',
+            subtitle: '计算色差的公式',
             width: widget.width - 40,
             height: 140,
             initValue: blockprov.rgb,
@@ -230,7 +231,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
           IStringTile(
             title: '阶梯式竖向间隔',
             subtitle: 'JE 通常为 1 但在 BE 会出现马赛克',
-            avcState: blockprov.avcWhere('flattening'),
+            avcState: blockprov.avcWhere('staircasegap'),
             hintText: '2',
             hintStyle: getStyle(color: Colors.grey, size: 18),
             width: widget.width - 40,
@@ -250,17 +251,19 @@ class _BlockArgumentsState extends State<BlockArguments> {
               }
               return true;
             },
-            onUpdateAVC: (v) {},
+            onUpdateAVC: (v) {
+              blockprov.updateAVC('staircasegap', v);
+            },
           ),
           IStringTile(
             title: 'Floyd-Steinberg 系数',
             subtitle: '控制颜色抖动，可以微调来改变抖动效果',
-            avcState: blockprov.avcWhere('flattening'),
+            avcState: blockprov.avcWhere('fscoe'),
             hintText: '16',
             hintStyle: getStyle(color: Colors.grey, size: 18),
             width: widget.width - 40,
             height: 140,
-            controller: btecdithercoe,
+            controller: btecfscoe,
             inputType: TextInputType.number,
             examer: (v) {
               if (v.isEmpty) {
@@ -269,19 +272,24 @@ class _BlockArgumentsState extends State<BlockArguments> {
               if (v.toDouble() == null) {
                 return false;
               }
+              if (v.toDouble() == 0) {
+                return false;
+              }
               return true;
             },
-            onUpdateAVC: (v) {},
+            onUpdateAVC: (v) {
+              blockprov.updateAVC('fscoe', v);
+            },
           ),
           IStringTile(
             title: 'WebSocket 通信间隔',
             subtitle: '发送命令的间隔，太低会导致堵塞。单位 ms',
-            avcState: blockprov.avcWhere('flattening'),
+            avcState: blockprov.avcWhere('wsgap'),
             hintText: '10',
             hintStyle: getStyle(color: Colors.grey, size: 18),
             width: widget.width - 40,
             height: 140,
-            controller: btecwscommandgap,
+            controller: btecwscommanddelay,
             inputType: TextInputType.number,
             examer: (v) {
               if (v.isEmpty) {
@@ -296,7 +304,9 @@ class _BlockArgumentsState extends State<BlockArguments> {
               }
               return true;
             },
-            onUpdateAVC: (v) {},
+            onUpdateAVC: (v) {
+              blockprov.updateAVC('wsgap', v);
+            },
           ),
           const SizedBox(height: 400),
         ],

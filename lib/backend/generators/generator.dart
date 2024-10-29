@@ -13,6 +13,7 @@ class ColorifyGenerator<T> {
 
   dynamic Function(ProgressData) onProgressUpdate;
   dynamic Function(SendPort, String) onReceiveIdenticonData;
+  dynamic Function(int) onReceiveSocketDelay;
   dynamic Function(List<String>) onReceiveSocketCommands;
 
   ColorifyGenerator(
@@ -20,6 +21,7 @@ class ColorifyGenerator<T> {
     this.arguments, {
     required this.onProgressUpdate,
     required this.onReceiveIdenticonData,
+    required this.onReceiveSocketDelay,
     required this.onReceiveSocketCommands,
   });
 
@@ -50,7 +52,10 @@ class ColorifyGenerator<T> {
           onReceiveIdenticonData(_sendPort!, datapack.data);
         } else if (datapack.type == IsolateDataPackType.socketCommands) {
           onReceiveSocketCommands(datapack.data);
-        } else {
+        } else if (datapack.type == IsolateDataPackType.socketDelay) {
+
+        } 
+        else {
           throw Exception('Unexpected isolate data type');
         }
       },

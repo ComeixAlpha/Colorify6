@@ -1,3 +1,4 @@
+import 'package:colorify/frontend/components/arguments/avc_state_indicator.dart';
 import 'package:colorify/ui/basic/xtextfield.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
@@ -64,18 +65,19 @@ class _IStringTileState extends State<IStringTile> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      AnimatedContainer(
-                        curve: Curves.ease,
-                        duration: const Duration(
-                          milliseconds: 240,
-                        ),
-                        width: 10,
-                        height: 10,
-                        decoration: BoxDecoration(
-                          color: widget.avcState ? const Color(0xFFAED581) : const Color(0xFFEF5350),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
+                      AvcStateIndicator(state: widget.avcState),
+                      // AnimatedContainer(
+                      //   curve: Curves.ease,
+                      //   duration: const Duration(
+                      //     milliseconds: 240,
+                      //   ),
+                      //   width: 10,
+                      //   height: 10,
+                      //   decoration: BoxDecoration(
+                      //     color: widget.avcState ? const Color(0xFFAED581) : const Color(0xFFEF5350),
+                      //     borderRadius: BorderRadius.circular(5),
+                      //   ),
+                      // ),
                       const SizedBox(width: 10),
                       Text(
                         widget.title,
@@ -115,6 +117,7 @@ class _IStringTileState extends State<IStringTile> {
                         res = true;
                       }
                       widget.onUpdateAVC(res);
+                      setState(() {});
                     },
                   ),
                 ],

@@ -94,7 +94,7 @@ img.Image dither(img.Image image, List<num> Function(List<num> target) findRGB) 
   return copy;
 }
 
-List<List<RGBA>> ditherList(List<List<RGBA>> samples, List<num> Function(List<num> target) findRGB) {
+List<List<RGBA>> ditherList(List<List<RGBA>> samples, int coe, List<num> Function(List<num> target) findRGB) {
   samples = [...samples];
 
   const double coe1 = 7 / 16;

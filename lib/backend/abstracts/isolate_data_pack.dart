@@ -5,6 +5,7 @@ enum IsolateDataPackType {
   sendPort,
   identiconData,
   identiconUint8List,
+  socketDelay,
   socketCommands,
 }
 
