@@ -132,16 +132,6 @@ List<List<RGBA>> ditherList(List<List<RGBA>> samples, int coe, List<num> Functio
           final eg = pg - fg;
           final eb = pb - fb;
 
-//           print('''
-// FS Target: [$pr, $pg, $pb]
-//    Found:  [$fr, $fg, $fb]
-//    Error:  [$er, $eg, $eb]
-//    Speard: [${er * coe1}, ${eg * coe1}, ${eb * coe1}]
-//            [${er * coe2}, ${eg * coe2}, ${eb * coe2}]
-//            [${er * coe3}, ${eg * coe3}, ${eb * coe3}]
-//            [${er * coe4}, ${eg * coe4}, ${eb * coe4}]
-// ''');
-
           if (x != 0 && y != h - 1) {
             final p = samples[x - 1][y + 1];
             samples[x - 1][y + 1] = RGBA(
