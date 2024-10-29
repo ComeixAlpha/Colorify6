@@ -111,7 +111,7 @@ class AboutTexts extends StatelessWidget {
         padding: const EdgeInsets.all(0),
         children: [
           title('关于 Colorify'),
-          tile('版本', 'v6.0.7'),
+          tile('版本', 'v6.0.8'),
           tile('开源协议', 'GPL-3.0'),
           link('文档', 'https://comeixalpha.github.io'),
           const SizedBox(height: 10),
