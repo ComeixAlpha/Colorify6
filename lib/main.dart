@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:colorify/backend/prov.index.dart';
-import 'package:colorify/backend/utils/permisson.dart';
+import 'package:colorify/backend/utils/common/permisson.dart';
 import 'package:colorify/frontend/components/no_permisson.dart';
 import 'package:colorify/frontend/scaffold/body.dart';
 import 'package:colorify/frontend/scaffold/bottombar.dart';

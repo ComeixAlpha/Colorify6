@@ -9,3 +9,9 @@ extension DoubleIterableExt on Iterable<double> {
     return reduce((p, q) => p + q);
   }
 }
+
+extension NumIterableExt on Iterable<num> {
+  num sum() {
+    return reduce((p, q) => p + q);
+  }
+}

@@ -25,7 +25,7 @@ class _BottombarPageButtonState extends State<BottombarPageButton> {
       alignment: Alignment.center,
       children: [
         Positioned(
-          bottom: 10,
+          bottom: 0,
           child: AnimatedOpacity(
             opacity: isSelected ? 1 : 0,
             duration: const Duration(milliseconds: 240),
@@ -33,11 +33,11 @@ class _BottombarPageButtonState extends State<BottombarPageButton> {
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 240),
               curve: Curves.ease,
-              width: isSelected ? 20 : 6,
-              height: 6,
+              width: isSelected ? 60 : 6,
+              height: isSelected ? 60 : 6,
               decoration: BoxDecoration(
-                color: const Color(0xFF736b7d),
-                borderRadius: BorderRadius.circular(3),
+                color: const Color(0xFF736b7d).withOpacity(0.5),
+                borderRadius: BorderRadius.circular(isSelected ? 30 : 3),
               ),
             ),
           ),

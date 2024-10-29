@@ -1,6 +1,38 @@
+import 'package:colorify/frontend/components/arguments/avc_state_indicator.dart';
 import 'package:colorify/ui/basic/xtextfield.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
+
+class _IXYZTileTextfield extends StatelessWidget {
+  final double width;
+  final String hintText;
+  final TextEditingController tec;
+  final void Function(String v) onChanged;
+
+  const _IXYZTileTextfield({
+    required this.width,
+    required this.hintText,
+    required this.tec,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return XTextfield(
+      controller: tec,
+      width: width,
+      textInputType: TextInputType.number,
+      onChanged: onChanged,
+      style: XTextfieldStyle(
+        hintText: hintText,
+        hintStyle: getStyle(
+          color: Colors.grey,
+          size: 18,
+        ),
+      ),
+    );
+  }
+}
 
 class IXYZTile extends StatefulWidget {
   final double width;
@@ -29,12 +61,25 @@ class _IXYZTileState extends State<IXYZTile> {
   final List<bool> _avcPassedList = [true, true, true];
   bool get _avcPassed => _avcPassedList.every((e) => e);
 
+  void updateAVC(int index, String v) {
+    bool res = widget.examer(v);
+    if (widget.controllers[index].text.isEmpty) {
+      res = true;
+    }
+    setState(() {
+      _avcPassedList[index] = res;
+    });
+    widget.onUpdateAVC(_avcPassed);
+  }
+
   @override
   Widget build(BuildContext context) {
     final double singleTextfieldWidth = (widget.width - 20.0) / 3 - 12;
+
     _avcPassedList[0] = widget.examer(widget.controllers[0].text);
     _avcPassedList[1] = widget.examer(widget.controllers[1].text);
     _avcPassedList[2] = widget.examer(widget.controllers[2].text);
+
     return Column(
       children: [
         Row(
@@ -63,18 +108,7 @@ class _IXYZTileState extends State<IXYZTile> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      AnimatedContainer(
-                        curve: Curves.ease,
-                        duration: const Duration(
-                          milliseconds: 240,
-                        ),
-                        width: 10,
-                        height: 10,
-                        decoration: BoxDecoration(
-                          color: _avcPassedList.every((e) => e) ? const Color(0xFFAED581) : const Color(0xFFEF5350),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
+                      AvcStateIndicator(state: _avcPassed),
                       const SizedBox(width: 10),
                       Text(
                         widget.title,
@@ -103,71 +137,23 @@ class _IXYZTileState extends State<IXYZTile> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      XTextfield(
-                        controller: widget.controllers[0],
+                      _IXYZTileTextfield(
                         width: singleTextfieldWidth,
-                        textInputType: TextInputType.number,
-                        onChanged: (v) {
-                          bool res = widget.examer(v);
-                          if (widget.controllers[0].text.isEmpty) {
-                            res = true;
-                          }
-                          setState(() {
-                            _avcPassedList[0] = res;
-                          });
-                          widget.onUpdateAVC(_avcPassed);
-                        },
-                        style: XTextfieldStyle(
-                          hintText: 'X',
-                          hintStyle: getStyle(
-                            color: Colors.grey,
-                            size: 18,
-                          ),
-                        ),
+                        hintText: 'X',
+                        tec: widget.controllers[0],
+                        onChanged: (v) => updateAVC(0, v),
                       ),
-                      XTextfield(
-                        controller: widget.controllers[1],
+                      _IXYZTileTextfield(
                         width: singleTextfieldWidth,
-                        textInputType: TextInputType.number,
-                        onChanged: (v) {
-                          bool res = widget.examer(v);
-                          if (widget.controllers[1].text.isEmpty) {
-                            res = true;
-                          }
-                          setState(() {
-                            _avcPassedList[1] = res;
-                          });
-                          widget.onUpdateAVC(_avcPassed);
-                        },
-                        style: XTextfieldStyle(
-                          hintText: 'Y',
-                          hintStyle: getStyle(
-                            color: Colors.grey,
-                            size: 18,
-                          ),
-                        ),
+                        hintText: 'Y',
+                        tec: widget.controllers[1],
+                        onChanged: (v) => updateAVC(1, v),
                       ),
-                      XTextfield(
-                        controller: widget.controllers[2],
+                      _IXYZTileTextfield(
                         width: singleTextfieldWidth,
-                        textInputType: TextInputType.number,
-                        onChanged: (v) {
-                          bool res = widget.examer(v);
-                          if (widget.controllers[2].text.isEmpty) {
-                            res = true;
-                          }
-                          setState(() {
-                            _avcPassedList[2] = res;
-                          });
-                          widget.onUpdateAVC(_avcPassed);
-                        },
-                        style: XTextfieldStyle(
-                          hintText: 'Z',
-                          hintStyle: getStyle(
-                            color: Colors.grey,
-                            size: 18,
-                          ),
-                        ),
+                        hintText: 'Z',
+                        tec: widget.controllers[2],
+                        onChanged: (v) => updateAVC(2, v),
                       ),
                     ],
                   ),

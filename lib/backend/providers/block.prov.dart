@@ -3,7 +3,8 @@ import 'package:colorify/backend/extensions/on_list.dart';
 import 'package:colorify/backend/palette/palette.block.dart';
 import 'package:colorify/backend/palette/palette.carpet.dart';
 import 'package:colorify/backend/palette/palette.map.dart';
-import 'package:colorify/backend/utils/palette_parser.dart';
+import 'package:colorify/backend/palette/palette.map2.dart';
+import 'package:colorify/backend/utils/common/palette_parser.dart';
 import 'package:colorify/main.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class Blockprov with ChangeNotifier {
 
   /// AVC: Arguments Validity Check
   final Map<String, bool> _avcmap = {
-    'sampling': true,
+    'resize': true,
     'flattening': true,
     'basicOffset': true,
   };
@@ -28,6 +29,8 @@ class Blockprov with ChangeNotifier {
 
   /// Arguments
   int _plane = 0;
+  int _rgb = 0;
+  int _interpolation = 0;
   bool _stairType = false;
   bool _useStruct = false;
   bool _dithering = false;
@@ -36,6 +39,8 @@ class Blockprov with ChangeNotifier {
   bool _carperOnly = false;
 
   int get plane => _plane;
+  int get rgb => _rgb;
+  int get interpolation => _interpolation;
   bool get stairType => _stairType;
   bool get useStruct => _useStruct;
   bool get dithering => _dithering;
@@ -45,6 +50,16 @@ class Blockprov with ChangeNotifier {
 
   set plane(int v) {
     _plane = v;
+    notifyListeners();
+  }
+
+  set rgb(int v) {
+    _rgb = v;
+    notifyListeners();
+  }
+
+  set interpolation(int v) {
+    _interpolation = v;
     notifyListeners();
   }
 
@@ -99,7 +114,7 @@ class Blockprov with ChangeNotifier {
 
   void refreshPalette() {
     if (_stairType) {
-      _palette = parseMapPalette(mapPalette);
+      _palette = parseMapPalette(mapPalette2['data'] as Map<String, String>);
     } else if (_carperOnly) {
       _palette = parseCarpetPalette(carpetPalette);
     } else {

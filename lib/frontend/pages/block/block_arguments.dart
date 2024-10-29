@@ -1,15 +1,19 @@
 import 'package:colorify/backend/extensions/on_string.dart';
 import 'package:colorify/backend/providers/block.prov.dart';
+import 'package:colorify/frontend/components/arguments/advanced_alert.dart';
 import 'package:colorify/frontend/components/arguments/icheckbox_tile.dart';
 import 'package:colorify/frontend/components/arguments/ipackageinfo_tile.dart';
 import 'package:colorify/frontend/components/arguments/iselection_tile.dart';
+import 'package:colorify/frontend/components/arguments/isize_tile.dart';
 import 'package:colorify/frontend/components/arguments/istring_tile.dart';
 import 'package:colorify/frontend/components/arguments/ixyz_tile.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-final btecSampling = TextEditingController();
+final btecresizew = TextEditingController();
+final btecresizeh = TextEditingController();
+// final btecSampling = TextEditingController();
 final btecpkname = TextEditingController();
 final btecpkauth = TextEditingController();
 final btecpkdesc = TextEditingController();
@@ -17,6 +21,9 @@ final btecflattn = TextEditingController();
 final btecbox = TextEditingController();
 final btecboy = TextEditingController();
 final btecboz = TextEditingController();
+final btecstaircasegap = TextEditingController();
+final btecdithercoe = TextEditingController();
+final btecwscommandgap = TextEditingController();
 
 class BlockArguments extends StatefulWidget {
   final double width;
@@ -43,28 +50,36 @@ class _BlockArgumentsState extends State<BlockArguments> {
         padding: const EdgeInsets.all(0),
         children: [
           const SizedBox(height: 20),
-          IStringTile(
-            title: '采样率',
-            subtitle: '对原图的采样率，取值范围为(0, 1]',
-            avcState: blockprov.avcWhere('sampling'),
-            hintText: '自动',
-            hintStyle: getStyle(color: Colors.grey, size: 18),
+          ISizeTie(
             width: widget.width - 40,
             height: 140,
-            controller: btecSampling,
-            inputType: TextInputType.number,
+            title: '裁剪',
+            subtitle: '裁剪到指定尺寸，只填一项锁定长宽比',
+            controllers: [btecresizew, btecresizeh],
             examer: (v) {
-              final parsed = v.toDouble();
-              if (parsed == null) {
-                return false;
-              } else if (parsed <= 0 || parsed > 1) {
-                return false;
-              } else {
+              if (v.isEmpty) {
                 return true;
               }
+              final parsed = v.toInt();
+              if (parsed == null) {
+                return false;
+              }
+              if (parsed < 1) {
+                return false;
+              }
+              return true;
             },
-            onUpdateAVC: (v) {
-              Provider.of<Blockprov>(context, listen: false).updateAVC('sampling', v);
+            onUpdateAVC: (v) {},
+          ),
+          ISelectionTile(
+            title: '裁剪插值法',
+            subtitle: '无描述',
+            width: widget.width - 40,
+            height: 140,
+            initValue: blockprov.interpolation,
+            candidates: const ['Nearest', 'Cubic', 'Linear', 'Average'],
+            onSelect: (v) {
+              blockprov.interpolation = v;
             },
           ),
           ISelectionTile(
@@ -76,6 +91,17 @@ class _BlockArgumentsState extends State<BlockArguments> {
             candidates: const ['xOy', 'xOz', 'yOz'],
             onSelect: (v) {
               blockprov.plane = v;
+            },
+          ),
+          ISelectionTile(
+            title: '色差公式',
+            subtitle: '无描述',
+            width: widget.width - 40,
+            height: 140,
+            initValue: blockprov.rgb,
+            candidates: const ['RGB', 'RGB+'],
+            onSelect: (v) {
+              blockprov.rgb = v;
             },
           ),
           ICheckBoxTile(
@@ -109,7 +135,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
           ICheckBoxTile(
             value: blockprov.dithering,
             title: '颜色抖动',
-            subtitle: '使用 Floyd-Steinberg 算法处理图像，小体积画不建议使用',
+            subtitle: '使用 Floyd-Steinberg 算法处理图像',
             width: widget.width - 40,
             onCheck: (v) {
               blockprov.dithering = v;
@@ -197,6 +223,80 @@ class _BlockArgumentsState extends State<BlockArguments> {
             onUpdateAVC: (v) {
               Provider.of<Blockprov>(context, listen: false).updateAVC('basicOffset', v);
             },
+          ),
+          AdvancedAlert(
+            width: widget.width - 40,
+          ),
+          IStringTile(
+            title: '阶梯式竖向间隔',
+            subtitle: 'JE 通常为 1 但在 BE 会出现马赛克',
+            avcState: blockprov.avcWhere('flattening'),
+            hintText: '2',
+            hintStyle: getStyle(color: Colors.grey, size: 18),
+            width: widget.width - 40,
+            height: 140,
+            controller: btecstaircasegap,
+            inputType: TextInputType.number,
+            examer: (v) {
+              if (v.isEmpty) {
+                return true;
+              }
+              final toint = v.toInt();
+              if (toint == null) {
+                return false;
+              }
+              if (toint < 1) {
+                return false;
+              }
+              return true;
+            },
+            onUpdateAVC: (v) {},
+          ),
+          IStringTile(
+            title: 'Floyd-Steinberg 系数',
+            subtitle: '控制颜色抖动，可以微调来改变抖动效果',
+            avcState: blockprov.avcWhere('flattening'),
+            hintText: '16',
+            hintStyle: getStyle(color: Colors.grey, size: 18),
+            width: widget.width - 40,
+            height: 140,
+            controller: btecdithercoe,
+            inputType: TextInputType.number,
+            examer: (v) {
+              if (v.isEmpty) {
+                return true;
+              }
+              if (v.toDouble() == null) {
+                return false;
+              }
+              return true;
+            },
+            onUpdateAVC: (v) {},
+          ),
+          IStringTile(
+            title: 'WebSocket 通信间隔',
+            subtitle: '发送命令的间隔，太低会导致堵塞。单位 ms',
+            avcState: blockprov.avcWhere('flattening'),
+            hintText: '10',
+            hintStyle: getStyle(color: Colors.grey, size: 18),
+            width: widget.width - 40,
+            height: 140,
+            controller: btecwscommandgap,
+            inputType: TextInputType.number,
+            examer: (v) {
+              if (v.isEmpty) {
+                return true;
+              }
+              final toint = v.toInt();
+              if (toint == null) {
+                return false;
+              }
+              if (toint < 1) {
+                return false;
+              }
+              return true;
+            },
+            onUpdateAVC: (v) {},
           ),
           const SizedBox(height: 400),
         ],

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:colorify/backend/providers/socket.prov.dart';
-import 'package:colorify/backend/utils/websocket.dart';
+import 'package:colorify/backend/utils/minecraft/websocket.dart';
 import 'package:colorify/frontend/components/websocket/wstile.dart';
 import 'package:colorify/frontend/pages/socket/messages.dart';
 import 'package:colorify/frontend/pages/socket/process_line_indicator.dart';
@@ -54,9 +54,17 @@ class _SocketPageState extends State<SocketPage> {
                           socketprov.updateState(WebSocketState.connected);
                         },
                         onMessage: (v) {
-                          socketprov.appendLog(v);
-
                           final json = jsonDecode(v);
+
+                          final statusCode = json['body']['statusCode'] as int;
+
+                          if (statusCode == 0) {
+                            socketprov.appendLog(v);
+                          } else {
+                            socketprov.appendLog(v, logHead: 'ERROR');
+                            print(v);
+                          }
+
                           if (json['body']['position'] != null) {
                             final value = json['body']['position'];
                             socketprov.recordExeLoc(

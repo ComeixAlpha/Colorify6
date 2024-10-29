@@ -1,7 +1,7 @@
 import 'dart:isolate';
 
 import 'package:colorify/backend/abstracts/isolate_data_pack.dart';
-import 'package:colorify/backend/generators/_generator_block.dart';
+import 'package:colorify/backend/generators/generator_block.dart';
 import 'package:colorify/backend/generators/generator_particle.dart';
 import 'package:colorify/frontend/components/processing/progress_indicator.dart';
 import 'package:colorify/frontend/scaffold/bottombar.dart';

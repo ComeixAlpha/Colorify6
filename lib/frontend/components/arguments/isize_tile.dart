@@ -1,41 +1,84 @@
+import 'package:colorify/frontend/components/arguments/avc_state_indicator.dart';
 import 'package:colorify/ui/basic/xtextfield.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
 
-class IStringTile extends StatefulWidget {
+class _ISizeTileTextfield extends StatelessWidget {
+  final double width;
+  final String hintText;
+  final TextEditingController tec;
+  final void Function(String v) onChanged;
+
+  const _ISizeTileTextfield({
+    required this.width,
+    required this.hintText,
+    required this.tec,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return XTextfield(
+      controller: tec,
+      width: width,
+      textInputType: TextInputType.number,
+      onChanged: onChanged,
+      style: XTextfieldStyle(
+        hintText: hintText,
+        hintStyle: getStyle(
+          color: Colors.grey,
+          size: 18,
+        ),
+      ),
+    );
+  }
+}
+
+class ISizeTie extends StatefulWidget {
   final double width;
   final double height;
   final String title;
   final String subtitle;
-  final bool avcState;
-  final TextEditingController controller;
+  final List<TextEditingController> controllers;
   final bool Function(String) examer;
   final void Function(bool) onUpdateAVC;
-  final TextInputType? inputType;
-  final String? hintText;
-  final TextStyle? hintStyle;
-  const IStringTile({
+  const ISizeTie({
     super.key,
     required this.width,
     required this.height,
     required this.title,
     required this.subtitle,
-    required this.avcState,
-    required this.controller,
+    required this.controllers,
     required this.examer,
     required this.onUpdateAVC,
-    this.inputType,
-    this.hintText,
-    this.hintStyle,
   });
 
   @override
-  State<IStringTile> createState() => _IStringTileState();
+  State<ISizeTie> createState() => _ISizeTieState();
 }
 
-class _IStringTileState extends State<IStringTile> {
+class _ISizeTieState extends State<ISizeTie> {
+  final List<bool> _avcPassedList = [true, true];
+  bool get _avcPassed => _avcPassedList.every((e) => e);
+
+  void updateAVC(int index, String v) {
+    bool res = widget.examer(v);
+    if (widget.controllers[index].text.isEmpty) {
+      res = true;
+    }
+    setState(() {
+      _avcPassedList[index] = res;
+    });
+    widget.onUpdateAVC(_avcPassed);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final double singleTextfieldWidth = (widget.width - 20.0) / 2 - 12;
+
+    _avcPassedList[0] = widget.examer(widget.controllers[0].text);
+    _avcPassedList[1] = widget.examer(widget.controllers[1].text);
+
     return Column(
       children: [
         Row(
@@ -64,18 +107,7 @@ class _IStringTileState extends State<IStringTile> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      AnimatedContainer(
-                        curve: Curves.ease,
-                        duration: const Duration(
-                          milliseconds: 240,
-                        ),
-                        width: 10,
-                        height: 10,
-                        decoration: BoxDecoration(
-                          color: widget.avcState ? const Color(0xFFAED581) : const Color(0xFFEF5350),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
+                      AvcStateIndicator(state: _avcPassed),
                       const SizedBox(width: 10),
                       Text(
                         widget.title,
@@ -101,21 +133,22 @@ class _IStringTileState extends State<IStringTile> {
                       ),
                     ),
                   ),
-                  XTextfield(
-                    controller: widget.controller,
-                    width: widget.width - 20,
-                    textInputType: widget.inputType,
-                    style: XTextfieldStyle(
-                      hintText: widget.hintText,
-                      hintStyle: widget.hintStyle,
-                    ),
-                    onChanged: (v) {
-                      bool res = widget.examer(v);
-                      if (widget.controller.text.isEmpty) {
-                        res = true;
-                      }
-                      widget.onUpdateAVC(res);
-                    },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _ISizeTileTextfield(
+                        width: singleTextfieldWidth,
+                        hintText: '长/自动',
+                        tec: widget.controllers[0],
+                        onChanged: (v) => updateAVC(0, v),
+                      ),
+                      _ISizeTileTextfield(
+                        width: singleTextfieldWidth,
+                        hintText: '宽/自动',
+                        tec: widget.controllers[1],
+                        onChanged: (v) => updateAVC(1, v),
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -1,23 +1,22 @@
 import 'dart:isolate';
 
+import 'package:colorify/backend/abstracts/genblockargs.dart';
 import 'package:colorify/backend/abstracts/isolate_data_pack.dart';
 import 'package:colorify/backend/extensions/on_string.dart';
 import 'package:colorify/backend/generators/generator.dart';
-import 'package:colorify/backend/generators/generator_block.dart';
 import 'package:colorify/backend/generators/generator_particle.dart';
 import 'package:colorify/backend/providers/block.prov.dart';
 import 'package:colorify/backend/providers/page.prov.dart';
 import 'package:colorify/backend/providers/particle.prov.dart';
 import 'package:colorify/backend/providers/progress.prov.dart';
 import 'package:colorify/backend/providers/socket.prov.dart';
-import 'package:colorify/backend/utils/flie_picker.dart';
-import 'package:colorify/backend/utils/identicon.dart';
-import 'package:colorify/backend/utils/path.dart';
+import 'package:colorify/backend/utils/common/flie_picker.dart';
+import 'package:colorify/backend/utils/minecraft/identicon.dart';
+import 'package:colorify/backend/utils/common/path.dart';
 import 'package:colorify/frontend/components/bottombar/bottombar_button.dart';
 import 'package:colorify/frontend/components/bottombar/bottombar_page_button.dart';
 import 'package:colorify/frontend/components/bottombar/websocket_button.dart';
 import 'package:colorify/frontend/components/processing/progress_indicator.dart';
-import 'package:colorify/frontend/pages/block/block_arguments.dart';
 import 'package:colorify/frontend/pages/particle/particle_arguments.dart';
 import 'package:colorify/ui/basic/xframe.dart';
 import 'package:colorify/ui/hide/message_dialog.dart';
@@ -104,7 +103,7 @@ class _BottombarState extends State<Bottombar> {
     image = null;
   }
 
-  Future<void> __requestBlockTask(GenerateType type) async {
+  Future<void> _requestBlockTask(GenerateType type) async {
     /// 检测参数合法性
     final blockprov = Provider.of<Blockprov>(context, listen: false);
     final avc = blockprov.avc;
@@ -146,38 +145,6 @@ class _BottombarState extends State<Bottombar> {
       },
     );
     generator.start();
-  }
-
-  Future<void> _requestBlockTask(GenerateType type) async {
-    final blockprov = Provider.of<Blockprov>(context, listen: false);
-    final avc = blockprov.avc;
-    if (!avc) {
-      _alertAVCError();
-      return;
-    }
-    final image = await pickImage();
-    final docDir = await getAndCreateColorifyDir();
-    final args = GenBlockArguments(
-      type: type,
-      image: image,
-      outDir: docDir,
-      palette: blockprov.filteredPalette,
-      samp: btecSampling.text.toDouble(),
-      pkName: btecpkname.text,
-      pkAuth: btecpkauth.text,
-      pkDesc: btecpkdesc.text,
-      version: btecflattn.text,
-      basicOffset: [
-        btecbox.text.toInt(),
-        btecboy.text.toInt(),
-        btecboz.text.toInt(),
-      ],
-      plane: blockprov.plane,
-      stairType: blockprov.stairType,
-      useStruct: blockprov.useStruct,
-      dithering: blockprov.dithering,
-    );
-    await _startTask(type, bArgClosure(args));
   }
 
   Future<void> _startTask(GenerateType type, void Function(SendPort) generator) async {
@@ -236,7 +203,7 @@ class _BottombarState extends State<Bottombar> {
           height: 80.0,
           decoration: BoxDecoration(
             color: const Color(0xFF1d1a1f),
-            borderRadius: BorderRadius.circular(35.0),
+            borderRadius: BorderRadius.circular(40),
           ),
           padding: const EdgeInsets.all(10.0),
           child: Row(
@@ -261,7 +228,7 @@ class _BottombarState extends State<Bottombar> {
                   if (pageprov.page == 0) {
                     _requestParticleTask(GenerateType.file);
                   } else if (pageprov.page == 1) {
-                    __requestBlockTask(GenerateType.file);
+                    _requestBlockTask(GenerateType.file);
                   } else {}
                 },
               ),
@@ -284,7 +251,7 @@ class _BottombarState extends State<Bottombar> {
                         '要通过WS传输像素画吗?',
                         (v) async {
                           if (v) {
-                            await __requestBlockTask(GenerateType.socket);
+                            await _requestBlockTask(GenerateType.socket);
                           }
                         },
                       );

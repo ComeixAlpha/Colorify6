@@ -62,7 +62,7 @@ class Topbar extends StatelessWidget {
                     'COLORIFY',
                     overflow: TextOverflow.ellipsis,
                     style: getStyle(
-                      color: Colors.white,
+                      color: const Color(0xFFE2E0F9),
                       size: 30,
                       weight: FontWeight.w700,
                     ),
@@ -106,7 +106,7 @@ class Topbar extends StatelessWidget {
                       ),
                     );
                   },
-                  borderRadius: BorderRadius.circular(tp1.height / 2),
+                  borderRadius: BorderRadius.circular(12),
                   child: const Center(
                     child: Icon(
                       Icons.book,

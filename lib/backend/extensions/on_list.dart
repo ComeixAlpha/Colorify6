@@ -1,5 +1,5 @@
 extension ListExt<T> on List<T> {
-  void enumerate(Function(int, T) fn) {
+  void enumerate(dynamic Function(int, T) fn) {
     for (int i = 0; i < length; i++) {
       fn(i, this[i]);
     }
@@ -11,19 +11,25 @@ extension ListExt<T> on List<T> {
     }
   }
 
-  bool everyInEnumerate(bool Function(int, T) fn) {
-    for (int i = 0; i < length; i++) {
-      if (!fn(i, this[i])) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   List<T> mapInEnumerate(T Function(int, T) fn) {
     for (int i = 0; i < length; i++) {
       this[i] = fn(i, this[i]);
     }
     return this;
+  }
+}
+
+extension NumListExt on List<int> {
+  int max() {
+    if (length == 0) {
+      throw Exception();
+    }
+    int maxv = this[0];
+    for (int v in this) {
+      if (v > maxv) {
+        maxv = v;
+      }
+    }
+    return maxv;
   }
 }

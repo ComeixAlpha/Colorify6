@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:colorify/backend/extensions/on_datetime.dart';
-import 'package:colorify/backend/utils/websocket.dart';
+import 'package:colorify/backend/utils/minecraft/websocket.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -55,11 +55,11 @@ class Socketprov with ChangeNotifier {
     notifyListeners();
   }
 
-  void appendLog(String log) {
+  void appendLog(String log, {String? logHead}) {
     if (_logs.length == 20) {
       _logs.removeAt(0);
     }
-    _logs.add('[${DateTime.now().hmsOnly()}] $log');
+    _logs.add('[${logHead ?? 'INFO'}][${DateTime.now().hmsOnly()}] $log');
     notifyListeners();
   }
 
