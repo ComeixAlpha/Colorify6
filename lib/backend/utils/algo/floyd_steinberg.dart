@@ -97,10 +97,10 @@ img.Image dither(img.Image image, List<num> Function(List<num> target) findRGB) 
 List<List<RGBA>> ditherList(List<List<RGBA>> samples, int coe, List<num> Function(List<num> target) findRGB) {
   samples = [...samples];
 
-  const double coe1 = 7 / 16;
-  const double coe2 = 3 / 16;
-  const double coe3 = 5 / 16;
-  const double coe4 = 1 / 16;
+  final double coe1 = 7 / coe;
+  final double coe2 = 3 / coe;
+  final double coe3 = 5 / coe;
+  final double coe4 = 1 / coe;
 
   final w = samples.length;
   final h = samples[0].length;
@@ -132,12 +132,22 @@ List<List<RGBA>> ditherList(List<List<RGBA>> samples, int coe, List<num> Functio
           final eg = pg - fg;
           final eb = pb - fb;
 
+//           print('''
+// FS Target: [$pr, $pg, $pb]
+//    Found:  [$fr, $fg, $fb]
+//    Error:  [$er, $eg, $eb]
+//    Speard: [${er * coe1}, ${eg * coe1}, ${eb * coe1}]
+//            [${er * coe2}, ${eg * coe2}, ${eb * coe2}]
+//            [${er * coe3}, ${eg * coe3}, ${eb * coe3}]
+//            [${er * coe4}, ${eg * coe4}, ${eb * coe4}]
+// ''');
+
           if (x != 0 && y != h - 1) {
-            final p = samples[x - 1][y];
-            samples[x - 1][y] = RGBA(
-              r: (p.r + er * coe2).toInt(),
-              g: (p.g + eg * coe2).toInt(),
-              b: (p.b + eb * coe2).toInt(),
+            final p = samples[x - 1][y + 1];
+            samples[x - 1][y + 1] = RGBA(
+              r: (p.r + er * coe2).clamp(0, 255).toInt(),
+              g: (p.g + eg * coe2).clamp(0, 255).toInt(),
+              b: (p.b + eb * coe2).clamp(0, 255).toInt(),
               a: v.a,
             );
           }
@@ -146,24 +156,24 @@ List<List<RGBA>> ditherList(List<List<RGBA>> samples, int coe, List<num> Functio
             final p2 = samples[x + 1][y + 1];
 
             samples[x + 1][y] = RGBA(
-              r: (p1.r + er * coe1).toInt(),
-              g: (p1.g + eg * coe1).toInt(),
-              b: (p1.b + eb * coe1).toInt(),
+              r: (p1.r + er * coe1).clamp(0, 255).toInt(),
+              g: (p1.g + eg * coe1).clamp(0, 255).toInt(),
+              b: (p1.b + eb * coe1).clamp(0, 255).toInt(),
               a: v.a,
             );
             samples[x + 1][y + 1] = RGBA(
-              r: (p2.r + er * coe4).toInt(),
-              g: (p2.g + eg * coe4).toInt(),
-              b: (p2.b + eb * coe4).toInt(),
+              r: (p2.r + er * coe4).clamp(0, 255).toInt(),
+              g: (p2.g + eg * coe4).clamp(0, 255).toInt(),
+              b: (p2.b + eb * coe4).clamp(0, 255).toInt(),
               a: v.a,
             );
           }
           if (y != h - 1) {
             final p = samples[x][y + 1];
             samples[x][y + 1] = RGBA(
-              r: (p.r + er * coe3).toInt(),
-              g: (p.g + eg * coe3).toInt(),
-              b: (p.b + eb * coe3).toInt(),
+              r: (p.r + er * coe3).clamp(0, 255).toInt(),
+              g: (p.g + eg * coe3).clamp(0, 255).toInt(),
+              b: (p.b + eb * coe3).clamp(0, 255).toInt(),
               a: v.a,
             );
           }

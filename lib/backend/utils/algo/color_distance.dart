@@ -41,19 +41,17 @@ num rgbplus(RGBA x, RGBA y) {
 
   final num theta = 2 /
       pi *
-      acos(
-        (x.r * y.r + x.g * y.g + x.b * y.b) /
-            sqrt(
-              (pow(x.r, 2) + pow(x.g, 2) + pow(x.b, 2)) * (pow(y.r, 2) + pow(y.g, 2) + pow(y.b, 2)) + tiny,
-            ),
-      );
+      acos(((x.r * y.r + x.g * y.g + x.b * y.b) /
+              sqrt((pow(x.r, 2) + pow(x.g, 2) + pow(x.b, 2)) * (pow(y.r, 2) + pow(y.g, 2) + pow(y.b, 2)) + tiny))
+          .clamp(-1, 1));
 
   final num deno = [
-    (x.r - y.r).abs() / (x.r + y.r),
-    (x.g - y.g).abs() / (x.g + y.g),
-    (x.b - y.b).abs() / (x.b + y.b),
+    (x.r - y.r).abs() / (x.r + y.r + tiny),
+    (x.g - y.g).abs() / (x.g + y.g + tiny),
+    (x.b - y.b).abs() / (x.b + y.b + tiny),
     tiny,
   ].sum();
+
   final num sthetar = ((x.r - y.r).abs() / (x.r + y.r)) / deno * pow(sr, 2);
   final num sthetag = ((x.g - y.g).abs() / (x.g + y.g)) / deno * pow(sg, 2);
   final num sthetab = ((x.b - y.b).abs() / (x.b + y.b)) / deno * pow(sb, 2);
@@ -65,7 +63,7 @@ num rgbplus(RGBA x, RGBA y) {
             pow(sg, 2) * wg * pow((x.g - y.g), 2),
             pow(sb, 2) * wb * pow((x.b - y.b), 2),
           ].sum() /
-          (wr + wg + wr) /
+          (wr + wg + wb) /
           pow(255, 2) +
       stheta * sratio * pow(theta, 2));
 

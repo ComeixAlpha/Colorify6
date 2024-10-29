@@ -108,10 +108,10 @@ Future<void> _generate(SendPort sendPort, GenBlockArguments args) async {
   List<List<RGBA>> rgbamat = sampler(image);
 
   /// 抖动
-  args.fscoe ??= '16';
-  int? fscoe = args.fscoe!.toInt();
-  fscoe ??= 16;
   if (args.dithering) {
+    args.fscoe ??= '16';
+    int? fscoe = args.fscoe!.toInt();
+    fscoe ??= 16;
     _updateProgress(sendPort, '抖动中', 2);
     rgbamat = ditherList(rgbamat, fscoe, (rgb) {
       return _findRGB(rgb, args);
@@ -293,8 +293,8 @@ List<num> _findRGB(List<num> rgb, GenBlockArguments args) {
     if (dist < mindis) {
       find = [
         entry.r as num,
-        entry.r as num,
-        entry.r as num,
+        entry.g as num,
+        entry.b as num,
       ];
       mindis = dist;
     }

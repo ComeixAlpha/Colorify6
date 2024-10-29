@@ -62,7 +62,6 @@ class _SocketPageState extends State<SocketPage> {
                             socketprov.appendLog(v);
                           } else {
                             socketprov.appendLog(v, logHead: 'ERROR');
-                            print(v);
                           }
 
                           if (json['body']['position'] != null) {
@@ -195,11 +194,11 @@ class _SocketPageState extends State<SocketPage> {
           ),
           Wstile(
             width: mqs.width - 40,
-            height: 300,
+            height: 400,
             title: '日志（最近20条）',
             child: SocketMessages(
               width: mqs.width - 64,
-              height: 240,
+              height: 340,
               logs: socketprov.logs,
             ),
           ),
