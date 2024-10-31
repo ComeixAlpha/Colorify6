@@ -1,5 +1,5 @@
 import 'package:colorify/backend/abstracts/palette_entry.dart';
-import 'package:colorify/backend/palette/palette.block.classify.dart';
+import 'package:colorify/backend/assets/palette/palette.block.classify.dart';
 import 'package:colorify/backend/providers/block.prov.dart';
 import 'package:colorify/frontend/components/block/block_palette_class_head.dart';
 import 'package:colorify/frontend/components/block/block_palette_tile.dart';

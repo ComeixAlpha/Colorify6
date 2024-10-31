@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
 
+import 'package:colorify/backend/abstracts/block_with_state.dart';
 import 'package:colorify/backend/abstracts/genblockargs.dart';
 import 'package:colorify/backend/abstracts/isolate_data_pack.dart';
 import 'package:colorify/backend/abstracts/rgb.dart';
@@ -63,6 +64,7 @@ void blockArgumentsReceiver(SendPort sendPort) async {
   );
 }
 
+/// 进度更新器
 void _updateProgress(SendPort sendPort, String state, double v) {
   sendPort.send(
     IsolateDataPack(
@@ -158,7 +160,7 @@ Future<void> _generate(SendPort sendPort, GenBlockArguments args) async {
     }
     if (needPack) {
       final compressDir = args.outDir.concact('colorified');
-      pack(compressDir, args.outDir);
+      await pack(compressDir, args.outDir);
     }
   } else {
     /// 设置 WebSocket 间隔
@@ -355,13 +357,13 @@ BlockMatrix _buildFlat(List<List<RGBA>> rgbamat, GenBlockArguments args) {
           /// 透明即为空
           if (rgba.a != 255) return;
 
-          final found = kdtree.findNearest(PaletteEntry(rgba.r, rgba.g, rgba.b, ''));
+          final PaletteEntry? found = kdtree.findNearest(PaletteEntry(rgba.r, rgba.g, rgba.b, ''));
 
           if (found == null) {
             return;
           }
 
-          final block = manager.getBlockWithStateOf(found.id);
+          final BlockWithState block = manager.getBlockWithStateOf(found.id);
           blmx.push(Block(x: x, y: 0, z: z, block: block));
         },
       );
@@ -413,7 +415,7 @@ Future<void> _writeStructure(BlockMatrix blmx, bool needPack, GenBlockArguments 
   if (args.stairType) {
     struct = Structure(blmx.size);
   } else {
-    final xyz = xyzswitcher(args.plane, [
+    final xyz = xyswitcher(args.plane, [
       blmx.size.x,
       blmx.size.y,
       blmx.size.z,
@@ -436,7 +438,7 @@ Future<void> _writeStructure(BlockMatrix blmx, bool needPack, GenBlockArguments 
           v.block.id,
         );
       } else {
-        final xyz = xyzswitcher(args.plane, [v.x, v.y, v.z]);
+        final xyz = xyswitcher(args.plane, [v.x, v.y, v.z]);
         struct.setBlock(
           Vector3(
             xyz[0].toDouble(),
@@ -468,10 +470,10 @@ List<String> _buildCommands(BlockMatrix blmx, GenBlockArguments args) {
     args.basicOffset![1] ?? 0,
     args.basicOffset![2] ?? 0,
   ];
-  final List<int> bos = xyzswitcher(args.plane, bo);
+  final List<int> bos = xyswitcher(args.plane, bo);
   blmx.blocks.enumerate(
     (i, v) {
-      final List<int> xyz = xyzswitcher(args.plane, [v.x, v.y, v.z]);
+      final List<int> xyz = xyswitcher(args.plane, [v.x, v.y, v.z]);
       if (args.stairType) {
         commands.add('setblock ~${v.x + bos[0]} ~${v.y + bos[1]} ~${v.z + bos[2]} ${v.block.id} ${v.block.state}');
       } else {

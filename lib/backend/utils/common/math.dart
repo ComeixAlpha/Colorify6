@@ -2,54 +2,54 @@
 
 import 'dart:math';
 
-class MVector3 {
+class Vector3 {
   late double x;
   late double y;
   late double z;
   late double length;
 
-  MVector3(this.x, this.y, this.z) {
+  Vector3(this.x, this.y, this.z) {
     length = sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
   }
 
-  MVector3 plus(MVector3 vec) {
-    return MVector3(x + vec.x, y + vec.y, z + vec.z);
+  Vector3 plus(Vector3 vec) {
+    return Vector3(x + vec.x, y + vec.y, z + vec.z);
   }
 
-  MVector3 substract(MVector3 vec) {
-    return MVector3(x - vec.x, y - vec.y, z - vec.z);
+  Vector3 substract(Vector3 vec) {
+    return Vector3(x - vec.x, y - vec.y, z - vec.z);
   }
 
-  MVector3 times(num n) {
-    return MVector3(x * n, y * n, z * n);
+  Vector3 times(num n) {
+    return Vector3(x * n, y * n, z * n);
   }
 
-  MVector3 divides(num n) {
-    return MVector3(x / n, y / n, z / n);
+  Vector3 divides(num n) {
+    return Vector3(x / n, y / n, z / n);
   }
 
-  double dot(MVector3 vec) {
+  double dot(Vector3 vec) {
     return x * vec.x + y * vec.y + z * vec.z;
   }
 
-  MVector3 cross(MVector3 vec) {
-    return MVector3(
+  Vector3 cross(Vector3 vec) {
+    return Vector3(
       y * vec.z - vec.y * z,
       vec.x * z - vec.z * x,
       x * vec.y - vec.x * y,
     );
   }
 
-  MVector3 normalize() {
-    return MVector3(x / length, y / length, z / length);
+  Vector3 normalize() {
+    return Vector3(x / length, y / length, z / length);
   }
 
-  MVector3 clone() {
-    return MVector3(x, y, z);
+  Vector3 clone() {
+    return Vector3(x, y, z);
   }
 
-  MVector3 negate() {
-    return MVector3(-x, -y, -z);
+  Vector3 negate() {
+    return Vector3(-x, -y, -z);
   }
 }
 
@@ -76,18 +76,18 @@ class Matrix3 {
     this.n33,
   );
 
-  MVector3 multiplyWithVector3(MVector3 vec) {
+  Vector3 multiplyWithVector3(Vector3 vec) {
     final x = vec.x;
     final y = vec.y;
     final z = vec.z;
-    return MVector3(
+    return Vector3(
       n11 * x + n12 * y + n13 * z,
       n21 * x + n22 * y + n23 * z,
       n31 * x + n32 * y + n33 * z,
     );
   }
 
-  Matrix3 rotateByAxis(num angle, MVector3 axis) {
+  Matrix3 rotateByAxis(num angle, Vector3 axis) {
     final c = cos(angle);
     final s = sin(angle);
     final omc = 1 - c;

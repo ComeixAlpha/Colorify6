@@ -1,6 +1,6 @@
 import 'package:colorify/backend/abstracts/block_with_state.dart';
 import 'package:colorify/backend/abstracts/flatten_history.dart';
-import 'package:colorify/backend/palette/palette.flatten.histories.dart';
+import 'package:colorify/backend/assets/palette/palette.flatten.histories.dart';
 
 class FlattenManager {
   late final List<int> version;

@@ -9,7 +9,7 @@ enum GenerateMode {
 class Particleprov with ChangeNotifier {
   /// AVC: Arguments Validity Check
   final Map<String, bool> _avcmap = {
-    'sampling': true,
+    'resize': true,
     'height': true,
     'rotate': true,
   };
@@ -24,12 +24,19 @@ class Particleprov with ChangeNotifier {
   }
 
   int _plane = 0;
+  int _interpolation = 0;
   GenerateMode _mode = GenerateMode.match;
   List<RGBMapping> _mappings = [RGBMapping(r: 0, g: 0, b: 0, id: 'colorify:endrod')];
 
   int get plane => _plane;
+  int get interpolation => _interpolation;
   GenerateMode get mode => _mode;
   List<RGBMapping> get mappings => _mappings;
+
+  set interpolation(int v) {
+    _interpolation = v;
+    notifyListeners();
+  }
 
   void setPlane(int v) {
     _plane = v;

@@ -7,7 +7,7 @@ class RGBA {
     required this.r,
     required this.g,
     required this.b,
-    required this.a,
+    this.a = 0,
   });
 
   static RGBA fromRGBList(List<int> v) {

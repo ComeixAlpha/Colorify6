@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:colorify/backend/utils/common/math.dart';
 
-MVector3 rotate(MVector3 vec, MVector3 fitV) {
+Vector3 rotate(Vector3 vec, Vector3 fitV) {
   if (fitV.x == 0) {
     fitV.x = 0.001;
   }
@@ -13,7 +13,7 @@ MVector3 rotate(MVector3 vec, MVector3 fitV) {
     fitV.z = 0.001;
   }
 
-  final nnv = MVector3(0, 1, 0);
+  final nnv = Vector3(0, 1, 0);
   final nfitV = fitV.normalize();
 
   final axis = nnv.cross(nfitV);

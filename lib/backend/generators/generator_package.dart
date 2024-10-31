@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:archive/archive_io.dart';
 import 'package:colorify/backend/abstracts/rgbmapping.dart';
 import 'package:colorify/backend/extensions/on_directory.dart';
-import 'package:colorify/backend/generators/generator_particle.dart';
 import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
 import 'package:path/path.dart' as path;
@@ -140,96 +139,6 @@ Future<void> packIcon(
   if (erp) {
     await File(rpPackIconPath).writeAsBytes(list);
   }
-}
-
-Future<void> scriptModeMatch(Directory dir, int fileCount) async {
-  String runCommands = '';
-  for (int i = 0; i < fileCount; i++) {
-    runCommands += '\tentity.runCommand(\'function output_$i\');\n';
-  }
-  final script = '''
-import * as Server from '@minecraft/server';
-
-function paint(entity, tickDelay) {
-  if (!entity.isValid) return;
-$runCommands
-  Server.system.runTimeout(() => paint(entity, tickDelay), tickDelay);
-}
-
-Server.system.runInterval(() => {
-  const entities = Server.world.getDimension('overworld').getEntities();
-  for (let entity of entities) {
-    if (entity.nameTag.startsWith('particle:') && !entity.hasTag('particled')) {
-      const tickDelay = Number(entity.nameTag.split(':')[1]);
-      entity.addTag('particled');
-      entity.addEffect('invisibility', 99999, { showParticles: false });
-      paint(entity, tickDelay);
-    }
-  }
-});
-''';
-
-  final scriptDir = dir.concact('scripts');
-  if (!await scriptDir.exists()) {
-    await scriptDir.create();
-  }
-
-  final scriptPath = path.join(scriptDir.path, 'index.js');
-  await File(scriptPath).writeAsString(script);
-}
-
-Future<void> scriptModeDust(Directory dir, List<ParticlePoint> points) async {
-  String particles = '';
-  for (ParticlePoint point in points) {
-    particles +=
-        '\t{ x: ${point.x}, y: ${point.y}, z: ${point.z}, r: ${point.r! / 255}, g: ${point.g! / 255}, b: ${point.b! / 255} },\n';
-  }
-  final script = '''
-import * as Server from '@minecraft/server';
-
-const particles = [
-$particles
-];
-
-function paint(entity, tickDelay) {
-  if (!entity.isValid) return;
-  for (let particle of particles) {
-    const map = new Server.MolangVariableMap();
-    map.setColorRGB("variable.rgb", {
-        red: particle.r,
-        green: particle.g,
-        blue: particle.b,
-    });
-    entity.dimension.spawnParticle(
-      "comeix:dust",
-      { x: entity.location.x + particle.x, y: entity.location.y + particle.y, z: entity.location.z + particle.z },
-      map
-    );
-  }
-  Server.system.runTimeout(() => paint(entity, tickDelay), tickDelay);
-}
-
-Server.system.runInterval(() => {
-  const entities = Server.world.getDimension('overworld').getEntities();
-  for (let entity of entities) {
-    if (entity.nameTag.startsWith('particle:') && !entity.hasTag('particled')) {
-      const tickDelay = Number(entity.nameTag.split(':')[1]);
-      entity.addTag('particled');
-      entity.addEffect('invisibility', 99999, { showParticles: false });
-      paint(entity, tickDelay);
-    }
-  }
-});
-''';
-
-  final scriptDir = dir.concact('scripts');
-
-  if (!await scriptDir.exists()) {
-    await scriptDir.create();
-  }
-
-  final scriptPath = path.join(scriptDir.path, 'index.js');
-  await File(scriptPath).writeAsString(script);
 }
 
 Future<void> scriptTickingArea(Directory dir, int fileCount, int dx, int dy, int dz) async {

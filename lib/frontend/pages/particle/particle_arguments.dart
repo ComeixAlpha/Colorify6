@@ -2,13 +2,15 @@ import 'package:colorify/backend/extensions/on_string.dart';
 import 'package:colorify/backend/providers/particle.prov.dart';
 import 'package:colorify/frontend/components/arguments/ipackageinfo_tile.dart';
 import 'package:colorify/frontend/components/arguments/iselection_tile.dart';
+import 'package:colorify/frontend/components/arguments/isize_tile.dart';
 import 'package:colorify/frontend/components/arguments/istring_tile.dart';
 import 'package:colorify/frontend/components/arguments/ixyz_tile.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-final ptecSampling = TextEditingController();
+final ptecresizew = TextEditingController();
+final ptecresizeh = TextEditingController();
 final ptecHeight = TextEditingController();
 final ptecrx = TextEditingController();
 final ptecry = TextEditingController();
@@ -42,28 +44,38 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
         children: [
           ...[
             const SizedBox(height: 20),
-            IStringTile(
-              title: '采样率',
-              subtitle: '对原图的采样率，取值范围为(0, 1]',
-              avcState: particleprov.avcWhere('sampling'),
-              hintText: '自动',
-              hintStyle: getStyle(color: Colors.grey, size: 18),
+            ISizeTie(
               width: widget.width - 40,
               height: 140,
-              controller: ptecSampling,
-              inputType: TextInputType.number,
+              title: '裁剪',
+              subtitle: '裁剪到指定尺寸，只填一项锁定长宽比',
+              controllers: [ptecresizew, ptecresizeh],
               examer: (v) {
-                final parsed = v.toDouble();
-                if (parsed == null) {
-                  return false;
-                } else if (parsed <= 0 || parsed > 1) {
-                  return false;
-                } else {
+                if (v.isEmpty) {
                   return true;
                 }
+                final parsed = v.toInt();
+                if (parsed == null) {
+                  return false;
+                }
+                if (parsed < 1) {
+                  return false;
+                }
+                return true;
               },
               onUpdateAVC: (v) {
-                particleprov.updateAVC('sampling', v);
+                particleprov.updateAVC('resize', v);
+              },
+            ),
+            ISelectionTile(
+              title: '裁剪插值法',
+              subtitle: 'Resize 的插值函数',
+              width: widget.width - 40,
+              height: 140,
+              initValue: particleprov.interpolation,
+              candidates: const ['Nearest', 'Cubic', 'Linear', 'Average'],
+              onSelect: (v) {
+                particleprov.interpolation = v;
               },
             ),
             IStringTile(
