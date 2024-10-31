@@ -8,7 +8,7 @@ extension DirExt on Directory {
 
   Future<void> createIfNotExist() async {
     if (!await exists()) {
-      create();
+      await create();
     }
   }
 }

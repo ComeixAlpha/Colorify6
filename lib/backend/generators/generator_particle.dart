@@ -15,7 +15,6 @@ import 'package:colorify/backend/assets/json/rgb_particle.dart';
 import 'package:colorify/backend/extensions/on_datetime.dart';
 import 'package:colorify/backend/extensions/on_directory.dart';
 import 'package:colorify/backend/extensions/on_iterable.dart';
-import 'package:colorify/backend/extensions/on_sendport.dart';
 import 'package:colorify/backend/generators/generator_package.dart';
 import 'package:colorify/backend/providers/particle.prov.dart';
 import 'package:colorify/backend/utils/algo/rotator.dart';
@@ -83,7 +82,7 @@ Future<void> _generate(SendPort sendPort, GenParticleArguments args) async {
   /// 图像为空
   Image? image = args.image;
   if (image == null) {
-    sendPort.sendData(
+    sendPort.send(
       IsolateDataPack(
         type: IsolateDataPackType.progressUpdate,
         data: ProgressData(state: 'Error', progress: -1),

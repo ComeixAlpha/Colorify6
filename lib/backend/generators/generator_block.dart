@@ -11,7 +11,6 @@ import 'package:colorify/backend/abstracts/rgbmapping.dart';
 import 'package:colorify/backend/extensions/on_datetime.dart';
 import 'package:colorify/backend/extensions/on_directory.dart';
 import 'package:colorify/backend/extensions/on_list.dart';
-import 'package:colorify/backend/extensions/on_sendport.dart';
 import 'package:colorify/backend/extensions/on_string.dart';
 import 'package:colorify/backend/generators/generator_package.dart';
 import 'package:colorify/backend/utils/algo/color_distance.dart';
@@ -82,7 +81,7 @@ Future<void> _generate(SendPort sendPort, GenBlockArguments args) async {
   /// 图像为空
   Image? image = args.image;
   if (image == null) {
-    sendPort.sendData(
+    sendPort.send(
       IsolateDataPack(
         type: IsolateDataPackType.progressUpdate,
         data: ProgressData(state: 'Error', progress: -1),
@@ -501,21 +500,21 @@ Future<void> _writeFunctionsAndScripts(
   } else {
     functionDir = args.outDir;
   }
-  final fm = Functionmaker(dir: functionDir);
+  final maker = Functionmaker(dir: functionDir);
   final len = commands.length;
   await commands.enumerateAsync(
     (i, v) async {
       onProgress(i, len);
-      await fm.command(v);
+      await maker.command(v);
     },
   );
-  await fm.end();
+  await maker.end();
 
   if (needPack) {
     final size = blmx.size;
     await scriptTickingArea(
       args.outDir.concact('colorified'),
-      fm.fileCount + 1,
+      maker.fileCount + 1,
       size.x.toInt(),
       size.y.toInt(),
       size.z.toInt(),
