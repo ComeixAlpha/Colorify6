@@ -109,7 +109,7 @@ class Topbar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   child: const Center(
                     child: Icon(
-                      Icons.book,
+                      Icons.auto_stories_rounded,
                       color: Colors.white,
                     ),
                   ),

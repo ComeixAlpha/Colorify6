@@ -8,6 +8,8 @@ class BottombarButton extends StatefulWidget {
   final Color? splashColor;
   final Color? hoverColor;
   final Color? iconColor;
+  final double? enabledIconOpacity;
+  final double? disabledIconOpacity;
   final Duration? duration;
   const BottombarButton({
     super.key,
@@ -17,6 +19,8 @@ class BottombarButton extends StatefulWidget {
     this.splashColor,
     this.hoverColor,
     this.iconColor,
+    this.enabledIconOpacity,
+    this.disabledIconOpacity,
     this.duration,
   });
 
@@ -36,7 +40,10 @@ class _BottombarButtonState extends State<BottombarButton> {
       onTap: widget.onTap,
       splashColor: widget.splashColor,
       duration: widget.duration,
-      child: Icon(widget.icon, color: widget.iconColor ?? Colors.white),
+      child: Icon(
+        widget.icon,
+        color: widget.iconColor ?? Colors.white,
+      ),
     );
   }
 }

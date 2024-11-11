@@ -33,8 +33,8 @@ class _ParticleMappingsState extends State<ParticleMappings> {
     return XButton(
       width: 140,
       height: 50,
-      backgroundColor: const Color(0xFF2d2a31),
-      hoverColor: const Color(0xFF2d2a31),
+      backgroundColor: const Color(0xFFb9acc9),
+      hoverColor: const Color(0xFFb9acc9),
       onTap: () {
         _overlayEntry = OverlayEntry(
           builder: (ctx) {
@@ -66,7 +66,7 @@ class _ParticleMappingsState extends State<ParticleMappings> {
         child: AutoSizeText(
           '新建映射',
           style: getStyle(
-            color: Colors.white,
+            color: const Color(0xFF433e49),
             size: 20,
           ),
         ),

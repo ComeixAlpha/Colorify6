@@ -38,6 +38,10 @@ class _WebsocketButtonState extends State<WebsocketButton> {
       splashColor = null;
     }
 
+    if (socketprov.unactivated) {
+      iconColor = Colors.white.withOpacity(0.3);
+    }
+
     if (socketprov.unconnected) {
       if (_state == 0) {
         Timer(

@@ -59,6 +59,7 @@ class _XButtonState extends State<XButton> {
               });
             },
             splashColor: widget.splashColor,
+            highlightColor: Colors.transparent,
             child: Container(
               width: widget.width,
               height: widget.height,

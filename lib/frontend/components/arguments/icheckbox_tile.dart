@@ -39,9 +39,9 @@ class _ICheckBoxTileState extends State<ICheckBoxTile> {
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.3),
-                    blurRadius: 1,
+                    blurRadius: 10,
                     spreadRadius: 1,
-                    offset: const Offset(0, 3),
+                    offset: const Offset(0, 4),
                   ),
                 ],
               ),

@@ -46,9 +46,9 @@ class _BlockPaletteClassHeadState extends State<BlockPaletteClassHead> {
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.3),
-                  blurRadius: 1,
+                  blurRadius: 5,
                   spreadRadius: 1,
-                  offset: const Offset(0, 3),
+                  offset: const Offset(0, 4),
                 ),
               ],
             ),
@@ -82,7 +82,7 @@ class _BlockPaletteClassHeadState extends State<BlockPaletteClassHead> {
                   curve: Curves.ease,
                   child: const Icon(
                     Icons.expand_less,
-                    color: Colors.white,
+                    color: Colors.grey,
                   ),
                 )
               ],

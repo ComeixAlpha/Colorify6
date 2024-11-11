@@ -170,7 +170,7 @@ class Blockprov with ChangeNotifier {
   }
 
   void unexpandClass(String className) {
-    _expandedClasses.remove(className);
+    _expandedClasses.removeWhere((e) => e == className);
     notifyListeners();
   }
 }

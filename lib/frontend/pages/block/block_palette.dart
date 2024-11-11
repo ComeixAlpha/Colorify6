@@ -45,7 +45,7 @@ class _BlockPaletteState extends State<BlockPalette> {
       children.add(
         BlockPaletteClassHead(
           width: widget.width,
-          className: className,
+          className: '[${classes[classes.keys.toList()[i]]!.length}] $className',
           classSubname: classSubname,
           onChanged: (v) {
             if (v) {
@@ -56,11 +56,21 @@ class _BlockPaletteState extends State<BlockPalette> {
           },
         ),
       );
-      if (blockprov.expandedClasses.contains(className)) {
-        for (BlockPaletteEntry entry in allEntries) {
-          final thisClass = classes[classNameAll]!;
+      if (blockprov.expandedClasses.any((e) => e.contains(className))) {
+        for (int j = 0; j < allEntries.length; j++) {
+          final BlockPaletteEntry entry = allEntries[j];
+          final List<String> thisClass = classes[classNameAll]!;
           if (thisClass.contains(entry.id)) {
             children.add(BlockPaletteTile(width: widget.width, entry: entry));
+            if (j != allEntries.length - 1) {
+              children.add(UnconstrainedBox(
+                child: Container(
+                  width: widget.width - 40,
+                  height: 1,
+                  color: Colors.white.withOpacity(0.1),
+                ),
+              ));
+            }
           }
         }
       }
