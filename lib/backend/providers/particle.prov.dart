@@ -26,7 +26,7 @@ class Particleprov with ChangeNotifier {
   int _plane = 0;
   int _interpolation = 0;
   GenerateMode _mode = GenerateMode.match;
-  List<RGBMapping> _mappings = [RGBMapping(r: 0, g: 0, b: 0, id: 'colorify:endrod')];
+  List<RGBMapping> _mappings = [RGBMapping(r: 0, g: 0, b: 0, id: 'minecraft:endrod')];
 
   int get plane => _plane;
   int get interpolation => _interpolation;

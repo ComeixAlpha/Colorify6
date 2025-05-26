@@ -25,7 +25,7 @@ class ParticleMappings extends StatefulWidget {
 
 class _ParticleMappingsState extends State<ParticleMappings> {
   final List<RGBMapping> _mappings = [
-    RGBMapping(r: 0, g: 0, b: 0, id: 'colorify:endrod'),
+    RGBMapping(r: 0, g: 0, b: 0, id: 'minecraft:endrod'),
   ];
 
   OverlayEntry? _overlayEntry;

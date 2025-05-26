@@ -156,8 +156,19 @@ class _SocketPageState extends State<SocketPage> {
       );
     } else if (socketprov.connected || socketprov.pausing) {
       return ListView(
-        padding: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.all(0),
         children: [
+          Container(
+            width: 100.w - 40,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            child: Text(
+              'Tip: 在使用此功能时请在游戏设置 -> 通用\n开启此选项: 已启用WebSocket\n关闭此选项: 需要加密的WebSocket',
+              style: getStyle(
+                color: Colors.grey,
+                size: 16,
+              ),
+            ),
+          ),
           Wstile(
             width: 100.w - 40,
             height: 110,

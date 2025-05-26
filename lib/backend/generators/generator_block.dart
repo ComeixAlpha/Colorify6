@@ -14,22 +14,22 @@ import 'package:colorify/backend/extensions/on_list.dart';
 import 'package:colorify/backend/extensions/on_string.dart';
 import 'package:colorify/backend/generators/generator_package.dart';
 import 'package:colorify/backend/utils/algo/color_distance.dart';
-import 'package:colorify/backend/utils/common/block_matrix.dart';
-import 'package:colorify/backend/utils/minecraft/flatten_manager.dart';
 import 'package:colorify/backend/utils/algo/floyd_steinberg.dart';
-import 'package:colorify/backend/utils/minecraft/functionmaker.dart';
 import 'package:colorify/backend/utils/algo/kdtree.dart';
-import 'package:colorify/backend/utils/matchers/staircase_matcher.dart';
+import 'package:colorify/backend/utils/common/block_matrix.dart';
 import 'package:colorify/backend/utils/common/offset_request.dart';
 import 'package:colorify/backend/utils/common/sampler.dart';
-import 'package:colorify/backend/utils/minecraft/structure.dart';
 import 'package:colorify/backend/utils/common/xyzswitcher.dart';
+import 'package:colorify/backend/utils/matchers/staircase_matcher.dart';
+import 'package:colorify/backend/utils/minecraft/flatten_manager.dart';
+import 'package:colorify/backend/utils/minecraft/functionmaker.dart';
+import 'package:colorify/backend/utils/minecraft/structure.dart';
 import 'package:colorify/frontend/components/processing/progress_indicator.dart';
 import 'package:colorify/frontend/scaffold/bottombar.dart';
 import 'package:image/image.dart';
+import 'package:path/path.dart' as path;
 import 'package:uuid/uuid.dart';
 import 'package:vector_math/vector_math.dart';
-import 'package:path/path.dart' as path;
 
 GenBlockArguments? _args;
 
@@ -159,7 +159,7 @@ Future<void> _generate(SendPort sendPort, GenBlockArguments args) async {
     }
     if (needPack) {
       final compressDir = args.outDir.concact('colorified');
-      await pack(compressDir, args.outDir);
+      await pack(compressDir, args.outDir, suffix: 'mcpack');
     }
   } else {
     /// 设置 WebSocket 间隔
@@ -283,7 +283,8 @@ List<num> _findRGB(List<num> rgb, GenBlockArguments args) {
   for (RGBMapping entry in args.palette) {
     ColorDistance cd = ColorDistance(args.colordistance);
     final RGBA entryRGBA = RGBA(r: entry.r, g: entry.g, b: entry.b, a: 0);
-    final RGBA targetRGBA = RGBA(r: rgb[0].toInt(), g: rgb[1].toInt(), b: rgb[2].toInt(), a: 0);
+    final RGBA targetRGBA =
+        RGBA(r: rgb[0].toInt(), g: rgb[1].toInt(), b: rgb[2].toInt(), a: 0);
     num dist = cd.calculator(entryRGBA, targetRGBA);
 
     if (dist.isNaN) {
@@ -356,7 +357,8 @@ BlockMatrix _buildFlat(List<List<RGBA>> rgbamat, GenBlockArguments args) {
           /// 透明即为空
           if (rgba.a != 255) return;
 
-          final PaletteEntry? found = kdtree.findNearest(PaletteEntry(rgba.r, rgba.g, rgba.b, ''));
+          final PaletteEntry? found =
+              kdtree.findNearest(PaletteEntry(rgba.r, rgba.g, rgba.b, ''));
 
           if (found == null) {
             return;
@@ -409,7 +411,8 @@ Future<void> _buildPack(SendPort sendPort, GenBlockArguments args) async {
   );
 }
 
-Future<void> _writeStructure(BlockMatrix blmx, bool needPack, GenBlockArguments args) async {
+Future<void> _writeStructure(
+    BlockMatrix blmx, bool needPack, GenBlockArguments args) async {
   Structure struct;
   if (args.stairType) {
     struct = Structure(blmx.size);
@@ -474,7 +477,8 @@ List<String> _buildCommands(BlockMatrix blmx, GenBlockArguments args) {
     (i, v) {
       final List<int> xyz = xyswitcher(args.plane, [v.x, v.y, v.z]);
       if (args.stairType) {
-        commands.add('setblock ~${v.x + bos[0]} ~${v.y + bos[1]} ~${v.z + bos[2]} ${v.block.id} ${v.block.state}');
+        commands.add(
+            'setblock ~${v.x + bos[0]} ~${v.y + bos[1]} ~${v.z + bos[2]} ${v.block.id} ${v.block.state}');
       } else {
         commands.add(
           'setblock ~${xyz[0] + bos[0]} ~${xyz[1] + bos[1]} ~${xyz[2] + bos[2]} ${v.block.id} ${v.block.state}',

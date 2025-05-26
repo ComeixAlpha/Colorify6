@@ -24,8 +24,8 @@ import 'package:colorify/backend/utils/minecraft/functionmaker.dart';
 import 'package:colorify/frontend/components/processing/progress_indicator.dart';
 import 'package:colorify/frontend/scaffold/bottombar.dart';
 import 'package:image/image.dart';
-import 'package:uuid/uuid.dart';
 import 'package:path/path.dart' as path;
+import 'package:uuid/uuid.dart';
 
 GenParticleArguments? _args;
 bool _isPackIconGenerated = false;
@@ -147,7 +147,7 @@ Future<void> _generate(SendPort sendPort, GenParticleArguments args) async {
     await _buildPack(sendPort, args);
 
     /// 生成粒子
-    _updateProgress(sendPort, '生成粒子中', 2);
+    _updateProgress(sendPort, '生成自定义粒子中', 2);
     _buildParticles(args);
   }
 
@@ -174,11 +174,16 @@ Future<void> _generate(SendPort sendPort, GenParticleArguments args) async {
   /// WS
   if (args.type == GenerateType.socket) {
     final commands = _buildWebSocketCommands(points, args);
-    sendPort.send(IsolateDataPack(type: IsolateDataPackType.socketCommands, data: commands));
+    sendPort
+        .send(IsolateDataPack(type: IsolateDataPackType.socketCommands, data: commands));
+
+    /// 完成
+    _updateProgress(sendPort, '', 1);
+    return;
   }
 
   /// 等待图标生成完成
-  _updateProgress(sendPort, '最后的步骤', 2);
+  _updateProgress(sendPort, '生成图标中', 2);
   Future<void> waitUntilIconGenerated() async {
     if (_isPackIconGenerated) {
       sendPort.send(
@@ -388,15 +393,18 @@ Future<void> _buildParticles(GenParticleArguments args) async {
   final particleDir = args.outDir.concact('colorified/resources_pack/particles');
 
   if (args.mode == GenerateMode.dust) {
-    await File(path.join(particleDir.path, 'colorify.dust.json')).writeAsString(jsonEncode(dustparticle));
+    await File(path.join(particleDir.path, 'colorify.dust.json'))
+        .writeAsString(jsonEncode(dustparticle));
     return;
   }
 
   for (RGBMapping entry in args.mappings) {
     Map json = Map.from(rgbparticle);
-    ((json['particle_effect'] as Map<String, Object>)['description'] as Map<String, Object>)['identifier'] = entry.id;
+    ((json['particle_effect'] as Map<String, Object>)['description']
+        as Map<String, Object>)['identifier'] = entry.id;
     (((json['particle_effect'] as Map<String, Object>)['components']
-        as Map<String, Object>)['minecraft:particle_appearance_tinting'] as Map<String, List<int>>)['color'] = [
+            as Map<String, Object>)['minecraft:particle_appearance_tinting']
+        as Map<String, List<int>>)['color'] = [
       entry.r,
       entry.g,
       entry.b,
@@ -473,7 +481,8 @@ Future<void> _buildScriptInDustMode(
     final r = point.rgb!.r / 255;
     final g = point.rgb!.g / 255;
     final b = point.rgb!.b / 255;
-    String particle = '\t{ x: ${point.x}, y: ${point.y}, z: ${point.z}, r: $r, g: $g, b: $b },\n';
+    String particle =
+        '\t{ x: ${point.x}, y: ${point.y}, z: ${point.z}, r: $r, g: $g, b: $b },\n';
 
     sink.write(particle);
     await sink.flush();
@@ -486,7 +495,8 @@ Future<void> _buildScriptInDustMode(
 }
 
 /// 生成用于 WebSocket 的命令
-List<String> _buildWebSocketCommands(List<ParticlePoint> points, GenParticleArguments args) {
+List<String> _buildWebSocketCommands(
+    List<ParticlePoint> points, GenParticleArguments args) {
   List<String> commands = [];
   for (ParticlePoint point in points) {
     commands.add('particle ${point.pid} ~${point.x} ~${point.y} ~${point.z}');

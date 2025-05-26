@@ -164,6 +164,10 @@ class Blockprov with ChangeNotifier {
     _disabled = disabledMemory;
   }
 
+  bool isExpanded(String className) {
+    return _expandedClasses.contains(className);
+  }
+
   void expandClass(String className) {
     _expandedClasses.add(className);
     notifyListeners();

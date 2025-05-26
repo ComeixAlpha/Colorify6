@@ -7,13 +7,15 @@ class BlockPaletteClassHead extends StatefulWidget {
   final double width;
   final String className;
   final String classSubname;
-  final void Function(bool) onChanged;
+  final bool isExpanded;
+  final void Function(bool) onExpandStateChanged;
   const BlockPaletteClassHead({
     super.key,
     required this.width,
     required this.className,
     required this.classSubname,
-    required this.onChanged,
+    required this.isExpanded,
+    required this.onExpandStateChanged,
   });
 
   @override
@@ -22,6 +24,12 @@ class BlockPaletteClassHead extends StatefulWidget {
 
 class _BlockPaletteClassHeadState extends State<BlockPaletteClassHead> {
   bool _expand = false;
+
+  @override
+  void initState() {
+    _expand = widget.isExpanded;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +42,7 @@ class _BlockPaletteClassHeadState extends State<BlockPaletteClassHead> {
         setState(() {
           _expand = !_expand;
         });
-        widget.onChanged(_expand);
+        widget.onExpandStateChanged(_expand);
       },
       child: Column(
         children: [

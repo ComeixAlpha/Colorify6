@@ -35,7 +35,7 @@ Future<void> manifest(
   "format_version": 2,
   "header": {
     "name": "${args.name}",
-    "description": "[Colorify] ${args.desc}",
+    "description": "[§bColorify§f] ${args.desc}",
     "uuid": "$uuidBP",
     "min_engine_version": [1, 19, 50],
     "version": [1, 0, 0]
@@ -77,7 +77,7 @@ Future<void> manifest(
   "format_version": 2,
   "header": {
     "name": "${args.name}",
-    "description": "[Colorify] ${args.desc}",
+    "description": "[§bColorify§f] ${args.desc}",
     "uuid": "$uuidRP",
     "min_engine_version": [1, 19, 50],
     "version": [1, 0, 0]

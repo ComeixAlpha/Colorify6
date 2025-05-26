@@ -47,7 +47,8 @@ class _BlockPaletteState extends State<BlockPalette> {
           width: widget.width,
           className: '[${classes[classes.keys.toList()[i]]!.length}] $className',
           classSubname: classSubname,
-          onChanged: (v) {
+          isExpanded: blockprov.isExpanded(className),
+          onExpandStateChanged: (v) {
             if (v) {
               blockprov.expandClass(className);
             } else {
@@ -81,7 +82,8 @@ class _BlockPaletteState extends State<BlockPalette> {
         width: widget.width,
         className: '其他 Others',
         classSubname: '未分类或无法明确分类',
-        onChanged: (v) {
+        isExpanded: blockprov.isExpanded('其他 Others'),
+        onExpandStateChanged: (v) {
           if (v) {
             blockprov.expandClass('其他 Others');
           } else {
