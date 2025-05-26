@@ -67,7 +67,7 @@ class _BlockPaletteState extends State<BlockPalette> {
                 child: Container(
                   width: widget.width - 40,
                   height: 1,
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withAlpha(26),
                 ),
               ));
             }
@@ -113,7 +113,8 @@ class _BlockPaletteState extends State<BlockPalette> {
     List<BlockPaletteEntry> palette = [...blockprov.palette];
 
     if (_filter.isNotEmpty) {
-      palette = palette.where((e) => e.id.contains(_filter) || e.cn.contains(_filter)).toList();
+      palette =
+          palette.where((e) => e.id.contains(_filter) || e.cn.contains(_filter)).toList();
     }
 
     return SizedBox(

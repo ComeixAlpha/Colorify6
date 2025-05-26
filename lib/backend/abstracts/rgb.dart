@@ -11,6 +11,9 @@ class RGBA {
   });
 
   static RGBA fromRGBList(List<int> v) {
+    if (v.length != 3) {
+      throw Exception();
+    }
     return RGBA(
       r: v[0].clamp(0, 255),
       g: v[1].clamp(0, 255),
@@ -21,6 +24,6 @@ class RGBA {
 
   @override
   String toString() {
-    return '[$r, $g, $b, $a]';
+    return '<RGBA>[$r, $g, $b, $a]';
   }
 }

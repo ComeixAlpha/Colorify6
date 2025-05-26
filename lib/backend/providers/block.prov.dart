@@ -98,7 +98,7 @@ class Blockprov with ChangeNotifier {
   List<BlockPaletteEntry> _palette = [];
   List<BlockPaletteEntry> get palette {
     if (!_init) {
-      _palette = parseBlockPalette(blockPalette);
+      _palette = PaletteParser.block(blockPalette);
       _init = true;
     }
     return _palette;
@@ -116,11 +116,11 @@ class Blockprov with ChangeNotifier {
 
   void refreshPalette() {
     if (_stairType) {
-      _palette = parseMapPalette(mapPalette2['data'] as Map<String, String>);
+      _palette = PaletteParser.staircase(mapPalette2['data'] as Map<String, String>);
     } else if (_carperOnly) {
-      _palette = parseCarpetPalette(carpetPalette);
+      _palette = PaletteParser.carpet(carpetPalette);
     } else {
-      _palette = parseBlockPalette(blockPalette);
+      _palette = PaletteParser.block(blockPalette);
 
       if (_noGlasses) {
         _palette.enumerate(

@@ -5,6 +5,7 @@ import 'package:colorify/backend/providers/progress.prov.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 enum ProgressState {
   born,
@@ -133,8 +134,8 @@ class _ProgressIndicatorState extends State<ProgressIndicator> {
     }
 
     final progressprov = context.watch<Progressprov>();
-    final mqs = MediaQuery.of(context).size;
-    final s = mqs.width * 0.8;
+
+    final s = 100.w * 0.8;
 
     /// Process ends with success
     if (progressprov.success && _state != ProgressState.disappear) {
@@ -167,19 +168,19 @@ class _ProgressIndicatorState extends State<ProgressIndicator> {
           }
         },
         child: Container(
-          width: mqs.width,
-          height: mqs.height,
-          color: Colors.black.withOpacity(0.2),
+          width: 100.w,
+          height: 100.h,
+          color: Colors.black.withAlpha(51),
           child: Center(
             child: GestureDetector(
               onTap: () {},
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 120),
                 curve: Curves.ease,
-                width: _state == ProgressState.disappear ? mqs.width : s,
-                height: _state == ProgressState.disappear ? mqs.height : s,
+                width: _state == ProgressState.disappear ? 100.w : s,
+                height: _state == ProgressState.disappear ? 100.h : s,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2d2a31).withOpacity(0.9),
+                  color: const Color(0xFF2d2a31).withAlpha(223),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Center(
@@ -202,10 +203,12 @@ class _ProgressIndicatorState extends State<ProgressIndicator> {
                                 /// Invisible when on error
                                 visible: _state != ProgressState.error,
                                 child: CircularProgressIndicator(
-                                  value: progressprov.onUnknown ? 0 : progressprov.progress,
+                                  value:
+                                      progressprov.onUnknown ? 0 : progressprov.progress,
                                   strokeWidth: 8,
                                   color: const Color(0xFF2d2a31),
-                                  valueColor: const AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 203, 243, 157)),
+                                  valueColor: const AlwaysStoppedAnimation<Color>(
+                                      Color.fromARGB(255, 203, 243, 157)),
                                 ),
                               ),
                             ),

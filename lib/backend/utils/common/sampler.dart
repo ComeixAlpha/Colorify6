@@ -1,15 +1,15 @@
 import 'package:colorify/backend/abstracts/rgb.dart';
 import 'package:image/image.dart';
 
-List<List<RGBA>> sampler(Image image) {
+List<List<RGBA>> readImageAsRGBAList(Image image) {
   final w = image.width;
   final h = image.height;
 
   final List<List<RGBA>> rgbamat = [];
   int relativex = 0;
-  for (int x = 0; x < w; x ++) {
+  for (int x = 0; x < w; x++) {
     rgbamat.add([]);
-    for (int y = 0; y < h; y ++) {
+    for (int y = 0; y < h; y++) {
       final pixel = image.getPixel(x, y);
       final r = pixel.r;
       final g = pixel.g;

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 import 'package:window_manager/window_manager.dart';
 
 SharedPreferences? pref;
@@ -18,7 +19,7 @@ SharedPreferences? pref;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isWindows) {
-  await windowManager.ensureInitialized();
+    await windowManager.ensureInitialized();
     windowManager.center();
   }
 
@@ -90,34 +91,36 @@ class _MainAppState extends State<MainApp> with WindowListener {
       systemNavigationBarDividerColor: Colors.transparent,
     ));
 
-    final mqs = MediaQuery.of(context).size;
-
-    return XFrame(
-      home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        extendBodyBehindAppBar: true,
-        body: Stack(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+    return Sizer(
+      builder: (context, orientation, screenType) {
+        return XFrame(
+          home: Scaffold(
+            resizeToAvoidBottomInset: false,
+            extendBodyBehindAppBar: true,
+            body: Stack(
               children: [
-                Topbar(
-                  width: mqs.width,
-                  height: mqs.height * 0.1,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Topbar(
+                      width: 100.w,
+                      height: 100.h * 0.1,
+                    ),
+                    Body(
+                      width: 100.w,
+                      height: 100.h * 0.9,
+                    ),
+                  ],
                 ),
-                Body(
-                  width: mqs.width,
-                  height: mqs.height * 0.9,
-                ),
+                const Positioned(
+                  bottom: 14,
+                  child: Bottombar(),
+                )
               ],
             ),
-            const Positioned(
-              bottom: 14,
-              child: Bottombar(),
-            )
-          ],
-        ),
-      ),
+          ),
+        );
+      }
     );
   }
 }

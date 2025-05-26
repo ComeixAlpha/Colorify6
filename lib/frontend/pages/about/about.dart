@@ -3,6 +3,7 @@ import 'package:colorify/frontend/components/about/sponsor_qrcode.dart';
 import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutTexts extends StatelessWidget {
@@ -10,8 +11,6 @@ class AboutTexts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mqs = MediaQuery.of(context).size;
-
     Widget title(String text) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
@@ -38,7 +37,7 @@ class AboutTexts extends StatelessWidget {
 
     Widget tile(String text, String? value) {
       return Container(
-        width: mqs.width,
+        width: 100.w,
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,7 +63,7 @@ class AboutTexts extends StatelessWidget {
 
     Widget link(String text, String url) {
       return Container(
-        width: mqs.width,
+        width: 100.w,
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -104,14 +103,14 @@ class AboutTexts extends StatelessWidget {
     }
 
     return Container(
-      width: mqs.width,
-      height: mqs.height * 0.9,
+      width: 100.w,
+      height: 100.h * 0.9,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: ListView(
         padding: const EdgeInsets.all(0),
         children: [
           title('关于 Colorify'),
-          tile('版本', 'v6.0.9'),
+          tile('版本', 'v6.1.0'),
           tile('开源协议', 'GPL-3.0'),
           link('文档', 'https://comeixalpha.github.io'),
           const SizedBox(height: 10),
@@ -207,8 +206,6 @@ class About extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mqs = MediaQuery.of(context).size;
-
     final tp = TextPainter(
       text: TextSpan(
         text: 'Documents',
@@ -222,14 +219,14 @@ class About extends StatelessWidget {
     )..layout();
 
     return Container(
-      width: mqs.width,
-      height: mqs.height,
+      width: 100.w,
+      height: 100.h,
       color: const Color(0xFF26232a),
       child: Column(
         children: [
           Container(
-            width: mqs.width,
-            height: mqs.height * 0.1,
+            width: 100.w,
+            height: 100.h * 0.1,
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -239,7 +236,7 @@ class About extends StatelessWidget {
                   width: tp.height,
                   height: tp.height,
                   backgroundColor: Colors.transparent,
-                  hoverColor: Colors.white.withOpacity(0.2),
+                  hoverColor: Colors.white.withAlpha(51),
                   onTap: () {
                     Navigator.pop(context);
                   },

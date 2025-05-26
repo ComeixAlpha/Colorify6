@@ -106,7 +106,7 @@ Future<void> _generate(SendPort sendPort, GenBlockArguments args) async {
 
   /// 采样
   _updateProgress(sendPort, '采样中', 2);
-  List<List<RGBA>> rgbamat = sampler(image);
+  List<List<RGBA>> rgbamat = readImageAsRGBAList(image);
 
   /// 抖动
   if (args.dithering) {

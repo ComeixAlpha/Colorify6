@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:colorify/ui/basic/xframe.dart';
 import 'package:colorify/ui/util/text_style.dart';
+import 'package:flutter/material.dart';
 
 class _FadingTip extends StatefulWidget {
   final String tip;
@@ -71,7 +71,7 @@ class _FadingTipState extends State<_FadingTip> {
             width: painter.width + 24.0,
             height: painter.height + 24.0,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.3),
+              color: Colors.white.withAlpha(77),
               borderRadius: BorderRadius.circular(4.0),
             ),
           ),
@@ -107,13 +107,14 @@ class _XTooltipState extends State<XTooltip> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final RenderBox renderBox = _globalKey.currentContext!.findRenderObject() as RenderBox;
+      final RenderBox renderBox =
+          _globalKey.currentContext!.findRenderObject() as RenderBox;
       setState(() {
         _renderBox = renderBox;
       });
     });
   }
-  
+
   @override
   void dispose() {
     super.dispose();

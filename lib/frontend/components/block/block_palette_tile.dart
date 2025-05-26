@@ -102,7 +102,7 @@ class _BlockPaletteTileState extends State<BlockPaletteTile> {
             width: 80,
             height: 40,
             backgroundColor: enabled ? Colors.transparent : const Color(0xFFEF5350),
-            hoverColor: enabled ? Colors.white.withOpacity(0.1) : const Color(0xFFEF5350),
+            hoverColor: enabled ? Colors.white.withAlpha(26) : const Color(0xFFEF5350),
             onTap: () {
               if (enabled) {
                 blockprov.disableWhichIdIs(entry.id);

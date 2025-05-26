@@ -45,7 +45,7 @@ class _BlockPaletteClassHeadState extends State<BlockPaletteClassHead> {
               borderRadius: BorderRadius.circular(4),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
+                  color: Colors.black.withAlpha(77),
                   blurRadius: 5,
                   spreadRadius: 1,
                   offset: const Offset(0, 4),
@@ -63,14 +63,14 @@ class _BlockPaletteClassHeadState extends State<BlockPaletteClassHead> {
                     Text(
                       widget.className,
                       style: getStyle(
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withAlpha(204),
                         size: 18,
                       ),
                     ),
                     Text(
                       widget.classSubname,
                       style: getStyle(
-                        color: Colors.grey.withOpacity(0.8),
+                        color: Colors.grey.withAlpha(204),
                         size: 16,
                       ),
                     ),

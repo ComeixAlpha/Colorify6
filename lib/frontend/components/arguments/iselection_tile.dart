@@ -41,7 +41,7 @@ class _ISelectionTileState extends State<ISelectionTile> {
                 borderRadius: BorderRadius.circular(4),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
+                    color: Colors.black.withAlpha(77),
                     blurRadius: 10,
                     spreadRadius: 1,
                     offset: const Offset(0, 4),
@@ -100,7 +100,7 @@ class _ISelectionTileState extends State<ISelectionTile> {
                     height: 50,
                     gapHeight: 8,
                     backgroundColor: const Color(0xFF26232a),
-                    splashColor: Colors.white.withOpacity(0.1),
+                    splashColor: Colors.white.withAlpha(26),
                     hoverColor: const Color(0xFF6b6276),
                     textStyle: getStyle(color: Colors.white, size: 18),
                     duration: const Duration(milliseconds: 180),

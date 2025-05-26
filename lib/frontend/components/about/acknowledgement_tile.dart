@@ -1,5 +1,6 @@
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AcknowledgementTile extends StatefulWidget {
@@ -52,7 +53,7 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
                             link,
                             overflow: TextOverflow.ellipsis,
                             style: getStyle(
-                              color: const Color(0xFFC5C4DD).withOpacity(0.3),
+                              color: const Color(0xFFC5C4DD).withAlpha(77),
                               fontStyle: FontStyle.italic,
                               decoration: TextDecoration.underline,
                               size: 16,
@@ -74,13 +75,12 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
 
   @override
   Widget build(BuildContext context) {
-    final mqs = MediaQuery.of(context).size;
-    final w = mqs.width / 6;
+    final w = 100.w / 6;
     return Column(
       children: [
         Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withAlpha(26),
             borderRadius: BorderRadius.circular(24),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
@@ -88,8 +88,8 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                width: mqs.width - 16,
-                height: mqs.width / 6,
+                width: 100.w - 16,
+                height: 100.w / 6,
                 child: Row(
                   children: [
                     SizedBox(
@@ -137,7 +137,7 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
                     return Column(
                       children: [
                         const SizedBox(height: 8),
-                        ..._buildLink(mqs.width - 40, 22, widget.links ?? []),
+                        ..._buildLink(100.w - 40, 22, widget.links ?? []),
                       ],
                     );
                   }

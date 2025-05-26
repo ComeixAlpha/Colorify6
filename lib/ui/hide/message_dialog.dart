@@ -44,7 +44,7 @@ class MessageDialogStyle {
     padding ??= const EdgeInsets.symmetric(horizontal: 8, vertical: 6);
     boxshadow ??= [
       BoxShadow(
-        color: Colors.black.withOpacity(0.2),
+        color: Colors.black.withAlpha(51),
         blurRadius: 0.1,
         spreadRadius: 1,
         offset: const Offset(0.0, 2),
@@ -123,7 +123,8 @@ class _MessageDialogState extends State<MessageDialog> {
 
     /// Dialog style
     final style = widget.style ?? MessageDialogStyle();
-    final animationDuration = widget.animationDuration ?? const Duration(milliseconds: 120);
+    final animationDuration =
+        widget.animationDuration ?? const Duration(milliseconds: 120);
     return AnimatedPositioned(
       duration: animationDuration,
       curve: Curves.ease,
@@ -164,7 +165,9 @@ class _MessageDialogState extends State<MessageDialog> {
                   AnimatedContainer(
                     duration: animationDuration,
                     curve: Curves.ease,
-                    width: _animationState == 0 ? 0.0 : (_animationState == 1 ? style.width : 0.0),
+                    width: _animationState == 0
+                        ? 0.0
+                        : (_animationState == 1 ? style.width : 0.0),
                     height: style.height,
                     decoration: BoxDecoration(
                       color: style.color,
@@ -206,7 +209,9 @@ class _MessageDialogState extends State<MessageDialog> {
               child: AnimatedContainer(
                 duration: animationDuration,
                 curve: Curves.ease,
-                width: _animationState == 0 ? 0.0 : (_animationState == 1 ? style.width : 0.0),
+                width: _animationState == 0
+                    ? 0.0
+                    : (_animationState == 1 ? style.width : 0.0),
                 height: style.height,
                 decoration: BoxDecoration(
                   color: Colors.white,

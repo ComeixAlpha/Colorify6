@@ -26,7 +26,7 @@ class Wstile extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.3),
+                color: Colors.black.withAlpha(77),
                 blurRadius: 1,
                 spreadRadius: 1,
                 offset: const Offset(0, 3),

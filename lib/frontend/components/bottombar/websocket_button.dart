@@ -34,12 +34,12 @@ class _WebsocketButtonState extends State<WebsocketButton> {
     if (socketprov.unactivated || socketprov.activating) {
       backgroundColor = Colors.transparent;
       iconColor = Colors.white;
-      hoverColor = Colors.white.withOpacity(0.3);
+      hoverColor = Colors.white.withAlpha(77);
       splashColor = null;
     }
 
     if (socketprov.unactivated) {
-      iconColor = Colors.white.withOpacity(0.3);
+      iconColor = Colors.white.withAlpha(77);
     }
 
     if (socketprov.unconnected) {

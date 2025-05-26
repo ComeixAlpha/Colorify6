@@ -45,7 +45,7 @@ class _GenerateButtonState extends State<GenerateButton> {
       borderRadius: BorderRadius.circular(30),
       backgroundColor: const Color(0xFFb9acc9),
       hoverColor: const Color(0xFFb9acc9),
-      splashColor: Colors.white.withOpacity(0.3),
+      splashColor: Colors.white.withAlpha(77),
       duration: const Duration(milliseconds: 240),
       onTap: widget.onTap,
       child: AnimatedRotation(

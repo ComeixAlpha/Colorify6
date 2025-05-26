@@ -1,6 +1,6 @@
-
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class SponsorQrcode extends StatefulWidget {
   const SponsorQrcode({super.key});
@@ -12,17 +12,16 @@ class SponsorQrcode extends StatefulWidget {
 class _SponsorQrcodeState extends State<SponsorQrcode> {
   @override
   Widget build(BuildContext context) {
-    final mqs = MediaQuery.of(context).size;
     return Opacity(
       opacity: 0.8,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
-            width: mqs.width * 0.5,
-            height: mqs.width * 0.5,
+            width: 100.w * 0.5,
+            height: 100.w * 0.5,
             child: CircleAvatar(
-              radius: mqs.width * 0.5,
+              radius: 100.w * 0.5,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
                 child: Image.asset('assets/sponsor.jpg'),
@@ -30,8 +29,8 @@ class _SponsorQrcodeState extends State<SponsorQrcode> {
             ),
           ),
           Container(
-            width: mqs.width * 0.5 - 16,
-            height: mqs.width * 0.5,
+            width: 100.w * 0.5 - 16,
+            height: 100.w * 0.5,
             padding: const EdgeInsets.only(left: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

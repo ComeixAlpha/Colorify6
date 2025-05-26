@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class NoPermisson extends StatelessWidget {
   final void Function() onCallClose;
@@ -12,10 +13,9 @@ class NoPermisson extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mqs = MediaQuery.of(context).size;
     return Container(
-      width: mqs.width,
-      height: mqs.height,
+      width: 100.w,
+      height: 100.h,
       decoration: BoxDecoration(
         color: const Color(0xFF2d2a31),
         borderRadius: BorderRadius.circular(4),

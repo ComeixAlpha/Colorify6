@@ -44,9 +44,9 @@ class HSV {
   }
 
   static HSV fromColor(Color color) {
-    double r = color.red / 255.0;
-    double g = color.green / 255.0;
-    double b = color.blue / 255.0;
+    double r = color.r;
+    double g = color.g;
+    double b = color.b;
 
     double maxVal = max(r, max(g, b));
     double minVal = min(r, min(g, b));

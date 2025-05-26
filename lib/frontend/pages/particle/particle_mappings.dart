@@ -3,11 +3,12 @@ import 'package:colorify/backend/abstracts/rgbmapping.dart';
 import 'package:colorify/backend/providers/particle.prov.dart';
 import 'package:colorify/frontend/components/particle/new_mapping.dart';
 import 'package:colorify/frontend/components/particle/rgbmapping_tile.dart';
-import 'package:colorify/ui/basic/xframe.dart';
 import 'package:colorify/ui/basic/xbutton.dart';
+import 'package:colorify/ui/basic/xframe.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class ParticleMappings extends StatefulWidget {
   final double width;
@@ -38,12 +39,11 @@ class _ParticleMappingsState extends State<ParticleMappings> {
       onTap: () {
         _overlayEntry = OverlayEntry(
           builder: (ctx) {
-            final Size mqs = MediaQuery.of(context).size;
-            final double w = mqs.width * 0.8;
-            final double h = mqs.height * 0.44;
+            final double w = 100.w * 0.8;
+            final double h = 100.h * 0.44;
             return Positioned(
-              top: mqs.height / 2 - h / 2 - 40,
-              left: mqs.width / 2 - w / 2,
+              top: 100.h / 2 - h / 2 - 40,
+              left: 100.w / 2 - w / 2,
               child: NewMapping(
                 width: w,
                 height: h,
@@ -51,7 +51,8 @@ class _ParticleMappingsState extends State<ParticleMappings> {
                   setState(() {
                     _mappings.add(v);
                   });
-                  Provider.of<Particleprov>(context, listen: false).setMappings(_mappings);
+                  Provider.of<Particleprov>(context, listen: false)
+                      .setMappings(_mappings);
                   _overlayEntry?.remove();
                 },
                 onCancel: () => _overlayEntry?.remove(),
@@ -120,7 +121,8 @@ class _ParticleMappingsState extends State<ParticleMappings> {
               onDelete: () {
                 setState(() {
                   _mappings.removeAt(i);
-                  Provider.of<Particleprov>(context, listen: false).setMappings(_mappings);
+                  Provider.of<Particleprov>(context, listen: false)
+                      .setMappings(_mappings);
                 });
               },
             );

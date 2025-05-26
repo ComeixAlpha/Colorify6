@@ -4,7 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
 import 'dart:ui' as ui;
 
-Future<Uint8List> processIdenticon(String v) async {
+/// Generates UInt8List identicon data from uuid
+Future<Uint8List> generateIdenticonPng(String uuid) async {
   const int isize = 1024;
   const double dsize = 1024;
 
@@ -13,7 +14,7 @@ Future<Uint8List> processIdenticon(String v) async {
   final paint = Paint()..color = const Color(0xFFFFFFFF);
   canvas.drawRect(const Rect.fromLTWH(0, 0, dsize, dsize), paint);
 
-  final String svgString = Jdenticon.toSvg(v, size: isize);
+  final String svgString = Jdenticon.toSvg(uuid, size: isize);
   final PictureInfo pictureInfo = await vg.loadPicture(SvgStringLoader(svgString), null);
   final ui.Image image = await pictureInfo.picture.toImage(isize, isize);
 

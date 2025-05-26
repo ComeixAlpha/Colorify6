@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class ComfirmDialog extends StatelessWidget {
   final String content;
@@ -14,15 +15,14 @@ class ComfirmDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mqs = MediaQuery.of(context).size;
     return Container(
-      width: mqs.width,
-      height: mqs.height,
-      color: Colors.black.withOpacity(0.3),
+      width: 100.w,
+      height: 100.h,
+      color: Colors.black.withAlpha(77),
       child: Center(
         child: UnconstrainedBox(
           child: Container(
-            width: mqs.width * 0.7,
+            width: 100.w * 0.7,
             decoration: BoxDecoration(
               color: const Color(0xFF2d2a31),
               borderRadius: BorderRadius.circular(24),
@@ -54,7 +54,7 @@ class ComfirmDialog extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: getStyle(
-                        color: Colors.white.withOpacity(0.6),
+                        color: Colors.white.withAlpha(153),
                         size: 16,
                       ),
                     ),
@@ -66,11 +66,11 @@ class ComfirmDialog extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       XButton(
-                        width: mqs.width * 0.7 * 0.3,
+                        width: 100.w * 0.7 * 0.3,
                         height: 50,
                         onTap: () => onChoose(false),
                         backgroundColor: Colors.transparent,
-                        hoverColor: Colors.white.withOpacity(0.1),
+                        hoverColor: Colors.white.withAlpha(26),
                         borderRadius: BorderRadius.circular(24),
                         child: Center(
                           child: AutoSizeText(
@@ -84,11 +84,11 @@ class ComfirmDialog extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
                       XButton(
-                        width: mqs.width * 0.9 * 0.25,
+                        width: 100.w * 0.9 * 0.25,
                         height: 50,
                         onTap: () => onChoose(true),
                         backgroundColor: Colors.transparent,
-                        hoverColor: Colors.white.withOpacity(0.1),
+                        hoverColor: Colors.white.withAlpha(26),
                         borderRadius: BorderRadius.circular(24),
                         child: Center(
                           child: AutoSizeText(

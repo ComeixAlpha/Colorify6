@@ -8,8 +8,8 @@ import 'package:colorify/backend/providers/particle.prov.dart';
 import 'package:colorify/backend/providers/progress.prov.dart';
 import 'package:colorify/backend/providers/socket.prov.dart';
 import 'package:colorify/backend/utils/common/flie_picker.dart';
-import 'package:colorify/backend/utils/minecraft/identicon.dart';
 import 'package:colorify/backend/utils/common/path.dart';
+import 'package:colorify/backend/utils/minecraft/identicon.dart';
 import 'package:colorify/frontend/components/bottombar/generate_button.dart';
 import 'package:colorify/frontend/components/bottombar/page_button.dart';
 import 'package:colorify/frontend/components/bottombar/websocket_button.dart';
@@ -19,6 +19,7 @@ import 'package:colorify/ui/hide/message_dialog.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart' hide ProgressIndicator;
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 enum GenerateType {
   file,
@@ -96,7 +97,7 @@ class _BottombarState extends State<Bottombar> {
         port.send(
           IsolateDataPack(
             type: IsolateDataPackType.identiconUint8List,
-            data: await processIdenticon(v),
+            data: await generateIdenticonPng(v),
           ),
         );
       },
@@ -143,7 +144,7 @@ class _BottombarState extends State<Bottombar> {
         port.send(
           IsolateDataPack(
             type: IsolateDataPackType.identiconUint8List,
-            data: await processIdenticon(v),
+            data: await generateIdenticonPng(v),
           ),
         );
       },
@@ -159,8 +160,7 @@ class _BottombarState extends State<Bottombar> {
 
   @override
   Widget build(BuildContext context) {
-    final mqs = MediaQuery.of(context).size;
-    final ow = mqs.width;
+    final ow = 100.w;
     const oh = 80.0;
     return SizedBox(
       width: ow,
@@ -174,7 +174,7 @@ class _BottombarState extends State<Bottombar> {
             borderRadius: BorderRadius.circular(40),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.6),
+                color: Colors.black.withAlpha(153),
                 blurRadius: 10,
                 spreadRadius: 1,
               ),

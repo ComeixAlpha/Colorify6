@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:colorify/ui/hide/comfirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:colorify/ui/hide/message_dialog.dart';
+import 'package:sizer/sizer.dart';
 
 class XFrame extends StatefulWidget {
   final Widget? home;

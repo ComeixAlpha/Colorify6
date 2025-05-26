@@ -28,8 +28,8 @@ class _PageButtonState extends State<PageButton> {
         width: 60,
         height: 60,
         borderRadius: BorderRadius.circular(30),
-        backgroundColor: const Color(0xFF736b7d).withOpacity(isSelected ? 0.3 : 0),
-        hoverColor: const Color(0xFF736b7d).withOpacity(isSelected ? 0.3 : 0),
+        backgroundColor: const Color(0xFF736b7d).withAlpha(isSelected ? 77 : 0),
+        hoverColor: const Color(0xFF736b7d).withAlpha(isSelected ? 77 : 0),
         splashColor: Colors.transparent,
         duration: const Duration(milliseconds: 240),
         onTap: () {

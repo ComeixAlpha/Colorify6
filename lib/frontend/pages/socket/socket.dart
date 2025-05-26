@@ -10,6 +10,7 @@ import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class SocketPage extends StatefulWidget {
   const SocketPage({super.key});
@@ -22,7 +23,6 @@ class _SocketPageState extends State<SocketPage> {
   @override
   Widget build(BuildContext context) {
     final socketprov = context.watch<Socketprov>();
-    final mqs = MediaQuery.of(context).size;
 
     if (socketprov.unactivated || socketprov.activating) {
       return Center(
@@ -131,7 +131,7 @@ class _SocketPageState extends State<SocketPage> {
             const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.3),
+                color: Colors.black.withAlpha(77),
                 borderRadius: BorderRadius.circular(4),
               ),
               padding: const EdgeInsets.all(12),
@@ -159,7 +159,7 @@ class _SocketPageState extends State<SocketPage> {
         padding: const EdgeInsets.only(top: 20),
         children: [
           Wstile(
-            width: mqs.width - 40,
+            width: 100.w - 40,
             height: 110,
             title: '速度',
             child: Row(
@@ -183,21 +183,21 @@ class _SocketPageState extends State<SocketPage> {
             ),
           ),
           Wstile(
-            width: mqs.width - 40,
+            width: 100.w - 40,
             height: 110,
             title: '进度',
             child: ProcessLineIndicator(
-              width: mqs.width - 64,
+              width: 100.w - 64,
               height: 40,
               progress: socketprov.progress,
             ),
           ),
           Wstile(
-            width: mqs.width - 40,
+            width: 100.w - 40,
             height: 400,
             title: '日志（最近20条）',
             child: SocketMessages(
-              width: mqs.width - 64,
+              width: 100.w - 64,
               height: 340,
               logs: socketprov.logs,
             ),

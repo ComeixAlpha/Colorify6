@@ -2,10 +2,11 @@
 
 import 'dart:async';
 
-import 'package:colorify/ui/basic/xframe.dart';
 import 'package:colorify/ui/basic/xbutton.dart';
+import 'package:colorify/ui/basic/xframe.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class _MenuPopup extends StatefulWidget {
   double? width;
@@ -190,7 +191,6 @@ class _XMenuState extends State<XMenu> {
         if (_onPopup) return;
         _overlayEntry = OverlayEntry(
           builder: (ctx) {
-            final mqs = MediaQuery.of(context).size;
             final renderbox = _key.currentContext!.findRenderObject() as RenderBox;
             final offset = renderbox.localToGlobal(Offset.zero);
             return Stack(
@@ -204,8 +204,8 @@ class _XMenuState extends State<XMenu> {
                   },
                   child: Container(
                     color: Colors.transparent,
-                    width: mqs.width,
-                    height: mqs.height,
+                    width: 100.w,
+                    height: 100.h,
                   ),
                 ),
                 Positioned(
@@ -215,7 +215,7 @@ class _XMenuState extends State<XMenu> {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
+                          color: Colors.black.withAlpha(77),
                           blurRadius: 1,
                           spreadRadius: 1,
                           offset: const Offset(0, 3),

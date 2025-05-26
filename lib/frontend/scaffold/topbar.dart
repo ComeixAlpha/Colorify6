@@ -3,6 +3,7 @@ import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class Topbar extends StatelessWidget {
   final double width;
@@ -15,8 +16,6 @@ class Topbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mqs = MediaQuery.of(context).size;
-
     final tp1 = TextPainter(
       text: TextSpan(
         text: 'COLORIFY',
@@ -33,7 +32,7 @@ class Topbar extends StatelessWidget {
       text: TextSpan(
         text: 'v6',
         style: getStyle(
-          color: Colors.white.withOpacity(0.3),
+          color: Colors.white.withAlpha(77),
           size: 30,
           weight: FontWeight.w700,
         ),
@@ -78,7 +77,7 @@ class Topbar extends StatelessWidget {
                     'v6',
                     overflow: TextOverflow.ellipsis,
                     style: getStyle(
-                      color: Colors.white.withOpacity(0.3),
+                      color: Colors.white.withAlpha(77),
                       size: 30,
                       weight: FontWeight.w700,
                     ),
@@ -89,13 +88,13 @@ class Topbar extends StatelessWidget {
           ),
           LayoutBuilder(
             builder: (_, __) {
-              final restWidth = mqs.width - 47 - tp1.width - tp2.width;
+              final restWidth = 100.w - 47 - tp1.width - tp2.width;
               if (restWidth >= tp1.height) {
                 return XButton(
                   width: tp1.height,
                   height: tp1.height,
                   backgroundColor: Colors.transparent,
-                  hoverColor: Colors.white.withOpacity(0.2),
+                  hoverColor: Colors.white.withAlpha(51),
                   onTap: () {
                     Navigator.push(
                       context,

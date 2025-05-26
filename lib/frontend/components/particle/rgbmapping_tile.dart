@@ -99,7 +99,7 @@ class RGBMappingTile extends StatelessWidget {
                   width: width / 6 * 0.75,
                   height: width / 6 * 0.75,
                   backgroundColor: Colors.transparent,
-                  hoverColor: Colors.white.withOpacity(0.1),
+                  hoverColor: Colors.white.withAlpha(26),
                   borderRadius: BorderRadius.circular(8),
                   onTap: onDelete,
                   child: const Icon(Icons.delete, color: Colors.white),
