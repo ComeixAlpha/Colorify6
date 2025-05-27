@@ -23,26 +23,15 @@ void main() async {
     windowManager.center();
   }
 
-  requestStorage().then(
-    (v) {
-      if (!v) {
-        OverlayEntry? oe;
-        oe = OverlayEntry(
-          builder: (v) => NoPermisson(
-            onCallClose: () => oe?.remove(),
-          ),
-        );
-        XFrame.insert(oe);
-      }
-    },
-  );
+  requestStorage().then((v) {
+    if (!v) {
+      OverlayEntry? oe;
+      oe = OverlayEntry(builder: (v) => NoPermisson(onCallClose: () => oe?.remove()));
+      XFrame.insert(oe);
+    }
+  });
 
-  runApp(
-    MultiProvider(
-      providers: providers,
-      child: const MainApp(),
-    ),
-  );
+  runApp(MultiProvider(providers: providers, child: const MainApp()));
 }
 
 class MainApp extends StatefulWidget {
@@ -80,16 +69,15 @@ class _MainAppState extends State<MainApp> with WindowListener {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.edgeToEdge,
-      overlays: [],
-    );
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      systemNavigationBarColor: Colors.transparent,
-      systemNavigationBarDividerColor: Colors.transparent,
-    ));
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.transparent,
+        systemNavigationBarDividerColor: Colors.transparent,
+      ),
+    );
 
     return Sizer(
       builder: (context, orientation, screenType) {
@@ -102,25 +90,16 @@ class _MainAppState extends State<MainApp> with WindowListener {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Topbar(
-                      width: 100.w,
-                      height: 100.h * 0.1,
-                    ),
-                    Body(
-                      width: 100.w,
-                      height: 100.h * 0.9,
-                    ),
+                    Topbar(width: 100.w, height: 100.h * 0.1),
+                    Body(width: 100.w, height: 100.h * 0.9),
                   ],
                 ),
-                const Positioned(
-                  bottom: 14,
-                  child: Bottombar(),
-                )
+                const Positioned(bottom: 14, child: Bottombar()),
               ],
             ),
           ),
         );
-      }
+      },
     );
   }
 }

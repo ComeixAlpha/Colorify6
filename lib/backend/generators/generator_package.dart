@@ -1,21 +1,18 @@
 import 'dart:io';
+
 import 'package:archive/archive_io.dart';
 import 'package:colorify/backend/abstracts/rgbmapping.dart';
 import 'package:colorify/backend/extensions/on_directory.dart';
 import 'package:flutter/services.dart';
-import 'package:uuid/uuid.dart';
 import 'package:path/path.dart' as path;
+import 'package:uuid/uuid.dart';
 
 class PackageArg {
   final String name;
   final String auth;
   final String desc;
 
-  PackageArg({
-    required this.name,
-    required this.auth,
-    required this.desc,
-  });
+  PackageArg({required this.name, required this.auth, required this.desc});
 }
 
 Future<void> manifest(
@@ -30,7 +27,8 @@ Future<void> manifest(
 
   final uuidBP = const Uuid().v4();
   final uuidRP = const Uuid().v4();
-  final bp = '''
+  final bp =
+      '''
 {
   "format_version": 2,
   "header": {
@@ -66,13 +64,14 @@ Future<void> manifest(
   "metadata": {
     "authors": ["${args.auth}"],
     "generated_with": {
-      "colorify": ["6.1.0"]
+      "colorify": ["6.1.1"]
     }
   }
 }
   ''';
 
-  final rp = '''
+  final rp =
+      '''
 {
   "format_version": 2,
   "header": {
@@ -98,7 +97,7 @@ Future<void> manifest(
   "metadata": {
     "authors": ["${args.auth}"],
     "generated_with": {
-      "colorify": ["6.1.0"]
+      "colorify": ["6.1.1"]
     }
   }
 }
@@ -141,10 +140,17 @@ Future<void> packIcon(
   }
 }
 
-Future<void> scriptTickingArea(Directory dir, int fileCount, int dx, int dy, int dz) async {
+Future<void> scriptTickingArea(
+  Directory dir,
+  int fileCount,
+  int dx,
+  int dy,
+  int dz,
+) async {
   String systemRun(int i, String before) {
     if (i != fileCount - 1) {
-      final s = '''
+      final s =
+          '''
 entity.runCommand('function output_$i');
 Server.system.run(() => {
 $before
@@ -155,7 +161,8 @@ $before
       }
       return systemRun(i - 1, s);
     } else {
-      final s = '''
+      final s =
+          '''
 entity.runCommand('function output_$i');
 Server.system.run(() => {
   entity.runCommand(`tickingarea remove colorify`);
@@ -168,7 +175,8 @@ Server.system.run(() => {
   for (int i = 0; i < fileCount; i++) {
     if (i == fileCount - 1) {}
   }
-  final script = '''
+  final script =
+      '''
 import * as Server from "@minecraft/server";
 
 Server.system.runInterval(() => {
@@ -199,7 +207,8 @@ Future<void> particleJsonModeMatch(Directory dir, List<RGBMapping> mappings) asy
     final r = mapping.r == 0 ? mapping.r : (mapping.r / 255).toStringAsFixed(5);
     final g = mapping.g == 0 ? mapping.g : (mapping.g / 255).toStringAsFixed(5);
     final b = mapping.b == 0 ? mapping.b : (mapping.b / 255).toStringAsFixed(5);
-    final json = '''
+    final json =
+        '''
 {
 	"format_version": "1.10.0",
 	"particle_effect": {
@@ -240,7 +249,10 @@ Future<void> particleJsonModeMatch(Directory dir, List<RGBMapping> mappings) asy
 	}
 }
 ''';
-    final jsonPath = path.join(dir.path, 'colorify.${mapping.id.replaceAll(':', '.')}.json');
+    final jsonPath = path.join(
+      dir.path,
+      'colorify.${mapping.id.replaceAll(':', '.')}.json',
+    );
     await File(jsonPath).writeAsString(json);
   }
 }
@@ -302,7 +314,14 @@ Future<void> particleJsonModeDust(Directory dir) async {
   await File(jsonPath).writeAsString(json);
 }
 
-Future<void> pack(Directory targetDir, Directory outDir, {String suffix = 'mcaddon'}) async {
+Future<void> pack(
+  Directory targetDir,
+  Directory outDir, {
+  String suffix = 'mcaddon',
+}) async {
   final encoder = ZipFileEncoder();
-  await encoder.zipDirectoryAsync(targetDir, filename: path.join(outDir.path, 'colorified.$suffix'));
+  await encoder.zipDirectory(
+    targetDir,
+    filename: path.join(outDir.path, 'colorified.$suffix'),
+  );
 }

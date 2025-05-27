@@ -5,13 +5,7 @@ import 'package:colorify/backend/utils/minecraft/websocket.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-enum WebSocketState {
-  unactivated,
-  activating,
-  unconnected,
-  connected,
-  pausing,
-}
+enum WebSocketState { unactivated, activating, unconnected, connected, pausing }
 
 class Socketprov with ChangeNotifier {
   WebSocketState _socketState = WebSocketState.unactivated;
@@ -102,18 +96,15 @@ class Socketprov with ChangeNotifier {
     await WebSocket().broadcastCommand('testforblock ~ ~ ~ air');
 
     Future<void> runUntilLocGot() async {
-      await Future.delayed(
-        Duration(milliseconds: _socketDelay),
-        () {
-          if (_executeLoc == null) {
-            runUntilLocGot();
-          } else {
-            processTask(commands);
+      await Future.delayed(Duration(milliseconds: _socketDelay), () {
+        if (_executeLoc == null) {
+          runUntilLocGot();
+        } else {
+          processTask(commands);
 
-            _recordSpeed();
-          }
-        },
-      );
+          _recordSpeed();
+        }
+      });
     }
 
     runUntilLocGot();
@@ -121,15 +112,12 @@ class Socketprov with ChangeNotifier {
 
   Future<void> _recordSpeed() async {
     if (!_onTask) return;
-    Timer(
-      const Duration(seconds: 1),
-      () {
-        _speed = _commandSent - _commandSentRecord;
-        _commandSentRecord = _commandSent;
-        notifyListeners();
-        _recordSpeed();
-      },
-    );
+    Timer(const Duration(seconds: 1), () {
+      _speed = _commandSent - _commandSentRecord;
+      _commandSentRecord = _commandSent;
+      notifyListeners();
+      _recordSpeed();
+    });
   }
 
   Future<void> processTask(List<String> commands) async {
@@ -141,7 +129,8 @@ class Socketprov with ChangeNotifier {
 
       String command;
       if (_executeLoc != null) {
-        command = 'execute @p ${_executeLoc![0]} ${_executeLoc![1]} ${_executeLoc![2]} ${commands[i]}';
+        command =
+            'execute @p ${_executeLoc![0]} ${_executeLoc![1]} ${_executeLoc![2]} ${commands[i]}';
       } else {
         command = commands[i];
       }
@@ -149,7 +138,9 @@ class Socketprov with ChangeNotifier {
       await WebSocket().broadcastCommand(command);
 
       if (_executeLoc != null) {
-        await WebSocket().broadcastCommand(titleBuilder(_executeLoc!, i, commands.length, speed));
+        await WebSocket().broadcastCommand(
+          titleBuilder(_executeLoc!, i, commands.length, speed),
+        );
       } else {
         await WebSocket().broadcastCommand(
           'title @s actionbar §bColorify§f: §cPlease dont move§f. ${i + 1} / ${commands.length}',
@@ -190,8 +181,10 @@ class Socketprov with ChangeNotifier {
 }
 
 String titleBuilder(List<int> exeLoc, int executed, int len, int speed) {
-  const String line1 = '§bColorify§f - v6.1.0 - Comeix Alpha';
-  final String line2 = 'Executing at: [§6${exeLoc[0]}§f, §6${exeLoc[1]}§f, §6${exeLoc[2]}§f]';
-  final String line3 = 'Executed §6$executed§f / §6$len§f Last §6${((len - executed) / speed).toStringAsFixed(2)}s§f';
+  const String line1 = '§bColorify§f - v6.1.1 - Comeix Alpha';
+  final String line2 =
+      'Executing at: [§6${exeLoc[0]}§f, §6${exeLoc[1]}§f, §6${exeLoc[2]}§f]';
+  final String line3 =
+      'Executed §6$executed§f / §6$len§f Last §6${((len - executed) / speed).toStringAsFixed(2)}s§f';
   return 'title @s actionbar ${[line1, line2, line3].join('\n')}';
 }

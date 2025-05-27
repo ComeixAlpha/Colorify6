@@ -16,20 +16,8 @@ class AboutTexts extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         child: Row(
           children: [
-            Text(
-              '# ',
-              style: getStyle(
-                size: 28,
-                color: const Color(0xFFb9acc9),
-              ),
-            ),
-            Text(
-              text,
-              style: getStyle(
-                size: 22,
-                color: Colors.white,
-              ),
-            ),
+            Text('# ', style: getStyle(size: 28, color: const Color(0xFFb9acc9))),
+            Text(text, style: getStyle(size: 22, color: Colors.white)),
           ],
         ),
       );
@@ -42,20 +30,8 @@ class AboutTexts extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              text,
-              style: getStyle(
-                size: 18,
-                color: Colors.white,
-              ),
-            ),
-            Text(
-              value ?? '',
-              style: getStyle(
-                size: 16,
-                color: Colors.white,
-              ),
-            ),
+            Text(text, style: getStyle(size: 18, color: Colors.white)),
+            Text(value ?? '', style: getStyle(size: 16, color: Colors.white)),
           ],
         ),
       );
@@ -68,13 +44,7 @@ class AboutTexts extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              text,
-              style: getStyle(
-                size: 18,
-                color: Colors.white,
-              ),
-            ),
+            Text(text, style: getStyle(size: 18, color: Colors.white)),
             Material(
               color: Colors.transparent,
               child: InkWell(
@@ -110,9 +80,9 @@ class AboutTexts extends StatelessWidget {
         padding: const EdgeInsets.all(0),
         children: [
           title('关于 Colorify'),
-          tile('版本', 'v6.1.0'),
+          tile('版本', 'v6.1.1'),
           tile('开源协议', 'GPL-3.0'),
-          link('文档', 'https://comeixalpha.github.io'),
+          link('文档/教程', 'https://comeixalpha.github.io'),
           const SizedBox(height: 10),
           const AcknowledgementTile(
             title: 'Comeix Alpha',
@@ -138,28 +108,19 @@ class AboutTexts extends StatelessWidget {
             title: '金羿ELS EillesWan',
             subtitle: '结构文件原理参考',
             assetPath: 'assets/acknowledgement/els.jpg',
-            links: [
-              'https://github.com/EillesWan',
-              'https://gitee.com/EillesWan',
-            ],
+            links: ['https://github.com/EillesWan', 'https://gitee.com/EillesWan'],
           ),
           const AcknowledgementTile(
             title: 'SlopeCraft & TokiNoBug',
             subtitle: '阶梯式原理参考',
             assetPath: 'assets/acknowledgement/tokinobug.jpg',
-            links: [
-              'https://github.com/ToKiNoBug',
-              'https://slopecraft.readthedocs.io/',
-            ],
+            links: ['https://github.com/ToKiNoBug', 'https://slopecraft.readthedocs.io/'],
           ),
           const AcknowledgementTile(
             title: 'Dislink Sforza',
             subtitle: 'Dithering 灵感来源',
             assetPath: 'assets/acknowledgement/dislink.jpg',
-            links: [
-              'https://github.com/Dislink',
-              'https://space.bilibili.com/490775607',
-            ],
+            links: ['https://github.com/Dislink', 'https://space.bilibili.com/490775607'],
           ),
           const AcknowledgementTile(
             title: 'DeltaRD',
@@ -209,11 +170,7 @@ class About extends StatelessWidget {
     final tp = TextPainter(
       text: TextSpan(
         text: 'Documents',
-        style: getStyle(
-          color: Colors.white,
-          size: 26,
-          weight: FontWeight.w300,
-        ),
+        style: getStyle(color: Colors.white, size: 26, weight: FontWeight.w300),
       ),
       textDirection: TextDirection.ltr,
     )..layout();
@@ -242,21 +199,13 @@ class About extends StatelessWidget {
                   },
                   borderRadius: BorderRadius.circular(tp.height / 2),
                   child: const Center(
-                    child: Icon(
-                      Icons.navigate_before,
-                      size: 30,
-                      color: Colors.white,
-                    ),
+                    child: Icon(Icons.navigate_before, size: 30, color: Colors.white),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Text(
                   'Documents',
-                  style: getStyle(
-                    color: Colors.white,
-                    size: 28,
-                    weight: FontWeight.w300,
-                  ),
+                  style: getStyle(color: Colors.white, size: 28, weight: FontWeight.w300),
                 ),
               ],
             ),

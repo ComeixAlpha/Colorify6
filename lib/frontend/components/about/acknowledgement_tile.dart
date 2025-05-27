@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+const double borderSideWidth = 3;
+
 class AcknowledgementTile extends StatefulWidget {
   final String assetPath;
   final String title;
@@ -29,11 +31,11 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
           children: [
             const SizedBox(height: 10),
             SizedBox(
-              width: w,
+              width: w - borderSideWidth,
               height: h,
               child: Row(
                 children: [
-                  const SizedBox(width: 4),
+                  const SizedBox(width: 3),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Material(
@@ -48,7 +50,7 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
                           }
                         },
                         child: SizedBox(
-                          width: w - 4,
+                          width: w - 4 - borderSideWidth,
                           child: Text(
                             link,
                             overflow: TextOverflow.ellipsis,
@@ -80,15 +82,16 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: Colors.white.withAlpha(26),
-            borderRadius: BorderRadius.circular(24),
+            border: Border(
+              left: BorderSide(color: Colors.white, width: borderSideWidth),
+            ),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                width: 100.w - 16,
+                width: 100.w - 16 - borderSideWidth,
                 height: 100.w / 6,
                 child: Row(
                   children: [
@@ -98,9 +101,7 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
                       child: CircleAvatar(
                         radius: w,
                         backgroundColor: Colors.transparent,
-                        child: ClipOval(
-                          child: Image.asset(widget.assetPath),
-                        ),
+                        child: ClipOval(child: Image.asset(widget.assetPath)),
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -111,18 +112,12 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
                         Text(
                           widget.title,
                           overflow: TextOverflow.ellipsis,
-                          style: getStyle(
-                            color: const Color(0xFFE2E0F9),
-                            size: 22,
-                          ),
+                          style: getStyle(color: const Color(0xFFE2E0F9), size: 22),
                         ),
                         Text(
                           widget.subtitle,
                           overflow: TextOverflow.ellipsis,
-                          style: getStyle(
-                            color: const Color(0xFFE2E0F9),
-                            size: 18,
-                          ),
+                          style: getStyle(color: const Color(0xFFE2E0F9), size: 18),
                         ),
                       ],
                     ),
@@ -146,7 +141,7 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
             ],
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
       ],
     );
   }
