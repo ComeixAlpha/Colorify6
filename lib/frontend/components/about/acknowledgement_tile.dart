@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const double borderSideWidth = 3;
-
 class AcknowledgementTile extends StatefulWidget {
   final String assetPath;
   final String title;
@@ -31,7 +29,7 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
           children: [
             const SizedBox(height: 10),
             SizedBox(
-              width: w - borderSideWidth,
+              width: w,
               height: h,
               child: Row(
                 children: [
@@ -50,7 +48,7 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
                           }
                         },
                         child: SizedBox(
-                          width: w - 4 - borderSideWidth,
+                          width: w - 4,
                           child: Text(
                             link,
                             overflow: TextOverflow.ellipsis,
@@ -82,16 +80,15 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
       children: [
         Container(
           decoration: BoxDecoration(
-            border: Border(
-              left: BorderSide(color: Colors.white, width: borderSideWidth),
-            ),
+            color: const Color.fromARGB(255, 35, 31, 39),
+            borderRadius: BorderRadius.circular(4),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                width: 100.w - 16 - borderSideWidth,
+                width: 100.w - 16,
                 height: 100.w / 6,
                 child: Row(
                   children: [

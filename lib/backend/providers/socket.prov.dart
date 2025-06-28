@@ -7,10 +7,16 @@ import 'package:flutter/material.dart';
 
 enum WebSocketState { unactivated, activating, unconnected, connected, pausing }
 
+enum WebSocketExecuteSyntaxVersion { executeOld, executeNew }
+
 class Socketprov with ChangeNotifier {
+  WebSocketExecuteSyntaxVersion _socketExecuteSyntaxVersion =
+      WebSocketExecuteSyntaxVersion.executeOld;
   WebSocketState _socketState = WebSocketState.unactivated;
   int _socketDelay = 10;
 
+  WebSocketExecuteSyntaxVersion get socketExecuteSyntaxVersion =>
+      _socketExecuteSyntaxVersion;
   WebSocketState get socketState => _socketState;
 
   bool get unactivated => _socketState == WebSocketState.unactivated;
@@ -38,6 +44,12 @@ class Socketprov with ChangeNotifier {
     if (!_onTask && !pausing) return 0.0;
     if (_commandSent == 0) return 0.0;
     return _commandSent / (_commandSent + _commandUnsend);
+  }
+
+  void updateExecuteSyntaxVersion(WebSocketExecuteSyntaxVersion v) {
+    if (v == _socketExecuteSyntaxVersion) return;
+    _socketExecuteSyntaxVersion = v;
+    notifyListeners();
   }
 
   void updateDelay(int v) {
@@ -129,8 +141,12 @@ class Socketprov with ChangeNotifier {
 
       String command;
       if (_executeLoc != null) {
-        command =
-            'execute @p ${_executeLoc![0]} ${_executeLoc![1]} ${_executeLoc![2]} ${commands[i]}';
+        command = {
+          WebSocketExecuteSyntaxVersion.executeOld:
+              'execute @p ${_executeLoc![0]} ${_executeLoc![1]} ${_executeLoc![2]} ${commands[i]}',
+          WebSocketExecuteSyntaxVersion.executeNew:
+              'execute positioned ${_executeLoc![0]} ${_executeLoc![1]} ${_executeLoc![2]} run ${commands[i]}',
+        }[_socketExecuteSyntaxVersion]!;
       } else {
         command = commands[i];
       }

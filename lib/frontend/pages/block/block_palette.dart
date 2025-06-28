@@ -10,11 +10,7 @@ import 'package:provider/provider.dart';
 class BlockPalette extends StatefulWidget {
   final double width;
   final double height;
-  const BlockPalette({
-    super.key,
-    required this.width,
-    required this.height,
-  });
+  const BlockPalette({super.key, required this.width, required this.height});
 
   @override
   State<BlockPalette> createState() => _BlockPaletteState();
@@ -64,13 +60,15 @@ class _BlockPaletteState extends State<BlockPalette> {
           if (thisClass.contains(entry.id)) {
             children.add(BlockPaletteTile(width: widget.width, entry: entry));
             if (j != allEntries.length - 1) {
-              children.add(UnconstrainedBox(
-                child: Container(
-                  width: widget.width - 40,
-                  height: 1,
-                  color: Colors.white.withAlpha(26),
+              children.add(
+                UnconstrainedBox(
+                  child: Container(
+                    width: widget.width - 40,
+                    height: 1,
+                    color: Colors.white.withAlpha(26),
+                  ),
                 ),
-              ));
+              );
             }
           }
         }
@@ -107,16 +105,22 @@ class _BlockPaletteState extends State<BlockPalette> {
   }
 
   @override
+  void initState() {
+    final blockprov = context.read<Blockprov>();
+    blockprov.getDisabledHistory();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final blockprov = context.watch<Blockprov>();
-
-    blockprov.getDisabledHistory();
 
     List<BlockPaletteEntry> palette = [...blockprov.palette];
 
     if (_filter.isNotEmpty) {
-      palette =
-          palette.where((e) => e.id.contains(_filter) || e.cn.contains(_filter)).toList();
+      palette = palette
+          .where((e) => e.id.contains(_filter) || e.cn.contains(_filter))
+          .toList();
     }
 
     return SizedBox(
@@ -145,10 +149,7 @@ class _BlockPaletteState extends State<BlockPalette> {
                         return const SizedBox(height: 100);
                       }
                       final entry = palette[i];
-                      return BlockPaletteTile(
-                        width: widget.width,
-                        entry: entry,
-                      );
+                      return BlockPaletteTile(width: widget.width, entry: entry);
                     },
                   ),
                 );

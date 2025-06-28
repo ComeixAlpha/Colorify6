@@ -15,10 +15,30 @@ Future<Directory> getAndCreateColorifyDir() async {
 
   /// Clear existing cache
   if (await dir.exists()) {
-    await dir.delete(recursive: true);
+    await forceDeleteDirectory(dir.path);
   }
 
   await dir.create(recursive: true);
 
   return dir;
+}
+
+Future<void> forceDeleteDirectory(String path) async {
+  final dir = Directory(path);
+  if (!await dir.exists()) {
+    return;
+  }
+
+  if (Platform.isWindows) {
+    final result = await Process.run('attrib', ['-R', '-S', '-H', path, '/S', '/D']);
+    if (result.exitCode != 0) {
+      return;
+    }
+  }
+
+  try {
+    await dir.delete(recursive: true);
+  } on FileSystemException catch (_) {
+    return;
+  }
 }

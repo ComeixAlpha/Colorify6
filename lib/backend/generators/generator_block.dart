@@ -38,29 +38,24 @@ void blockArgumentsReceiver(SendPort sendPort) async {
   /// 发送接收端口
   final ReceivePort receivePort = ReceivePort();
   sendPort.send(
-    IsolateDataPack(
-      type: IsolateDataPackType.sendPort,
-      data: receivePort.sendPort,
-    ),
+    IsolateDataPack(type: IsolateDataPackType.sendPort, data: receivePort.sendPort),
   );
 
   /// 添加监听
-  receivePort.listen(
-    (recv) {
-      IsolateDataPack dataPack = recv as IsolateDataPack;
+  receivePort.listen((recv) {
+    IsolateDataPack dataPack = recv as IsolateDataPack;
 
-      if (dataPack.type == IsolateDataPackType.blockArguments) {
-        /// 生成主体
-        _generate(sendPort, dataPack.data);
-        _args = dataPack.data;
-      } else if (dataPack.type == IsolateDataPackType.identiconUint8List) {
-        /// 生成 Identicon
-        packIcon(_args!.outDir.concact('colorified'), dataPack.data, erp: false);
-      } else {
-        throw Exception('Unexpected isolate data type');
-      }
-    },
-  );
+    if (dataPack.type == IsolateDataPackType.blockArguments) {
+      /// 生成主体
+      _generate(sendPort, dataPack.data);
+      _args = dataPack.data;
+    } else if (dataPack.type == IsolateDataPackType.identiconUint8List) {
+      /// 生成 Identicon
+      packIcon(_args!.outDir.concact('colorified'), dataPack.data, erp: false);
+    } else {
+      throw Exception('Unexpected isolate data type');
+    }
+  });
 }
 
 /// 进度更新器
@@ -68,16 +63,15 @@ void _updateProgress(SendPort sendPort, String state, double v) {
   sendPort.send(
     IsolateDataPack(
       type: IsolateDataPackType.progressUpdate,
-      data: ProgressData(
-        state: state,
-        progress: v,
-      ),
+      data: ProgressData(state: state, progress: v),
     ),
   );
 }
 
 /// 像素画生成器
 Future<void> _generate(SendPort sendPort, GenBlockArguments args) async {
+  print("Any powders?: ${args.palette.any((e) => e.id.contains("powder"))}");
+
   /// 图像为空
   Image? image = args.image;
   if (image == null) {
@@ -123,13 +117,9 @@ Future<void> _generate(SendPort sendPort, GenBlockArguments args) async {
   BlockMatrix blmx;
   if (args.stairType) {
     /// 阶梯式
-    blmx = _buildStaircase(
-      rgbamat,
-      args,
-      (v) {
-        _updateProgress(sendPort, '构建阶梯式中', v);
-      },
-    );
+    blmx = _buildStaircase(rgbamat, args, (v) {
+      _updateProgress(sendPort, '构建阶梯式中', v);
+    });
   } else {
     /// 扁平式
     _updateProgress(sendPort, '构建扁平式中', 2);
@@ -166,12 +156,7 @@ Future<void> _generate(SendPort sendPort, GenBlockArguments args) async {
     args.wsDelay ??= '10';
     int? delay = args.wsDelay!.toInt();
     delay ??= 10;
-    sendPort.send(
-      IsolateDataPack(
-        type: IsolateDataPackType.socketDelay,
-        data: delay,
-      ),
-    );
+    sendPort.send(IsolateDataPack(type: IsolateDataPackType.socketDelay, data: delay));
 
     /// 用 WebSocket 输出
     sendPort.send(
@@ -239,40 +224,31 @@ BlockMatrix _buildStaircase(
   final BlockMatrix blmx = BlockMatrix();
 
   /// 偏移矩阵
-  final ormx = OffsetRequestMatrix(
-    width: rgbamat.length,
-    height: rgbamat[0].length,
-  );
+  final ormx = OffsetRequestMatrix(width: rgbamat.length, height: rgbamat[0].length);
 
   /// 匹配与偏移
-  rgbamat.enumerate(
-    (x, row) {
-      row.enumerate(
-        (z, rgba) {
-          /// 显示进度
-          onProgress((x * rgbamat[0].length + z) / rgbamat.length / rgbamat[0].length);
+  rgbamat.enumerate((x, row) {
+    row.enumerate((z, rgba) {
+      /// 显示进度
+      onProgress((x * rgbamat[0].length + z) / rgbamat.length / rgbamat[0].length);
 
-          /// 透明即为空
-          if (rgba.a != 255) return;
+      /// 透明即为空
+      if (rgba.a != 255) return;
 
-          final matched = staircaseMatcher(rgba, args);
-          ormx.orm[x][z].block = matched.block;
+      final matched = staircaseMatcher(rgba, args);
+      ormx.orm[x][z].block = matched.block;
 
-          final ormxEntry = ormx.orm[x][z];
-          ormx.update(x, z + 1, ormxEntry.basey + ormxEntry.offset, matched.offset);
-        },
-      );
-    },
-  );
+      final ormxEntry = ormx.orm[x][z];
+      ormx.update(x, z + 1, ormxEntry.basey + ormxEntry.offset, matched.offset);
+    });
+  });
 
   ormx.archieve();
 
   /// 写入方块矩阵
-  ormx.enumerate(
-    (i, j, entry) {
-      blmx.push(Block(x: i, y: entry.basey + entry.offset, z: j, block: entry.block));
-    },
-  );
+  ormx.enumerate((i, j, entry) {
+    blmx.push(Block(x: i, y: entry.basey + entry.offset, z: j, block: entry.block));
+  });
 
   return blmx;
 }
@@ -283,8 +259,12 @@ List<num> _findRGB(List<num> rgb, GenBlockArguments args) {
   for (RGBMapping entry in args.palette) {
     ColorDistance cd = ColorDistance(args.colordistance);
     final RGBA entryRGBA = RGBA(r: entry.r, g: entry.g, b: entry.b, a: 0);
-    final RGBA targetRGBA =
-        RGBA(r: rgb[0].toInt(), g: rgb[1].toInt(), b: rgb[2].toInt(), a: 0);
+    final RGBA targetRGBA = RGBA(
+      r: rgb[0].toInt(),
+      g: rgb[1].toInt(),
+      b: rgb[2].toInt(),
+      a: 0,
+    );
     num dist = cd.calculator(entryRGBA, targetRGBA);
 
     if (dist.isNaN) {
@@ -293,11 +273,7 @@ List<num> _findRGB(List<num> rgb, GenBlockArguments args) {
     }
 
     if (dist < mindis) {
-      find = [
-        entry.r as num,
-        entry.g as num,
-        entry.b as num,
-      ];
+      find = [entry.r as num, entry.g as num, entry.b as num];
       mindis = dist;
     }
   }
@@ -319,15 +295,13 @@ BlockMatrix _buildFlat(List<List<RGBA>> rgbamat, GenBlockArguments args) {
         args.palette[i].b,
         args.palette[i].id,
       ),
-    ).where(
-      (e) {
-        if (args.useStruct) {
-          return !manager.chs.map((v) => v.flattened).contains(e.id);
-        } else {
-          return true;
-        }
-      },
-    ).toList(),
+    ).where((e) {
+      if (args.useStruct) {
+        return !manager.chs.map((v) => v.flattened).contains(e.id);
+      } else {
+        return true;
+      }
+    }).toList(),
     (x, y) {
       if (x == null || y == null) {
         throw Exception();
@@ -350,26 +324,23 @@ BlockMatrix _buildFlat(List<List<RGBA>> rgbamat, GenBlockArguments args) {
     },
   );
 
-  rgbamat.enumerate(
-    (x, row) {
-      row.enumerate(
-        (z, rgba) {
-          /// 透明即为空
-          if (rgba.a != 255) return;
+  rgbamat.enumerate((x, row) {
+    row.enumerate((z, rgba) {
+      /// 透明即为空
+      if (rgba.a != 255) return;
 
-          final PaletteEntry? found =
-              kdtree.findNearest(PaletteEntry(rgba.r, rgba.g, rgba.b, ''));
-
-          if (found == null) {
-            return;
-          }
-
-          final BlockWithState block = manager.getBlockWithStateOf(found.id);
-          blmx.push(Block(x: x, y: 0, z: z, block: block));
-        },
+      final PaletteEntry? found = kdtree.findNearest(
+        PaletteEntry(rgba.r, rgba.g, rgba.b, ''),
       );
-    },
-  );
+
+      if (found == null) {
+        return;
+      }
+
+      final BlockWithState block = manager.getBlockWithStateOf(found.id);
+      blmx.push(Block(x: x, y: 0, z: z, block: block));
+    });
+  });
 
   return blmx;
 }
@@ -393,65 +364,41 @@ Future<void> _buildPack(SendPort sendPort, GenBlockArguments args) async {
   /// 清单
   await manifest(
     zpdir,
-    PackageArg(
-      name: args.pkName!,
-      auth: args.pkAuth!,
-      desc: args.pkDesc!,
-    ),
+    PackageArg(name: args.pkName!, auth: args.pkAuth!, desc: args.pkDesc!),
     erp: false,
   );
 
   /// 图标
   final uuid = const Uuid().v4();
-  sendPort.send(
-    IsolateDataPack(
-      type: IsolateDataPackType.identiconData,
-      data: uuid,
-    ),
-  );
+  sendPort.send(IsolateDataPack(type: IsolateDataPackType.identiconData, data: uuid));
 }
 
 Future<void> _writeStructure(
-    BlockMatrix blmx, bool needPack, GenBlockArguments args) async {
+  BlockMatrix blmx,
+  bool needPack,
+  GenBlockArguments args,
+) async {
   Structure struct;
   if (args.stairType) {
     struct = Structure(blmx.size);
   } else {
-    final xyz = xyswitcher(args.plane, [
-      blmx.size.x,
-      blmx.size.y,
-      blmx.size.z,
-    ]);
-    struct = Structure(Vector3(
-      xyz[0],
-      xyz[1],
-      xyz[2],
-    ));
+    final xyz = xyswitcher(args.plane, [blmx.size.x, blmx.size.y, blmx.size.z]);
+    struct = Structure(Vector3(xyz[0], xyz[1], xyz[2]));
   }
-  blmx.blocks.enumerate(
-    (i, v) {
-      if (args.stairType) {
-        struct.setBlock(
-          Vector3(
-            v.x.toDouble(),
-            v.y.toDouble(),
-            v.z.toDouble(),
-          ),
-          v.block.id,
-        );
-      } else {
-        final xyz = xyswitcher(args.plane, [v.x, v.y, v.z]);
-        struct.setBlock(
-          Vector3(
-            xyz[0].toDouble(),
-            xyz[1].toDouble(),
-            xyz[2].toDouble(),
-          ),
-          v.block.id,
-        );
-      }
-    },
-  );
+  blmx.blocks.enumerate((i, v) {
+    if (args.stairType) {
+      struct.setBlock(
+        Vector3(v.x.toDouble(), v.y.toDouble(), v.z.toDouble()),
+        v.block.id,
+      );
+    } else {
+      final xyz = xyswitcher(args.plane, [v.x, v.y, v.z]);
+      struct.setBlock(
+        Vector3(xyz[0].toDouble(), xyz[1].toDouble(), xyz[2].toDouble()),
+        v.block.id,
+      );
+    }
+  });
 
   Directory outDir;
   if (needPack) {
@@ -473,19 +420,18 @@ List<String> _buildCommands(BlockMatrix blmx, GenBlockArguments args) {
     args.basicOffset![2] ?? 0,
   ];
   final List<int> bos = xyswitcher(args.plane, bo);
-  blmx.blocks.enumerate(
-    (i, v) {
-      final List<int> xyz = xyswitcher(args.plane, [v.x, v.y, v.z]);
-      if (args.stairType) {
-        commands.add(
-            'setblock ~${v.x + bos[0]} ~${v.y + bos[1]} ~${v.z + bos[2]} ${v.block.id} ${v.block.state}');
-      } else {
-        commands.add(
-          'setblock ~${xyz[0] + bos[0]} ~${xyz[1] + bos[1]} ~${xyz[2] + bos[2]} ${v.block.id} ${v.block.state}',
-        );
-      }
-    },
-  );
+  blmx.blocks.enumerate((i, v) {
+    final List<int> xyz = xyswitcher(args.plane, [v.x, v.y, v.z]);
+    if (args.stairType) {
+      commands.add(
+        'setblock ~${v.x + bos[0]} ~${v.y + bos[1]} ~${v.z + bos[2]} ${v.block.id} ${v.block.state}',
+      );
+    } else {
+      commands.add(
+        'setblock ~${xyz[0] + bos[0]} ~${xyz[1] + bos[1]} ~${xyz[2] + bos[2]} ${v.block.id} ${v.block.state}',
+      );
+    }
+  });
 
   return commands;
 }
@@ -506,12 +452,10 @@ Future<void> _writeFunctionsAndScripts(
   }
   final maker = Functionmaker(dir: functionDir);
   final len = commands.length;
-  await commands.enumerateAsync(
-    (i, v) async {
-      onProgress(i, len);
-      await maker.command(v);
-    },
-  );
+  await commands.enumerateAsync((i, v) async {
+    onProgress(i, len);
+    await maker.command(v);
+  });
   await maker.end();
 
   if (needPack) {

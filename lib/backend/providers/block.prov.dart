@@ -1,8 +1,8 @@
 import 'package:colorify/backend/abstracts/palette_entry.dart';
-import 'package:colorify/backend/extensions/on_list.dart';
 import 'package:colorify/backend/assets/palette/palette.block.dart';
 import 'package:colorify/backend/assets/palette/palette.carpet.dart';
 import 'package:colorify/backend/assets/palette/palette.map2.dart';
+import 'package:colorify/backend/extensions/on_list.dart';
 import 'package:colorify/backend/utils/common/palette_parser.dart';
 import 'package:colorify/main.dart';
 import 'package:flutter/material.dart';
@@ -123,25 +123,21 @@ class Blockprov with ChangeNotifier {
       _palette = PaletteParser.block(blockPalette);
 
       if (_noGlasses) {
-        _palette.enumerate(
-          (i, v) {
-            if (v.id.contains('glass')) {
-              _disabled.add(v.id);
-            }
-          },
-        );
+        _palette.enumerate((i, v) {
+          if (v.id.contains('glass')) {
+            _disabled.add(v.id);
+          }
+        });
       } else {
         _disabled.removeWhere((v) => v.contains('glass'));
       }
 
       if (_noSands) {
-        _palette.enumerate(
-          (i, v) {
-            if (v.id.contains('sand') || v.id.contains('powder')) {
-              _disabled.add(v.id);
-            }
-          },
-        );
+        _palette.enumerate((i, v) {
+          if (v.id.contains('sand') || v.id.contains('powder')) {
+            _disabled.add(v.id);
+          }
+        });
       } else {
         _disabled.removeWhere((v) => v.contains('glass') || v.contains('powder'));
       }

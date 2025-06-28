@@ -7,6 +7,7 @@ import 'package:colorify/frontend/components/websocket/wstile.dart';
 import 'package:colorify/frontend/pages/socket/messages.dart';
 import 'package:colorify/frontend/pages/socket/process_line_indicator.dart';
 import 'package:colorify/ui/basic/xbutton.dart';
+import 'package:colorify/ui/basic/xmenu.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,10 +33,7 @@ class _SocketPageState extends State<SocketPage> {
           children: [
             Text(
               socketprov.unactivated ? '服务器未启动' : '启动中...',
-              style: getStyle(
-                color: Colors.white,
-                size: 22,
-              ),
+              style: getStyle(color: Colors.white, size: 22),
             ),
             const SizedBox(height: 20),
             LayoutBuilder(
@@ -66,13 +64,7 @@ class _SocketPageState extends State<SocketPage> {
 
                           if (json['body']['position'] != null) {
                             final value = json['body']['position'];
-                            socketprov.recordExeLoc(
-                              [
-                                value['x'],
-                                value['y'],
-                                value['z'],
-                              ],
-                            );
+                            socketprov.recordExeLoc([value['x'], value['y'], value['z']]);
                           }
                         },
                         onDone: () {},
@@ -84,10 +76,7 @@ class _SocketPageState extends State<SocketPage> {
                     child: Center(
                       child: AutoSizeText(
                         '启动',
-                        style: getStyle(
-                          color: Colors.white,
-                          size: 20,
-                        ),
+                        style: getStyle(color: Colors.white, size: 20),
                       ),
                     ),
                   );
@@ -105,29 +94,11 @@ class _SocketPageState extends State<SocketPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              '服务器正在运行',
-              style: getStyle(
-                color: Colors.white,
-                size: 22,
-              ),
-            ),
+            Text('服务器正在运行', style: getStyle(color: Colors.white, size: 22)),
             const SizedBox(height: 20),
-            Text(
-              '等待设备连接',
-              style: getStyle(
-                color: Colors.white,
-                size: 22,
-              ),
-            ),
+            Text('等待设备连接', style: getStyle(color: Colors.white, size: 22)),
             const SizedBox(height: 20),
-            Text(
-              '在 Minecraft 中使用',
-              style: getStyle(
-                color: Colors.white,
-                size: 22,
-              ),
-            ),
+            Text('在 Minecraft 中使用', style: getStyle(color: Colors.white, size: 22)),
             const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
@@ -137,20 +108,11 @@ class _SocketPageState extends State<SocketPage> {
               padding: const EdgeInsets.all(12),
               child: SelectableText(
                 '/connect 127.0.0.1:8080',
-                style: getStyle(
-                  color: Colors.grey,
-                  size: 18,
-                ),
+                style: getStyle(color: Colors.grey, size: 18),
               ),
             ),
             const SizedBox(height: 20),
-            Text(
-              '命令来连接',
-              style: getStyle(
-                color: Colors.white,
-                size: 22,
-              ),
-            ),
+            Text('命令来连接', style: getStyle(color: Colors.white, size: 22)),
           ],
         ),
       );
@@ -163,10 +125,7 @@ class _SocketPageState extends State<SocketPage> {
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             child: Text(
               'Tip: 在使用此功能时请在游戏设置 -> 通用\n开启此选项: 已启用WebSocket\n关闭此选项: 需要加密的WebSocket',
-              style: getStyle(
-                color: Colors.grey,
-                size: 16,
-              ),
+              style: getStyle(color: Colors.grey, size: 16),
             ),
           ),
           Wstile(
@@ -178,17 +137,11 @@ class _SocketPageState extends State<SocketPage> {
               children: [
                 Text(
                   socketprov.speed.toString(),
-                  style: getStyle(
-                    color: Colors.white,
-                    size: 30,
-                  ),
+                  style: getStyle(color: Colors.white, size: 30),
                 ),
                 Text(
                   'bps (block per second)',
-                  style: getStyle(
-                    color: Colors.grey,
-                    size: 20,
-                  ),
+                  style: getStyle(color: Colors.grey, size: 20),
                 ),
               ],
             ),
@@ -205,13 +158,29 @@ class _SocketPageState extends State<SocketPage> {
           ),
           Wstile(
             width: 100.w - 40,
+            height: 120,
+            title: '/execute 语法版本',
+            child: XMenu(
+              initValue: 0,
+              tiles: ["旧版", "新版"],
+              width: 100.w - 60,
+              height: 50,
+              gapHeight: 8,
+              backgroundColor: const Color(0xFF26232a),
+              splashColor: Colors.white.withAlpha(26),
+              hoverColor: const Color(0xFF6b6276),
+              textStyle: getStyle(color: Colors.white, size: 18),
+              duration: const Duration(milliseconds: 180),
+              onSelect: (v) => socketprov.updateExecuteSyntaxVersion(
+                WebSocketExecuteSyntaxVersion.values[v],
+              ),
+            ),
+          ),
+          Wstile(
+            width: 100.w - 40,
             height: 400,
             title: '日志（最近20条）',
-            child: SocketMessages(
-              width: 100.w - 64,
-              height: 340,
-              logs: socketprov.logs,
-            ),
+            child: SocketMessages(width: 100.w - 64, height: 340, logs: socketprov.logs),
           ),
           LayoutBuilder(
             builder: (_, __) {
@@ -234,10 +203,7 @@ class _SocketPageState extends State<SocketPage> {
                       child: Center(
                         child: AutoSizeText(
                           socketprov.connected ? '暂停' : '继续',
-                          style: getStyle(
-                            color: Colors.white,
-                            size: 20,
-                          ),
+                          style: getStyle(color: Colors.white, size: 20),
                         ),
                       ),
                     ),
@@ -257,10 +223,7 @@ class _SocketPageState extends State<SocketPage> {
                             child: Center(
                               child: AutoSizeText(
                                 '终止此任务',
-                                style: getStyle(
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
+                                style: getStyle(color: Colors.white, size: 20),
                               ),
                             ),
                           ),
