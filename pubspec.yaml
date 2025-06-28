@@ -1,7 +1,7 @@
 name: colorify
 description: "A new Flutter project."
 publish_to: "none"
-version: 6.1.1+60101
+version: 6.1.2+60101
 
 environment:
   sdk: ^3.8.0

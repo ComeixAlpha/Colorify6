@@ -64,7 +64,7 @@ Future<void> manifest(
   "metadata": {
     "authors": ["${args.auth}"],
     "generated_with": {
-      "colorify": ["6.1.1"]
+      "colorify": ["6.1.2"]
     }
   }
 }
@@ -97,7 +97,7 @@ Future<void> manifest(
   "metadata": {
     "authors": ["${args.auth}"],
     "generated_with": {
-      "colorify": ["6.1.1"]
+      "colorify": ["6.1.2"]
     }
   }
 }
