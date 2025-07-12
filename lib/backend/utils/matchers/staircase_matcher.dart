@@ -64,8 +64,8 @@ StaircaseMatchResult staircaseMatcher(RGBA rgba, GenBlockArguments args) {
 
     final found = manager.getBlockWithStateOf(entry.id);
 
-    /// 结构与 WebSocket 不支持方块状态
-    if (args.useStruct || args.type == GenerateType.socket && (found.stateString ?? '').isNotEmpty) {
+    /// WebSocket 不支持方块状态
+    if (args.type == GenerateType.socket && (found.stateString ?? '').isNotEmpty) {
       continue;
     }
 

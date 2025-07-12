@@ -113,7 +113,6 @@ class _BlockArgumentsState extends State<BlockArguments> {
             onCheck: (v) {
               blockprov.stairType = v;
               if (v) {
-                blockprov.useStruct = false;
                 blockprov.dithering = false;
                 blockprov.carpetOnly = false;
                 blockprov.refreshPalette();
@@ -127,9 +126,6 @@ class _BlockArgumentsState extends State<BlockArguments> {
             width: widget.width - 40,
             onCheck: (v) {
               blockprov.useStruct = v;
-              if (v) {
-                blockprov.stairType = false;
-              }
               blockprov.refreshPalette();
             },
           ),

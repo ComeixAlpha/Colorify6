@@ -70,8 +70,6 @@ void _updateProgress(SendPort sendPort, String state, double v) {
 
 /// 像素画生成器
 Future<void> _generate(SendPort sendPort, GenBlockArguments args) async {
-  print("Any powders?: ${args.palette.any((e) => e.id.contains("powder"))}");
-
   /// 图像为空
   Image? image = args.image;
   if (image == null) {
