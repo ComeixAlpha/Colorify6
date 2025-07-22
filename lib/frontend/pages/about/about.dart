@@ -80,7 +80,7 @@ class AboutTexts extends StatelessWidget {
         padding: const EdgeInsets.all(0),
         children: [
           title('关于 Colorify'),
-          tile('版本', 'v6.1.3'),
+          tile('版本', 'v6.1.4'),
           tile('开源协议', 'GPL-3.0'),
           link('文档/教程', 'https://comeixalpha.github.io'),
           const SizedBox(height: 10),
@@ -93,7 +93,7 @@ class AboutTexts extends StatelessWidget {
               'https://space.bilibili.com/1257718729',
             ],
           ),
-          title('特别鸣谢'),
+          title('特别鸣谢（按时间顺序）'),
           const SizedBox(height: 20),
           const AcknowledgementTile(
             title: '静之秋恋 QuietFallHe',
@@ -141,7 +141,13 @@ class AboutTexts extends StatelessWidget {
               'https://gitee.com/wn1027',
             ],
           ),
-          title('赞助 Sponsor'),
+          const AcknowledgementTile(
+            title: 'Happy2018new',
+            subtitle: '地图基色表提供',
+            assetPath: 'assets/acknowledgement/happy.jpg',
+            links: ['https://github.com/Happy2018new'],
+          ),
+          title('赞助 Sponsor（按时间顺序）'),
           const SizedBox(height: 20),
           const SponsorQrcode(),
           const SizedBox(height: 20),

@@ -60,4 +60,8 @@ class BlockMatrix {
     _lz = min(_lz, block.z);
     _mz = max(_mz, block.z);
   }
+
+  void normalize() {
+    
+  }
 }

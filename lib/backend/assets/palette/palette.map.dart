@@ -1,3 +1,5 @@
+// Color map from WIKI (for JE)
+
 const mapPalette = [
   {
     "id": "GRASS",

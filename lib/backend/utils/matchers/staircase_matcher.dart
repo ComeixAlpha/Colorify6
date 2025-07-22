@@ -13,10 +13,7 @@ class StaircaseMatchResult {
   int offset;
   BlockWithState block;
 
-  StaircaseMatchResult({
-    required this.offset,
-    required this.block,
-  });
+  StaircaseMatchResult({required this.offset, required this.block});
 }
 
 StaircaseMatchResult staircaseMatcher(RGBA rgba, GenBlockArguments args) {
@@ -56,7 +53,7 @@ StaircaseMatchResult staircaseMatcher(RGBA rgba, GenBlockArguments args) {
       lmd = cd.calculator(lRGB, tRGB);
     }
 
-    final minmd = min(smd, min(pmd, lmd)).toDouble();
+    final minmd = min(smd, min(pmd, lmd));
 
     if (minmd > minmdRecord) {
       continue;
@@ -70,14 +67,16 @@ StaircaseMatchResult staircaseMatcher(RGBA rgba, GenBlockArguments args) {
     }
 
     block = found;
-    minmdRecord = minmd;
+    minmdRecord = minmd.toDouble();
 
     if (minmd == smd) {
-      offset = gap;
+      offset = -gap;
     } else if (minmd == pmd) {
       offset = 0;
+    } else if (minmd == lmd) {
+      offset = gap;
     } else {
-      offset = -gap;
+      throw Exception('Unexpected minmd value');
     }
   }
 

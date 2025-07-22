@@ -1,3 +1,5 @@
+// Color map from Wn1027
+
 const mapPalette2 = {
   "version": 1,
   "gameVersion": "1.21.3-1.686+60bf22d",

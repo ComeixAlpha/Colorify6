@@ -27,11 +27,7 @@ final btecwscommanddelay = TextEditingController();
 class BlockArguments extends StatefulWidget {
   final double width;
   final double height;
-  const BlockArguments({
-    super.key,
-    required this.width,
-    required this.height,
-  });
+  const BlockArguments({super.key, required this.width, required this.height});
 
   @override
   State<BlockArguments> createState() => _BlockArgumentsState();
@@ -100,7 +96,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
             width: widget.width - 40,
             height: 140,
             initValue: blockprov.rgb,
-            candidates: const ['RGB', 'RGB+'],
+            candidates: const ['RGB(Manhattan)', 'RGB+'],
             onSelect: (v) {
               blockprov.rgb = v;
             },
@@ -113,7 +109,6 @@ class _BlockArgumentsState extends State<BlockArguments> {
             onCheck: (v) {
               blockprov.stairType = v;
               if (v) {
-                blockprov.dithering = false;
                 blockprov.carpetOnly = false;
                 blockprov.refreshPalette();
               }
@@ -136,9 +131,6 @@ class _BlockArgumentsState extends State<BlockArguments> {
             width: widget.width - 40,
             onCheck: (v) {
               blockprov.dithering = v;
-              if (v) {
-                blockprov.stairType = false;
-              }
               blockprov.refreshPalette();
             },
           ),
@@ -221,9 +213,7 @@ class _BlockArgumentsState extends State<BlockArguments> {
               Provider.of<Blockprov>(context, listen: false).updateAVC('basicOffset', v);
             },
           ),
-          AdvancedAlert(
-            width: widget.width - 40,
-          ),
+          AdvancedAlert(width: widget.width - 40),
           IStringTile(
             title: '阶梯式竖向间隔',
             subtitle: 'JE 通常为 1 但在 BE 会出现马赛克',

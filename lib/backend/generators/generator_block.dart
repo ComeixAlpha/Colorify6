@@ -1,7 +1,6 @@
 import 'dart:core';
 import 'dart:io';
 import 'dart:isolate';
-import 'dart:math';
 
 import 'package:colorify/backend/abstracts/block_with_state.dart';
 import 'package:colorify/backend/abstracts/genblockargs.dart';
@@ -173,19 +172,21 @@ List<int> _autoSize(Image image, List<int?> origin) {
   final w = image.width;
   final h = image.height;
   if (origin.every((e) => e == null)) {
-    final zoomFactor = sqrt(20000 / w / h);
-    final int zw = (w * zoomFactor).floor();
-    final int zh = (h * zoomFactor).floor();
+    return [w, h];
+    // Deprecated auto size logic
+    // final zoomFactor = sqrt(20000 / w / h);
+    // final int zw = (w * zoomFactor).floor();
+    // final int zh = (h * zoomFactor).floor();
 
-    int rw = zw - zw % 128;
-    int rh = zh - zh % 128;
+    // int rw = zw - zw % 128;
+    // int rh = zh - zh % 128;
 
-    if (zw < 128 || zh < 128) {
-      rw = zw;
-      rh = zh;
-    }
+    // if (zw < 128 || zh < 128) {
+    //   rw = zw;
+    //   rh = zh;
+    // }
 
-    return [rw, rh];
+    // return [rw, rh];
   } else if (origin[0] == null) {
     final zoomFactor = origin[1]! / h;
     final int zw = (w * zoomFactor).round();
@@ -226,22 +227,27 @@ BlockMatrix _buildStaircase(
 
   /// 匹配与偏移
   rgbamat.enumerate((x, row) {
-    row.enumerate((z, rgba) {
+    for (int z = row.length - 1; z >= 0; z--) {
+      final RGBA rgba = row[z];
+
       /// 显示进度
-      onProgress((x * rgbamat[0].length + z) / rgbamat.length / rgbamat[0].length);
+      onProgress(
+        (x * rgbamat[0].length + (row.length - z)) / rgbamat.length / rgbamat[0].length,
+      );
 
       /// 透明即为空
-      if (rgba.a != 255) return;
+      if (rgba.a != 255) continue;
 
       final matched = staircaseMatcher(rgba, args);
       ormx.orm[x][z].block = matched.block;
 
       final ormxEntry = ormx.orm[x][z];
-      ormx.update(x, z + 1, ormxEntry.basey + ormxEntry.offset, matched.offset);
-    });
+      ormx.update(x, z - 1, ormxEntry.basey + ormxEntry.offset, matched.offset);
+    }
   });
 
-  ormx.archieve();
+  // Dreprecated code for archiving
+  // ormx.archieve();
 
   /// 写入方块矩阵
   ormx.enumerate((i, j, entry) {
@@ -386,7 +392,7 @@ Future<void> _writeStructure(
   blmx.blocks.enumerate((i, v) {
     if (args.stairType) {
       struct.setBlock(
-        Vector3(v.x.toDouble(), v.y.toDouble(), v.z.toDouble()),
+        Vector3(v.x.toDouble(), v.y.toDouble() - blmx.ly, v.z.toDouble()),
         v.block.id,
       );
     } else {

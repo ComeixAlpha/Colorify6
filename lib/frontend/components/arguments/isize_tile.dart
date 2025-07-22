@@ -25,10 +25,7 @@ class _ISizeTileTextfield extends StatelessWidget {
       onChanged: onChanged,
       style: XTextfieldStyle(
         hintText: hintText,
-        hintStyle: getStyle(
-          color: Colors.grey,
-          size: 18,
-        ),
+        hintStyle: getStyle(color: Colors.grey, size: 18),
       ),
     );
   }
@@ -109,13 +106,7 @@ class _ISizeTieState extends State<ISizeTie> {
                     children: [
                       AvcStateIndicator(state: _avcPassed),
                       const SizedBox(width: 10),
-                      Text(
-                        widget.title,
-                        style: getStyle(
-                          color: Colors.white,
-                          size: 22,
-                        ),
-                      ),
+                      Text(widget.title, style: getStyle(color: Colors.white, size: 22)),
                     ],
                   ),
                   SizedBox(
@@ -126,10 +117,7 @@ class _ISizeTieState extends State<ISizeTie> {
                       child: Text(
                         widget.subtitle,
                         overflow: TextOverflow.ellipsis,
-                        style: getStyle(
-                          color: Colors.grey,
-                          size: 16,
-                        ),
+                        style: getStyle(color: Colors.grey, size: 16),
                       ),
                     ),
                   ),
@@ -138,13 +126,13 @@ class _ISizeTieState extends State<ISizeTie> {
                     children: [
                       _ISizeTileTextfield(
                         width: singleTextfieldWidth,
-                        hintText: '长/自动',
+                        hintText: '长',
                         tec: widget.controllers[0],
                         onChanged: (v) => updateAVC(0, v),
                       ),
                       _ISizeTileTextfield(
                         width: singleTextfieldWidth,
-                        hintText: '宽/自动',
+                        hintText: '宽',
                         tec: widget.controllers[1],
                         onChanged: (v) => updateAVC(1, v),
                       ),

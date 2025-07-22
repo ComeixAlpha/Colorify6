@@ -1,7 +1,7 @@
 import 'package:colorify/backend/abstracts/palette_entry.dart';
 import 'package:colorify/backend/assets/palette/palette.block.dart';
 import 'package:colorify/backend/assets/palette/palette.carpet.dart';
-import 'package:colorify/backend/assets/palette/palette.map2.dart';
+import 'package:colorify/backend/assets/palette/palette.map3.dart';
 import 'package:colorify/backend/extensions/on_list.dart';
 import 'package:colorify/backend/utils/common/palette_parser.dart';
 import 'package:colorify/main.dart';
@@ -116,7 +116,7 @@ class Blockprov with ChangeNotifier {
 
   void refreshPalette() {
     if (_stairType) {
-      _palette = PaletteParser.staircase(mapPalette2['data'] as Map<String, String>);
+      _palette = PaletteParser.staircase(mapPalette3['data'] as Map<String, String>);
     } else if (_carperOnly) {
       _palette = PaletteParser.carpet(carpetPalette);
     } else {
