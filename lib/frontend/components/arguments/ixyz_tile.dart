@@ -1,4 +1,5 @@
 import 'package:colorify/frontend/components/arguments/avc_state_indicator.dart';
+import 'package:colorify/frontend/scaffold/colors.dart';
 import 'package:colorify/ui/basic/xtextfield.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +26,7 @@ class _IXYZTileTextfield extends StatelessWidget {
       onChanged: onChanged,
       style: XTextfieldStyle(
         hintText: hintText,
-        hintStyle: getStyle(
-          color: Colors.grey,
-          size: 18,
-        ),
+        hintStyle: getStyle(color: Colors.grey, size: 18),
       ),
     );
   }
@@ -89,16 +87,9 @@ class _IXYZTileState extends State<IXYZTile> {
               width: widget.width,
               height: widget.height,
               decoration: BoxDecoration(
-                color: const Color(0xFF2d2a31),
+                // color: const Color(0xFF2d2a31),
+                color: MyTheme.card,
                 borderRadius: BorderRadius.circular(4),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withAlpha(77),
-                    blurRadius: 10,
-                    spreadRadius: 1,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
               ),
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -110,13 +101,7 @@ class _IXYZTileState extends State<IXYZTile> {
                     children: [
                       AvcStateIndicator(state: _avcPassed),
                       const SizedBox(width: 10),
-                      Text(
-                        widget.title,
-                        style: getStyle(
-                          color: Colors.white,
-                          size: 22,
-                        ),
-                      ),
+                      Text(widget.title, style: getStyle(color: Colors.white, size: 22)),
                     ],
                   ),
                   SizedBox(
@@ -127,10 +112,7 @@ class _IXYZTileState extends State<IXYZTile> {
                       child: Text(
                         widget.subtitle,
                         overflow: TextOverflow.ellipsis,
-                        style: getStyle(
-                          color: Colors.grey,
-                          size: 16,
-                        ),
+                        style: getStyle(color: Colors.grey, size: 16),
                       ),
                     ),
                   ),

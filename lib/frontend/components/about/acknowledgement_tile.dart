@@ -1,3 +1,4 @@
+import 'package:colorify/frontend/scaffold/colors.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -8,12 +9,16 @@ class AcknowledgementTile extends StatefulWidget {
   final String title;
   final String subtitle;
   final List<String>? links;
+  final bool? isFirstOne;
+  final bool? isLastOne;
   const AcknowledgementTile({
     super.key,
     required this.assetPath,
     required this.title,
     required this.subtitle,
     this.links,
+    this.isFirstOne,
+    this.isLastOne,
   });
 
   @override
@@ -76,13 +81,23 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
   @override
   Widget build(BuildContext context) {
     final w = 100.w / 6;
+    BorderRadiusGeometry borderRadius = BorderRadius.circular(4);
+    assert(!(widget.isFirstOne == true && widget.isLastOne == true));
+    if (widget.isFirstOne == true) {
+      borderRadius = const BorderRadius.only(
+        topLeft: Radius.circular(28),
+        topRight: Radius.circular(28),
+      );
+    } else if (widget.isLastOne == true) {
+      borderRadius = const BorderRadius.only(
+        bottomLeft: Radius.circular(28),
+        bottomRight: Radius.circular(28),
+      );
+    }
     return Column(
       children: [
         Container(
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 35, 31, 39),
-            borderRadius: BorderRadius.circular(4),
-          ),
+          decoration: BoxDecoration(color: MyTheme.card, borderRadius: borderRadius),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -138,7 +153,7 @@ class _AcknowledgementTileState extends State<AcknowledgementTile> {
             ],
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 4),
       ],
     );
   }

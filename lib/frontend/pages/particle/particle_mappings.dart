@@ -3,6 +3,7 @@ import 'package:colorify/backend/abstracts/rgbmapping.dart';
 import 'package:colorify/backend/providers/particle.prov.dart';
 import 'package:colorify/frontend/components/particle/new_mapping.dart';
 import 'package:colorify/frontend/components/particle/rgbmapping_tile.dart';
+import 'package:colorify/frontend/scaffold/colors.dart';
 import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/basic/xframe.dart';
 import 'package:colorify/ui/util/text_style.dart';
@@ -13,11 +14,7 @@ import 'package:sizer/sizer.dart';
 class ParticleMappings extends StatefulWidget {
   final double width;
   final double height;
-  const ParticleMappings({
-    super.key,
-    required this.width,
-    required this.height,
-  });
+  const ParticleMappings({super.key, required this.width, required this.height});
 
   @override
   State<ParticleMappings> createState() => _ParticleMappingsState();
@@ -32,31 +29,31 @@ class _ParticleMappingsState extends State<ParticleMappings> {
 
   XButton _newMappingButton() {
     return XButton(
-      width: 140,
-      height: 50,
-      backgroundColor: const Color(0xFFb9acc9),
-      hoverColor: const Color(0xFFb9acc9),
+      width: 150,
+      height: 60,
+      backgroundColor: MyTheme.tertiary,
+      hoverColor: MyTheme.tertiary.withAlpha(200),
+      splashColor: Colors.white.withAlpha(100),
+      borderRadius: BorderRadius.circular(16),
       onTap: () {
         _overlayEntry = OverlayEntry(
           builder: (ctx) {
             final double w = 100.w * 0.8;
             final double h = 100.h * 0.44;
-            return Positioned(
-              top: 100.h / 2 - h / 2 - 40,
-              left: 100.w / 2 - w / 2,
-              child: NewMapping(
-                width: w,
-                height: h,
-                onDone: (v) {
-                  setState(() {
-                    _mappings.add(v);
-                  });
-                  Provider.of<Particleprov>(context, listen: false)
-                      .setMappings(_mappings);
-                  _overlayEntry?.remove();
-                },
-                onCancel: () => _overlayEntry?.remove(),
-              ),
+            return NewParticleMappingDialog(
+              width: w,
+              height: h,
+              onDone: (v) {
+                setState(() {
+                  _mappings.add(v);
+                });
+                Provider.of<Particleprov>(
+                  context,
+                  listen: false,
+                ).setMappings(_mappings);
+                _overlayEntry?.remove();
+              },
+              onCancel: () => _overlayEntry?.remove(),
             );
           },
         );
@@ -64,12 +61,13 @@ class _ParticleMappingsState extends State<ParticleMappings> {
       },
       padding: const EdgeInsets.all(12),
       child: Center(
-        child: AutoSizeText(
-          '新建映射',
-          style: getStyle(
-            color: const Color(0xFF433e49),
-            size: 20,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Icon(Icons.add, color: MyTheme.onTertiary, size: 28),
+            SizedBox(width: 10),
+            AutoSizeText('新建映射', style: getStyle(color: MyTheme.onTertiary, size: 20)),
+          ],
         ),
       ),
     );
@@ -82,13 +80,7 @@ class _ParticleMappingsState extends State<ParticleMappings> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              '还没有映射?',
-              style: getStyle(
-                color: Colors.white,
-                size: 24,
-              ),
-            ),
+            Text('还没有映射?', style: getStyle(color: Colors.white, size: 24)),
             const SizedBox(width: 20),
             _newMappingButton(),
           ],
@@ -105,24 +97,47 @@ class _ParticleMappingsState extends State<ParticleMappings> {
             if (i == _mappings.length) {
               return Column(
                 children: [
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _newMappingButton(),
-                    ],
+                    children: [_newMappingButton()],
                   ),
                   const SizedBox(height: 100),
                 ],
               );
             }
+
+            if (i == 0) {
+              return Column(
+                children: [
+                  const SizedBox(height: 20),
+                  RGBMappingTile(
+                    width: widget.width,
+                    mapping: _mappings[i],
+                    onDelete: () {
+                      setState(() {
+                        _mappings.removeAt(i);
+                        Provider.of<Particleprov>(
+                          context,
+                          listen: false,
+                        ).setMappings(_mappings);
+                      });
+                    },
+                  ),
+                ],
+              );
+            }
+
             return RGBMappingTile(
               width: widget.width,
               mapping: _mappings[i],
               onDelete: () {
                 setState(() {
                   _mappings.removeAt(i);
-                  Provider.of<Particleprov>(context, listen: false)
-                      .setMappings(_mappings);
+                  Provider.of<Particleprov>(
+                    context,
+                    listen: false,
+                  ).setMappings(_mappings);
                 });
               },
             );

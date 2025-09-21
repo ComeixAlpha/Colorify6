@@ -4,6 +4,14 @@ import 'dart:io';
 import 'package:colorify/backend/extensions/on_directory.dart';
 import 'package:path_provider/path_provider.dart';
 
+Future<Directory> getColorifyDir() async {
+  if (Platform.isAndroid) {
+    return Directory('/storage/emulated/0/Download/colorify/');
+  } else {
+    return (await getApplicationDocumentsDirectory()).concact('colorify');
+  }
+}
+
 Future<Directory> getAndCreateColorifyDir() async {
   Directory dir;
 

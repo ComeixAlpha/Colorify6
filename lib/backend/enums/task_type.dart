@@ -1,0 +1,4 @@
+enum TaskType {
+  file,
+  socket,
+}

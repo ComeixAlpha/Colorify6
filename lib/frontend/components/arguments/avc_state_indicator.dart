@@ -11,17 +11,26 @@ class AvcStateIndicator extends StatefulWidget {
 class _AvcStateIndicatorState extends State<AvcStateIndicator> {
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      curve: Curves.ease,
-      duration: const Duration(
-        milliseconds: 240,
-      ),
-      width: 10,
-      height: 10,
-      decoration: BoxDecoration(
-        color: widget.state ? const Color(0xFFAED581) : const Color(0xFFEF5350),
-        borderRadius: BorderRadius.circular(5),
-      ),
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 240),
+      switchInCurve: Curves.easeInOut,
+      switchOutCurve: Curves.easeInOut,
+      child: widget.state
+          ? const Icon(
+              key: ValueKey(1),
+              Icons.done_all_rounded,
+              color: Color(0xFFAED581),
+              size: 16,
+            )
+          : const Icon(
+              key: ValueKey(2),
+              Icons.close_rounded,
+              color: Color(0xFFEF5350),
+              size: 16,
+            ),
+      transitionBuilder: (child, animation) {
+        return FadeTransition(opacity: animation, child: child);
+      },
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:colorify/frontend/components/about/acknowledgement_tile.dart';
-import 'package:colorify/frontend/components/about/sponsor_qrcode.dart';
+import 'package:colorify/frontend/scaffold/colors.dart';
 import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class AboutTexts extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         child: Row(
           children: [
-            Text('# ', style: getStyle(size: 28, color: const Color(0xFFb9acc9))),
+            Text('# ', style: getStyle(size: 28, color: MyTheme.onPrimary)),
             Text(text, style: getStyle(size: 22, color: Colors.white)),
           ],
         ),
@@ -72,16 +72,30 @@ class AboutTexts extends StatelessWidget {
       );
     }
 
+    Widget divider() {
+      return UnconstrainedBox(
+        child: Container(
+          width: 90.w,
+          height: 1,
+          margin: const EdgeInsets.symmetric(vertical: 4),
+          color: Color(0xFFC5C4DD).withAlpha(30),
+        ),
+      );
+    }
+
     return Container(
       width: 100.w,
       height: 100.h * 0.9,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: ListView(
+        physics: BouncingScrollPhysics(),
         padding: const EdgeInsets.all(0),
         children: [
           title('关于 Colorify'),
-          tile('版本', 'v6.1.4'),
+          tile('版本', 'v6.1.5'),
+          divider(),
           tile('开源协议', 'GPL-3.0'),
+          divider(),
           link('文档/教程', 'https://comeixalpha.github.io'),
           const SizedBox(height: 10),
           const AcknowledgementTile(
@@ -94,7 +108,7 @@ class AboutTexts extends StatelessWidget {
             ],
           ),
           title('特别鸣谢（按时间顺序）'),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           const AcknowledgementTile(
             title: '静之秋恋 QuietFallHe',
             subtitle: '项目最初的的灵感来源',
@@ -103,6 +117,7 @@ class AboutTexts extends StatelessWidget {
               'https://github.com/QuietFallHe',
               'https://space.bilibili.com/327352538',
             ],
+            isFirstOne: true,
           ),
           const AcknowledgementTile(
             title: '金羿ELS EillesWan',
@@ -146,22 +161,24 @@ class AboutTexts extends StatelessWidget {
             subtitle: '地图基色表提供',
             assetPath: 'assets/acknowledgement/happy.jpg',
             links: ['https://github.com/Happy2018new'],
+            isLastOne: true,
           ),
           title('赞助 Sponsor（按时间顺序）'),
-          const SizedBox(height: 20),
-          const SponsorQrcode(),
-          const SizedBox(height: 20),
+          // const SizedBox(height: 20),
+          // const SponsorQrcode(),
+          const SizedBox(height: 10),
           const AcknowledgementTile(
             title: '核能蜥蜴',
             subtitle: 'Feb 25th 2024',
             assetPath: 'assets/sponsors/nuclear.png',
+            isFirstOne: true,
           ),
           const AcknowledgementTile(
             title: '灰常的优秀',
             subtitle: 'Oct 12th 2024',
             assetPath: 'assets/sponsors/hcdyx.jpg',
+            isLastOne: true,
           ),
-          // const SizedBox(height: 20),
         ],
       ),
     );
@@ -175,7 +192,7 @@ class About extends StatelessWidget {
   Widget build(BuildContext context) {
     final tp = TextPainter(
       text: TextSpan(
-        text: 'Documents',
+        text: '关于 About',
         style: getStyle(color: Colors.white, size: 26, weight: FontWeight.w300),
       ),
       textDirection: TextDirection.ltr,
@@ -184,7 +201,8 @@ class About extends StatelessWidget {
     return Container(
       width: 100.w,
       height: 100.h,
-      color: const Color(0xFF26232a),
+      // color: const Color(0xFF26232a),
+      color: MyTheme.background,
       child: Column(
         children: [
           Container(
@@ -210,7 +228,7 @@ class About extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  'Documents',
+                  '关于 About',
                   style: getStyle(color: Colors.white, size: 28, weight: FontWeight.w300),
                 ),
               ],

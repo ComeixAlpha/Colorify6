@@ -43,9 +43,10 @@ class _BlockArgumentsState extends State<BlockArguments> {
       height: widget.height,
       child: ListView(
         padding: const EdgeInsets.all(0),
+        physics: const BouncingScrollPhysics(),
         children: [
           const SizedBox(height: 20),
-          ISizeTie(
+          ISizeTile(
             width: widget.width - 40,
             height: 140,
             title: '裁剪',
@@ -194,8 +195,8 @@ class _BlockArgumentsState extends State<BlockArguments> {
             },
           ),
           IXYZTile(
-            title: '基础偏移',
-            subtitle: '从玩家坐标偏移基准点以防止被方块挤压',
+            title: '基准点偏移',
+            subtitle: '从玩家坐标偏移基准点',
             width: widget.width - 40,
             height: 150,
             controllers: [btecbox, btecboy, btecboz],

@@ -197,7 +197,7 @@ class Socketprov with ChangeNotifier {
 }
 
 String titleBuilder(List<int> exeLoc, int executed, int len, int speed) {
-  const String line1 = '§bColorify§f - v6.1.4 - Comeix Alpha';
+  const String line1 = '§bColorify§f - v6.1.5 - Comeix Alpha';
   final String line2 =
       'Executing at: [§6${exeLoc[0]}§f, §6${exeLoc[1]}§f, §6${exeLoc[2]}§f]';
   final String line3 =

@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:colorify/backend/prov.index.dart';
 import 'package:colorify/backend/utils/common/permisson.dart';
 import 'package:colorify/frontend/components/no_permisson.dart';
+import 'package:colorify/frontend/scaffold/new_bottombar.dart';
 import 'package:colorify/frontend/scaffold/body.dart';
-import 'package:colorify/frontend/scaffold/bottombar.dart';
 import 'package:colorify/frontend/scaffold/topbar.dart';
 import 'package:colorify/ui/basic/xframe.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +94,12 @@ class _MainAppState extends State<MainApp> with WindowListener {
                     Body(width: 100.w, height: 100.h * 0.9),
                   ],
                 ),
-                const Positioned(bottom: 14, child: Bottombar()),
+                // const Positioned(bottom: 14, child: Bottombar()),
+                Positioned(
+                  bottom: 14,
+                  child: NewBottombar(
+                  ),
+                ),
               ],
             ),
           ),

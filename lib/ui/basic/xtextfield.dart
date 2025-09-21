@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:colorify/ui/util/text_style.dart';
+import 'package:flutter/material.dart';
 
 class XTextfieldStyle {
   TextStyle? textStyle;
@@ -18,11 +18,7 @@ class XTextfieldStyle {
     this.cursorColor,
     this.hintText,
   }) {
-    textStyle ??= getStyle(
-      color: Colors.white,
-      size: 18,
-      weight: FontWeight.w300,
-    );
+    textStyle ??= getStyle(color: Colors.white, size: 18, weight: FontWeight.w300);
     borderWidth ??= 2.0;
     focusColor ??= const Color(0xFF777085);
     enabledColor ??= const Color(0xFF333039);

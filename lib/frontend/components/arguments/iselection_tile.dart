@@ -1,3 +1,5 @@
+import 'package:colorify/frontend/components/arguments/avc_state_indicator.dart';
+import 'package:colorify/frontend/scaffold/colors.dart';
 import 'package:colorify/ui/basic/xmenu.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
@@ -37,16 +39,9 @@ class _ISelectionTileState extends State<ISelectionTile> {
               width: widget.width,
               height: widget.height,
               decoration: BoxDecoration(
-                color: const Color(0xFF2d2a31),
+                // color: const Color(0xFF2d2a31),
+                color: MyTheme.card,
                 borderRadius: BorderRadius.circular(4),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withAlpha(77),
-                    blurRadius: 10,
-                    spreadRadius: 1,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
               ),
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -56,26 +51,9 @@ class _ISelectionTileState extends State<ISelectionTile> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      AnimatedContainer(
-                        curve: Curves.ease,
-                        duration: const Duration(
-                          milliseconds: 240,
-                        ),
-                        width: 10,
-                        height: 10,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFAED581),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
+                      AvcStateIndicator(state: true),
                       const SizedBox(width: 10),
-                      Text(
-                        widget.title,
-                        style: getStyle(
-                          color: Colors.white,
-                          size: 22,
-                        ),
-                      ),
+                      Text(widget.title, style: getStyle(color: Colors.white, size: 22)),
                     ],
                   ),
                   SizedBox(
@@ -86,10 +64,7 @@ class _ISelectionTileState extends State<ISelectionTile> {
                       child: Text(
                         widget.subtitle,
                         overflow: TextOverflow.ellipsis,
-                        style: getStyle(
-                          color: Colors.grey,
-                          size: 16,
-                        ),
+                        style: getStyle(color: Colors.grey, size: 16),
                       ),
                     ),
                   ),
@@ -99,10 +74,12 @@ class _ISelectionTileState extends State<ISelectionTile> {
                     width: widget.width - 20,
                     height: 50,
                     gapHeight: 8,
-                    backgroundColor: const Color(0xFF26232a),
+                    // backgroundColor: const Color(0xFF26232a),
+                    backgroundColor: MyTheme.button,
                     splashColor: Colors.white.withAlpha(26),
-                    hoverColor: const Color(0xFF6b6276),
-                    textStyle: getStyle(color: Colors.white, size: 18),
+                    // hoverColor: const Color(0xFF6b6276),
+                    hoverColor: MyTheme.buttonHover,
+                    textStyle: getStyle(color: MyTheme.onButton, size: 18),
                     duration: const Duration(milliseconds: 180),
                     onSelect: (v) => widget.onSelect(v),
                   ),

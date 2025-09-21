@@ -1,14 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:colorify/backend/abstracts/rgbmapping.dart';
-import 'package:colorify/ui/basic/xbutton.dart';
-import 'package:colorify/ui/util/hsv.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
 
 class RGBMappingTile extends StatelessWidget {
-  final double width;
-  final RGBMapping mapping;
-  final void Function() onDelete;
   const RGBMappingTile({
     super.key,
     required this.mapping,
@@ -16,100 +11,52 @@ class RGBMappingTile extends StatelessWidget {
     required this.onDelete,
   });
 
+  final RGBMapping mapping;
+  final void Function() onDelete;
+  final double width;
+
   @override
   Widget build(BuildContext context) {
     final color = Color.fromARGB(255, mapping.r, mapping.g, mapping.b);
 
-    final flColorHSV = HSV.fromColor(color);
-    flColorHSV.value = 0.2;
-
-    final contrastColor = flColorHSV.toColor();
-
-    return Column(
-      children: [
-        SizedBox(
-          width: width,
-          height: 80,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: width / 6 * 1.6,
-                height: 80,
-                child: Center(
-                  child: Container(
-                    width: width / 6 * 2 - 10,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      color: color,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '${mapping.r}, ${mapping.g}, ${mapping.b}',
-                        style: getStyle(
-                          color: contrastColor,
-                          size: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: width / 6 * 0.6,
-                height: 80,
-                child: const Center(
-                  child: Icon(
-                    Icons.link,
-                    color: Colors.white,
-                    size: 28,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: width / 6 * 2.5,
-                height: 80,
-                child: Center(
-                  child: Container(
-                    width: width / 6 * 2.5 - 10,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF2d2a31),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding: const EdgeInsets.all(12),
-                    child: Center(
-                      child: AutoSizeText(
-                        mapping.id,
-                        overflow: TextOverflow.ellipsis,
-                        style: getStyle(
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: width / 6 * 0.75,
-                height: 70,
-                child: XButton(
-                  width: width / 6 * 0.75,
-                  height: width / 6 * 0.75,
-                  backgroundColor: Colors.transparent,
-                  hoverColor: Colors.white.withAlpha(26),
-                  borderRadius: BorderRadius.circular(8),
-                  onTap: onDelete,
-                  child: const Icon(Icons.delete, color: Colors.white),
-                ),
-              ),
-            ],
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: 64,
+            height: 64,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(32),
+            ),
+            child: Center(
+              child: Icon(Icons.auto_awesome_rounded, size: 24, color: Colors.white),
+            ),
           ),
-        ),
-        const SizedBox(height: 20),
-      ],
+          SizedBox(width: 20),
+          SizedBox(
+            height: 64,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AutoSizeText(
+                  'RGB (${mapping.r}, ${mapping.g}, ${mapping.b})',
+                  style: getStyle(color: Colors.white, size: 18),
+                ),
+                AutoSizeText(
+                  mapping.id,
+                  style: getStyle(color: Colors.white70, size: 16),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

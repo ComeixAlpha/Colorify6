@@ -1,3 +1,4 @@
+import 'package:colorify/frontend/scaffold/colors.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
 
@@ -22,16 +23,8 @@ class Wstile extends StatelessWidget {
           width: width,
           height: height,
           decoration: BoxDecoration(
-            color: const Color(0xFF2d2a31),
+            color: MyTheme.card,
             borderRadius: BorderRadius.circular(4),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withAlpha(77),
-                blurRadius: 1,
-                spreadRadius: 1,
-                offset: const Offset(0, 3),
-              ),
-            ],
           ),
           padding: const EdgeInsets.all(12.0),
           child: Column(
@@ -40,15 +33,7 @@ class Wstile extends StatelessWidget {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: getStyle(
-                      color: Colors.white,
-                      size: 22,
-                    ),
-                  ),
-                ],
+                children: [Text(title, style: getStyle(color: Colors.white, size: 22))],
               ),
               child,
             ],

@@ -22,11 +22,7 @@ final ptecpkdesc = TextEditingController();
 class ParticleArguments extends StatefulWidget {
   final double width;
   final double height;
-  const ParticleArguments({
-    super.key,
-    required this.width,
-    required this.height,
-  });
+  const ParticleArguments({super.key, required this.width, required this.height});
 
   @override
   State<ParticleArguments> createState() => _ParticleArgumentsState();
@@ -41,10 +37,11 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
       height: widget.height,
       child: ListView(
         padding: const EdgeInsets.all(0),
+        physics: const BouncingScrollPhysics(),
         children: [
           ...[
             const SizedBox(height: 20),
-            ISizeTie(
+            ISizeTile(
               width: widget.width - 40,
               height: 140,
               title: '裁剪',
@@ -121,9 +118,10 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
               initValue: particleprov.mode == GenerateMode.match ? 0 : 1,
               candidates: const ['Match', 'Dust'],
               onSelect: (v) {
-                Provider.of<Particleprov>(context, listen: false).setMode(
-                  v == 0 ? GenerateMode.match : GenerateMode.dust,
-                );
+                Provider.of<Particleprov>(
+                  context,
+                  listen: false,
+                ).setMode(v == 0 ? GenerateMode.match : GenerateMode.dust);
               },
             ),
             IXYZTile(
@@ -154,7 +152,7 @@ class _ParticleArgumentsState extends State<ParticleArguments> {
               controllers: [ptecpkname, ptecpkauth, ptecpkdesc],
             ),
           ],
-          const SizedBox(height: 400)
+          const SizedBox(height: 400),
         ],
       ),
     );

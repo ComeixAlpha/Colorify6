@@ -1,3 +1,5 @@
+import 'package:colorify/frontend/components/arguments/avc_state_indicator.dart';
+import 'package:colorify/frontend/scaffold/colors.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
 
@@ -34,16 +36,9 @@ class _ICheckBoxTileState extends State<ICheckBoxTile> {
               width: widget.width,
               height: widget.height,
               decoration: BoxDecoration(
-                color: const Color(0xFF2d2a31),
+                // color: const Color(0xFF2d2a31),
+                color: MyTheme.card,
                 borderRadius: BorderRadius.circular(4),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withAlpha(77),
-                    blurRadius: 10,
-                    spreadRadius: 1,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
               ),
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -53,48 +48,39 @@ class _ICheckBoxTileState extends State<ICheckBoxTile> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AnimatedContainer(
-                            curve: Curves.ease,
-                            duration: const Duration(
-                              milliseconds: 240,
-                            ),
-                            width: 10,
-                            height: 10,
-                            margin: const EdgeInsets.only(top: 10, right: 10),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFAED581),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                          // const SizedBox(width: 10),
-                          Column(
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+                              Container(
+                                width: 10,
+                                height: 10,
+                                margin: const EdgeInsets.only(right: 14),
+                                child: Center(
+                                  child: const AvcStateIndicator(state: true),
+                                ),
+                              ),
                               SizedBox(
-                                width: widget.width - 80,
+                                width: widget.width - 104,
                                 child: Text(
                                   widget.title,
                                   overflow: TextOverflow.ellipsis,
-                                  style: getStyle(
-                                    color: Colors.white,
-                                    size: 22,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: widget.width - 80,
-                                child: Text(
-                                  widget.subtitle,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: getStyle(
-                                    color: Colors.grey,
-                                    size: 16,
-                                  ),
+                                  style: getStyle(color: Colors.white, size: 22),
                                 ),
                               ),
                             ],
+                          ),
+                          SizedBox(
+                            width: widget.width - 80,
+                            child: Text(
+                              widget.subtitle,
+                              overflow: TextOverflow.ellipsis,
+                              style: getStyle(color: Colors.grey, size: 16),
+                            ),
                           ),
                         ],
                       ),
@@ -105,7 +91,9 @@ class _ICheckBoxTileState extends State<ICheckBoxTile> {
                           scale: 1.2,
                           child: Checkbox(
                             value: widget.value,
-                            activeColor: const Color(0xFFAED581),
+                            // activeColor: const Color(0xFFAED581),
+                            activeColor: MyTheme.checkBoxActiveColor,
+                            checkColor: MyTheme.checkBoxCheckColor,
                             tristate: false,
                             onChanged: (v) => widget.onCheck(v!),
                           ),

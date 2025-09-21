@@ -1,4 +1,5 @@
 import 'package:colorify/backend/providers/block.prov.dart';
+import 'package:colorify/frontend/scaffold/colors.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -49,16 +50,8 @@ class _BlockPaletteClassHeadState extends State<BlockPaletteClassHead> {
           Container(
             width: widget.width - 24,
             decoration: BoxDecoration(
-              color: const Color(0xFF2d2a31),
+              color: MyTheme.card,
               borderRadius: BorderRadius.circular(4),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withAlpha(77),
-                  blurRadius: 5,
-                  spreadRadius: 1,
-                  offset: const Offset(0, 4),
-                ),
-              ],
             ),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             child: Row(
@@ -70,17 +63,11 @@ class _BlockPaletteClassHeadState extends State<BlockPaletteClassHead> {
                   children: [
                     Text(
                       widget.className,
-                      style: getStyle(
-                        color: Colors.white.withAlpha(204),
-                        size: 18,
-                      ),
+                      style: getStyle(color: Colors.white.withAlpha(204), size: 18),
                     ),
                     Text(
                       widget.classSubname,
-                      style: getStyle(
-                        color: Colors.grey.withAlpha(204),
-                        size: 16,
-                      ),
+                      style: getStyle(color: Colors.grey.withAlpha(204), size: 16),
                     ),
                   ],
                 ),
@@ -88,11 +75,8 @@ class _BlockPaletteClassHeadState extends State<BlockPaletteClassHead> {
                   turns: _expand ? 0.5 : 0.0,
                   duration: const Duration(milliseconds: 120),
                   curve: Curves.ease,
-                  child: const Icon(
-                    Icons.expand_less,
-                    color: Colors.grey,
-                  ),
-                )
+                  child: const Icon(Icons.expand_less, color: Colors.grey),
+                ),
               ],
             ),
           ),

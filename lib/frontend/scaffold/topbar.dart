@@ -1,4 +1,5 @@
 import 'package:colorify/frontend/pages/about/about.dart';
+import 'package:colorify/frontend/scaffold/colors.dart';
 import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,21 +9,18 @@ import 'package:sizer/sizer.dart';
 class Topbar extends StatelessWidget {
   final double width;
   final double height;
-  const Topbar({
-    super.key,
-    required this.width,
-    required this.height,
-  });
+  const Topbar({super.key, required this.width, required this.height});
 
   @override
   Widget build(BuildContext context) {
     final tp1 = TextPainter(
       text: TextSpan(
-        text: 'COLORIFY',
+        text: 'Colorify',
         style: getStyle(
           color: Colors.white,
-          size: 30,
+          size: 34,
           weight: FontWeight.w700,
+          fontFamily: "Yellowtail",
         ),
       ),
       textDirection: TextDirection.ltr,
@@ -43,7 +41,7 @@ class Topbar extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      color: const Color(0xFF26232a),
+      color: MyTheme.background,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,12 +56,13 @@ class Topbar extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'COLORIFY',
+                    'Colorify',
                     overflow: TextOverflow.ellipsis,
                     style: getStyle(
-                      color: const Color(0xFFE2E0F9),
-                      size: 30,
+                      color: MyTheme.onPrimary,
+                      size: 32,
                       weight: FontWeight.w700,
+                      fontFamily: "Yellowtail",
                     ),
                   ),
                 ),
@@ -77,7 +76,8 @@ class Topbar extends StatelessWidget {
                     'v6',
                     overflow: TextOverflow.ellipsis,
                     style: getStyle(
-                      color: Colors.white.withAlpha(77),
+                      // color: Colors.white.withAlpha(77),
+                      color: MyTheme.onPrimary,
                       size: 30,
                       weight: FontWeight.w700,
                     ),
@@ -93,8 +93,11 @@ class Topbar extends StatelessWidget {
                 return XButton(
                   width: tp1.height,
                   height: tp1.height,
-                  backgroundColor: Colors.transparent,
-                  hoverColor: Colors.white.withAlpha(51),
+                  // backgroundColor: Colors.transparent,
+                  backgroundColor: MyTheme.tertiary,
+                  // hoverColor: Colors.white.withAlpha(51),
+                  hoverColor: MyTheme.tertiary.withAlpha(200),
+                  splashColor: Colors.white.withAlpha(100),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -106,11 +109,8 @@ class Topbar extends StatelessWidget {
                     );
                   },
                   borderRadius: BorderRadius.circular(12),
-                  child: const Center(
-                    child: Icon(
-                      Icons.auto_stories_rounded,
-                      color: Colors.white,
-                    ),
+                  child: Center(
+                    child: Icon(Icons.auto_stories_rounded, color: MyTheme.onTertiary),
                   ),
                 );
               } else {

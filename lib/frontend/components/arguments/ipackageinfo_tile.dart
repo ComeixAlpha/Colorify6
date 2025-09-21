@@ -1,3 +1,5 @@
+import 'package:colorify/frontend/components/arguments/avc_state_indicator.dart';
+import 'package:colorify/frontend/scaffold/colors.dart';
 import 'package:colorify/ui/basic/xtextfield.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
@@ -35,16 +37,9 @@ class _IPackageInfoTileState extends State<IPackageInfoTile> {
               width: widget.width,
               height: widget.height,
               decoration: BoxDecoration(
-                color: const Color(0xFF2d2a31),
+                // color: const Color(0xFF2d2a31),
+                color: MyTheme.card,
                 borderRadius: BorderRadius.circular(4),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withAlpha(77),
-                    blurRadius: 10,
-                    spreadRadius: 1,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
               ),
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -54,26 +49,9 @@ class _IPackageInfoTileState extends State<IPackageInfoTile> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      AnimatedContainer(
-                        curve: Curves.ease,
-                        duration: const Duration(
-                          milliseconds: 240,
-                        ),
-                        width: 10,
-                        height: 10,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFAED581),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
+                      AvcStateIndicator(state: true),
                       const SizedBox(width: 10),
-                      Text(
-                        widget.title,
-                        style: getStyle(
-                          color: Colors.white,
-                          size: 22,
-                        ),
-                      ),
+                      Text(widget.title, style: getStyle(color: Colors.white, size: 22)),
                     ],
                   ),
                   SizedBox(
@@ -84,10 +62,7 @@ class _IPackageInfoTileState extends State<IPackageInfoTile> {
                       child: Text(
                         widget.subtitle,
                         overflow: TextOverflow.ellipsis,
-                        style: getStyle(
-                          color: Colors.grey,
-                          size: 16,
-                        ),
+                        style: getStyle(color: Colors.grey, size: 16),
                       ),
                     ),
                   ),
@@ -100,10 +75,7 @@ class _IPackageInfoTileState extends State<IPackageInfoTile> {
                         height: singleTextfieldHeight,
                         style: XTextfieldStyle(
                           hintText: '包名',
-                          hintStyle: getStyle(
-                            color: Colors.grey,
-                            size: 18,
-                          ),
+                          hintStyle: getStyle(color: Colors.grey, size: 18),
                         ),
                       ),
                       XTextfield(
@@ -112,10 +84,7 @@ class _IPackageInfoTileState extends State<IPackageInfoTile> {
                         height: singleTextfieldHeight,
                         style: XTextfieldStyle(
                           hintText: '作者',
-                          hintStyle: getStyle(
-                            color: Colors.grey,
-                            size: 18,
-                          ),
+                          hintStyle: getStyle(color: Colors.grey, size: 18),
                         ),
                       ),
                       XTextfield(
@@ -124,10 +93,7 @@ class _IPackageInfoTileState extends State<IPackageInfoTile> {
                         height: singleTextfieldHeight,
                         style: XTextfieldStyle(
                           hintText: '描述',
-                          hintStyle: getStyle(
-                            color: Colors.grey,
-                            size: 18,
-                          ),
+                          hintStyle: getStyle(color: Colors.grey, size: 18),
                         ),
                       ),
                     ],

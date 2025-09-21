@@ -10,10 +10,11 @@ import 'package:colorify/backend/providers/socket.prov.dart';
 import 'package:colorify/backend/utils/common/flie_picker.dart';
 import 'package:colorify/backend/utils/common/path.dart';
 import 'package:colorify/backend/utils/minecraft/identicon.dart';
-import 'package:colorify/frontend/components/bottombar/generate_button.dart';
-import 'package:colorify/frontend/components/bottombar/page_button.dart';
-import 'package:colorify/frontend/components/bottombar/websocket_button.dart';
+import 'package:colorify/frontend/components/bottombar/new_bottombar_generate_button.dart';
+import 'package:colorify/frontend/components/bottombar/new_bottombar_page_button.dart';
+import 'package:colorify/frontend/components/bottombar/new_bottombar_ws_button.dart';
 import 'package:colorify/frontend/components/processing/progress_indicator.dart';
+import 'package:colorify/frontend/scaffold/bottombar.dart';
 import 'package:colorify/ui/basic/xframe.dart';
 import 'package:colorify/ui/hide/message_dialog.dart';
 import 'package:colorify/ui/util/text_style.dart';
@@ -21,16 +22,14 @@ import 'package:flutter/material.dart' hide ProgressIndicator;
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-enum GenerateType { file, socket }
-
-class Bottombar extends StatefulWidget {
-  const Bottombar({super.key});
+class NewBottombar extends StatefulWidget {
+  const NewBottombar({super.key});
 
   @override
-  State<Bottombar> createState() => _BottombarState();
+  State<NewBottombar> createState() => _NewBottombarState();
 }
 
-class _BottombarState extends State<Bottombar> {
+class _NewBottombarState extends State<NewBottombar> {
   OverlayEntry? _overlayEntry;
 
   void _alertAVCError() {
@@ -63,7 +62,7 @@ class _BottombarState extends State<Bottombar> {
     XFrame.insert(_overlayEntry!);
   }
 
-  Future<void> __requestParticleTask(GenerateType type) async {
+  Future<void> _startParticleTask(GenerateType type) async {
     /// 检测参数合法性
     final particleprov = Provider.of<Particleprov>(context, listen: false);
     final avc = particleprov.avc;
@@ -105,7 +104,7 @@ class _BottombarState extends State<Bottombar> {
     generator.start();
   }
 
-  Future<void> _requestBlockTask(GenerateType type) async {
+  Future<void> _startBlockTask(GenerateType type) async {
     /// 检测参数合法性
     final blockprov = Provider.of<Blockprov>(context, listen: false);
     final avc = blockprov.avc;
@@ -154,67 +153,40 @@ class _BottombarState extends State<Bottombar> {
 
   @override
   Widget build(BuildContext context) {
-    final ow = 100.w;
-    const oh = 80.0;
     return SizedBox(
-      width: ow,
-      height: oh,
-      child: Center(
-        child: Container(
-          width: ow - 26.0,
-          height: 80.0,
-          decoration: BoxDecoration(
-            color: const Color(0xFF1d1a1f),
-            borderRadius: BorderRadius.circular(40),
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Colors.black.withAlpha(153),
-            //     blurRadius: 10,
-            //     spreadRadius: 1,
-            //   ),
-            // ],
+      width: 100.w,
+      height: 80,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          NewBottombarPageButton(
+            index: 0,
+            icon: Icons.bubble_chart_rounded,
+            label: "Particle",
           ),
-          padding: const EdgeInsets.all(10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const PageButton(index: 0, icon: Icons.bubble_chart_rounded),
-              const PageButton(index: 1, icon: Icons.filter_hdr_rounded),
-              GenerateButton(
-                onTap: () {
-                  final pageprov = Provider.of<Pageprov>(context, listen: false);
-                  if (pageprov.page == 0) {
-                    __requestParticleTask(GenerateType.file);
-                  } else if (pageprov.page == 1) {
-                    _requestBlockTask(GenerateType.file);
-                  } else {}
-                },
-              ),
-              WebsocketButton(
-                onTap: () async {
-                  final pageprov = Provider.of<Pageprov>(context, listen: false);
-                  final socketprov = Provider.of<Socketprov>(context, listen: false);
-                  if (socketprov.connected) {
-                    if (pageprov.page == 0) {
-                      XFrame.comfirm('要通过WS传输粒子画吗?', (v) async {
-                        if (v) {
-                          await __requestParticleTask(GenerateType.socket);
-                        }
-                      });
-                    } else if (pageprov.page == 1) {
-                      XFrame.comfirm('要通过WS传输像素画吗?', (v) async {
-                        if (v) {
-                          await _requestBlockTask(GenerateType.socket);
-                        }
-                      });
-                    }
-                  }
-                  pageprov.update(2);
-                },
-              ),
-            ],
+          SizedBox(width: 10),
+          NewBottombarPageButton(
+            index: 1,
+            icon: Icons.filter_hdr_rounded,
+            label: "Block",
           ),
-        ),
+          SizedBox(width: 10),
+          NewBottombarGenerateButton(
+            onTap: () {
+              final page = Provider.of<Pageprov>(context, listen: false).page;
+              if (page == 0) {
+                _startParticleTask(GenerateType.file);
+              } else {
+                _startBlockTask(GenerateType.file);
+              }
+            },
+          ),
+          SizedBox(width: 5),
+          NewBottombarWSButton(
+            onRequestingParticleTask: () => _startParticleTask(GenerateType.socket),
+            onRequestingBlockTask: () => _startBlockTask(GenerateType.socket),
+          ),
+        ],
       ),
     );
   }

@@ -52,7 +52,12 @@ class _XButtonState extends State<XButton> {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: onTap,
+            onTap: () {
+              onTap();
+              setState(() {
+                _onHover = false;
+              });
+            },
             onHover: (v) {
               setState(() {
                 _onHover = v;

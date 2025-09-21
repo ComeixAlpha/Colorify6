@@ -6,10 +6,13 @@ import 'package:colorify/backend/utils/minecraft/websocket.dart';
 import 'package:colorify/frontend/components/websocket/wstile.dart';
 import 'package:colorify/frontend/pages/socket/messages.dart';
 import 'package:colorify/frontend/pages/socket/process_line_indicator.dart';
+import 'package:colorify/frontend/scaffold/colors.dart';
 import 'package:colorify/ui/basic/xbutton.dart';
 import 'package:colorify/ui/basic/xmenu.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -31,19 +34,30 @@ class _SocketPageState extends State<SocketPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              socketprov.unactivated ? '服务器未启动' : '启动中...',
-              style: getStyle(color: Colors.white, size: 22),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (socketprov.unactivated)
+                  SvgPicture.asset('assets/icons/zzz.svg', width: 30, height: 30),
+                SizedBox(width: 10),
+                Text(
+                  socketprov.unactivated ? '服务器未启动' : '启动中...',
+                  style: getStyle(color: Colors.white, size: 22),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             LayoutBuilder(
               builder: (_, __) {
                 if (socketprov.unactivated) {
                   return XButton(
-                    width: 140,
-                    height: 50,
-                    backgroundColor: const Color(0xFF2d2a31),
-                    hoverColor: const Color(0xFF2d2a31),
+                    width: 130,
+                    height: 60,
+                    // backgroundColor: Color(0xffe1d4f6),
+                    backgroundColor: MyTheme.tertiary,
+                    hoverColor: MyTheme.tertiary.withAlpha(200),
+                    splashColor: Colors.white.withAlpha(100),
+                    borderRadius: BorderRadius.circular(16),
                     padding: const EdgeInsets.all(12),
                     onTap: () async {
                       socketprov.updateState(WebSocketState.activating);
@@ -74,9 +88,20 @@ class _SocketPageState extends State<SocketPage> {
                       socketprov.updateState(WebSocketState.unconnected);
                     },
                     child: Center(
-                      child: AutoSizeText(
-                        '启动',
-                        style: getStyle(color: Colors.white, size: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Icon(
+                            Icons.play_arrow_rounded,
+                            // color: Color(0xff1a122e),
+                            color: MyTheme.onTertiary,
+                            size: 28,
+                          ),
+                          AutoSizeText(
+                            '启动',
+                            style: getStyle(color: MyTheme.onTertiary, size: 20),
+                          ),
+                        ],
                       ),
                     ),
                   );
@@ -100,25 +125,50 @@ class _SocketPageState extends State<SocketPage> {
             const SizedBox(height: 20),
             Text('在 Minecraft 中使用', style: getStyle(color: Colors.white, size: 22)),
             const SizedBox(height: 20),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.black.withAlpha(77),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              padding: const EdgeInsets.all(12),
-              child: SelectableText(
-                '/connect 127.0.0.1:8080',
-                style: getStyle(color: Colors.grey, size: 18),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withAlpha(77),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  padding: const EdgeInsets.all(12),
+                  child: SelectableText(
+                    '/connect 127.0.0.1:8080',
+                    style: getStyle(color: Colors.grey, size: 18),
+                  ),
+                ),
+                SizedBox(width: 10),
+                XButton(
+                  width: 50,
+                  height: 50,
+                  backgroundColor: MyTheme.tertiary,
+                  hoverColor: MyTheme.tertiary.withAlpha(200),
+                  splashColor: Colors.white.withAlpha(100),
+                  borderRadius: BorderRadius.circular(12),
+                  child: Icon(Icons.copy_rounded, color: MyTheme.onTertiary),
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: '/connect 127.0.0.1:8080'));
+                  },
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             Text('命令来连接', style: getStyle(color: Colors.white, size: 22)),
+            const SizedBox(height: 20),
+            Text('对于 Windows 用户', style: getStyle(color: Colors.grey, size: 18)),
+            const SizedBox(height: 20),
+            Text('请先解锁 UWP 应用回环', style: getStyle(color: Colors.grey, size: 18)),
           ],
         ),
       );
     } else if (socketprov.connected || socketprov.pausing) {
       return ListView(
         padding: const EdgeInsets.all(0),
+        physics: const BouncingScrollPhysics(),
         children: [
           Container(
             width: 100.w - 40,
@@ -166,9 +216,9 @@ class _SocketPageState extends State<SocketPage> {
               width: 100.w - 60,
               height: 50,
               gapHeight: 8,
-              backgroundColor: const Color(0xFF26232a),
+              backgroundColor: MyTheme.button,
               splashColor: Colors.white.withAlpha(26),
-              hoverColor: const Color(0xFF6b6276),
+              hoverColor: MyTheme.buttonHover,
               textStyle: getStyle(color: Colors.white, size: 18),
               duration: const Duration(milliseconds: 180),
               onSelect: (v) => socketprov.updateExecuteSyntaxVersion(

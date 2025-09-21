@@ -94,9 +94,20 @@ class _BlockPaletteState extends State<BlockPalette> {
       for (BlockPaletteEntry entry in allEntries) {
         if (!_notAnyClass(entry.id)) {
           children.add(BlockPaletteTile(width: widget.width, entry: entry));
+          children.add(
+            UnconstrainedBox(
+              child: Container(
+                width: widget.width - 40,
+                height: 1,
+                color: Colors.white.withAlpha(26),
+              ),
+            ),
+          );
         }
       }
     }
+
+    children.removeLast();
 
     /// Padding
     children.add(const SizedBox(height: 100));
@@ -144,6 +155,7 @@ class _BlockPaletteState extends State<BlockPalette> {
                   child: ListView.builder(
                     itemCount: palette.length + 1,
                     padding: const EdgeInsets.all(0),
+                    physics: const BouncingScrollPhysics(),
                     itemBuilder: (_, i) {
                       if (i == palette.length) {
                         return const SizedBox(height: 100);
@@ -158,6 +170,7 @@ class _BlockPaletteState extends State<BlockPalette> {
                   height: widget.height - 100,
                   child: ListView(
                     padding: const EdgeInsets.all(0),
+                    physics: const BouncingScrollPhysics(),
                     children: _buildChildren(palette),
                   ),
                 );

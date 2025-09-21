@@ -1,4 +1,5 @@
 import 'package:colorify/frontend/components/arguments/avc_state_indicator.dart';
+import 'package:colorify/frontend/scaffold/colors.dart';
 import 'package:colorify/ui/basic/xtextfield.dart';
 import 'package:colorify/ui/util/text_style.dart';
 import 'package:flutter/material.dart';
@@ -25,13 +26,14 @@ class _ISizeTileTextfield extends StatelessWidget {
       onChanged: onChanged,
       style: XTextfieldStyle(
         hintText: hintText,
+        enabledColor: MyTheme.outline,
         hintStyle: getStyle(color: Colors.grey, size: 18),
       ),
     );
   }
 }
 
-class ISizeTie extends StatefulWidget {
+class ISizeTile extends StatefulWidget {
   final double width;
   final double height;
   final String title;
@@ -39,7 +41,7 @@ class ISizeTie extends StatefulWidget {
   final List<TextEditingController> controllers;
   final bool Function(String) examer;
   final void Function(bool) onUpdateAVC;
-  const ISizeTie({
+  const ISizeTile({
     super.key,
     required this.width,
     required this.height,
@@ -51,10 +53,10 @@ class ISizeTie extends StatefulWidget {
   });
 
   @override
-  State<ISizeTie> createState() => _ISizeTieState();
+  State<ISizeTile> createState() => _ISizeTileState();
 }
 
-class _ISizeTieState extends State<ISizeTie> {
+class _ISizeTileState extends State<ISizeTile> {
   final List<bool> _avcPassedList = [true, true];
   bool get _avcPassed => _avcPassedList.every((e) => e);
 
@@ -85,16 +87,9 @@ class _ISizeTieState extends State<ISizeTie> {
               width: widget.width,
               height: widget.height,
               decoration: BoxDecoration(
-                color: const Color(0xFF2d2a31),
+                color: MyTheme.card,
                 borderRadius: BorderRadius.circular(4),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withAlpha(77),
-                    blurRadius: 10,
-                    spreadRadius: 1,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+                // border: Border.all(color: MyTheme.outline, width: 1),
               ),
               padding: const EdgeInsets.all(12.0),
               child: Column(
