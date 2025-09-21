@@ -1,4 +1,4 @@
-![](assets/c6mask.png)
+![](assets/c6mask2.png)
 
 Particle/Block Painting Generator for Minecraft BE made with Flutter.
 
