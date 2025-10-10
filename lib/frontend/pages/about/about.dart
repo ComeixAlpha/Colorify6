@@ -92,7 +92,7 @@ class AboutTexts extends StatelessWidget {
         padding: const EdgeInsets.all(0),
         children: [
           title('关于 Colorify'),
-          tile('版本', 'v6.1.5'),
+          tile('版本', 'v6.1.6'),
           divider(),
           tile('开源协议', 'GPL-3.0'),
           divider(),
