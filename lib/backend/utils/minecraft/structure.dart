@@ -1,92 +1,8 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dart_minecraft/dart_nbt.dart';
 import 'package:vector_math/vector_math.dart';
-
-// ignore: non_constant_identifier_names
-final TEMPLATE = NbtCompound(
-  name: '',
-  children: [
-    NbtInt(name: 'format_version', value: 1),
-    NbtList<NbtInt>(
-      name: "size",
-      children: [
-        NbtInt(name: "None", value: 2),
-        NbtInt(name: "None", value: 2),
-        NbtInt(name: "None", value: 2),
-      ],
-    ),
-    NbtCompound(
-      name: 'structure',
-      children: [
-        NbtList<NbtList>(
-          name: "block_indices",
-          children: [
-            NbtList<NbtInt>(
-              name: "None",
-              children: [
-                NbtInt(name: "None", value: -1),
-                NbtInt(name: "None", value: -1),
-                NbtInt(name: "None", value: -1),
-                NbtInt(name: "None", value: -1),
-                NbtInt(name: "None", value: -1),
-                NbtInt(name: "None", value: -1),
-                NbtInt(name: "None", value: -1),
-                NbtInt(name: "None", value: 0),
-              ],
-            ),
-            NbtList<NbtInt>(
-              name: "None",
-              children: [
-                NbtInt(name: "None", value: -1),
-                NbtInt(name: "None", value: -1),
-                NbtInt(name: "None", value: -1),
-                NbtInt(name: "None", value: -1),
-                NbtInt(name: "None", value: -1),
-                NbtInt(name: "None", value: -1),
-                NbtInt(name: "None", value: -1),
-                NbtInt(name: "None", value: -1),
-              ],
-            ),
-          ],
-        ),
-        NbtList<NbtCompound>(name: "entities", children: []),
-        NbtCompound(
-          name: "palette",
-          children: [
-            NbtCompound(
-              name: "default",
-              children: [
-                NbtList<NbtCompound>(
-                  name: "block_palette",
-                  children: [
-                    NbtCompound(
-                      name: "None",
-                      children: [
-                        NbtString(name: "name", value: "minecraft:concrete"),
-                        NbtCompound<NbtTag>(name: "states", children: []),
-                        NbtInt(name: "version", value: 18090528),
-                      ],
-                    ),
-                  ],
-                ),
-                NbtCompound<NbtTag>(name: "block_position_data", children: []),
-              ],
-            ),
-          ],
-        ),
-      ],
-    ),
-    NbtList<NbtInt>(
-      name: "structure_world_origin",
-      children: [
-        NbtInt(name: "None", value: 2),
-        NbtInt(name: "None", value: 2),
-        NbtInt(name: "None", value: 2),
-      ],
-    ),
-  ],
-);
 
 class Structure {
   late final Vector3 _size;
@@ -168,8 +84,98 @@ class Structure {
     _blockIndices[indicesIndex] = NbtInt(name: "None", value: newPaletteIndex);
   }
 
-  Future<void> writeFile(path) {
-    final NbtCompound template = TEMPLATE;
+  NbtCompound _getTemplate() {
+    return NbtCompound(
+      name: '',
+      children: [
+        NbtInt(name: 'format_version', value: 1),
+        NbtList<NbtInt>(
+          name: "size",
+          children: [
+            NbtInt(name: "None", value: 2),
+            NbtInt(name: "None", value: 2),
+            NbtInt(name: "None", value: 2),
+          ],
+        ),
+        NbtCompound(
+          name: 'structure',
+          children: [
+            NbtList<NbtList>(
+              name: "block_indices",
+              children: [
+                NbtList<NbtInt>(
+                  name: "None",
+                  children: [
+                    NbtInt(name: "None", value: -1),
+                    NbtInt(name: "None", value: -1),
+                    NbtInt(name: "None", value: -1),
+                    NbtInt(name: "None", value: -1),
+                    NbtInt(name: "None", value: -1),
+                    NbtInt(name: "None", value: -1),
+                    NbtInt(name: "None", value: -1),
+                    NbtInt(name: "None", value: 0),
+                  ],
+                ),
+                NbtList<NbtInt>(
+                  name: "None",
+                  children: [
+                    NbtInt(name: "None", value: -1),
+                    NbtInt(name: "None", value: -1),
+                    NbtInt(name: "None", value: -1),
+                    NbtInt(name: "None", value: -1),
+                    NbtInt(name: "None", value: -1),
+                    NbtInt(name: "None", value: -1),
+                    NbtInt(name: "None", value: -1),
+                    NbtInt(name: "None", value: -1),
+                  ],
+                ),
+              ],
+            ),
+            NbtList<NbtCompound>(name: "entities", children: []),
+            NbtCompound(
+              name: "palette",
+              children: [
+                NbtCompound(
+                  name: "default",
+                  children: [
+                    NbtList<NbtCompound>(
+                      name: "block_palette",
+                      children: [
+                        NbtCompound(
+                          name: "None",
+                          children: [
+                            NbtString(name: "name", value: "minecraft:concrete"),
+                            NbtCompound<NbtTag>(name: "states", children: []),
+                            NbtInt(name: "version", value: 18090528),
+                          ],
+                        ),
+                      ],
+                    ),
+                    NbtCompound<NbtTag>(name: "block_position_data", children: []),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+        NbtList<NbtInt>(
+          name: "structure_world_origin",
+          children: [
+            NbtInt(name: "None", value: 2),
+            NbtInt(name: "None", value: 2),
+            NbtInt(name: "None", value: 2),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Future<void> writeFile(
+    path, {
+    int chunkSize = 4 * 1024 * 1024,
+    void Function(int, int)? onProgress,
+  }) async {
+    final NbtCompound template = _getTemplate();
     // ! Apply custom data
     template.children[0] = NbtInt(name: "format_version", value: 1);
     template.children[1] = NbtList<NbtInt>(
@@ -207,8 +213,35 @@ class Structure {
       ],
     );
 
-    final NbtWriter writer = NbtWriter(nbtCompression: NbtCompression.none);
+    NbtWriter? writer = NbtWriter(nbtCompression: NbtCompression.none);
     writer.setEndianness = Endian.little;
-    return writer.writeFile(path, template);
+
+    final bytes = writer.write(template);
+    final file = File(path);
+    final sink = file.openWrite();
+
+    final total = bytes.length;
+    int offset = 0;
+    while (offset < total) {
+      final end = (offset + chunkSize < total) ? offset + chunkSize : total;
+      sink.add(Uint8List.fromList(bytes.sublist(offset, end)));
+      offset = end;
+
+      onProgress?.call(offset, total);
+      await Future.delayed(Duration.zero);
+    }
+
+    await sink.flush();
+    await sink.close();
+
+    template.children.clear();
+    writer = null;
+  }
+
+  void dispose() {
+    _blockIndices.clear();
+    _blockIndicesInner.clear();
+    _blockPaletteTypeId.clear();
+    _blockPalette.clear();
   }
 }

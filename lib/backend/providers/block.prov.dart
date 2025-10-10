@@ -39,6 +39,7 @@ class Blockprov with ChangeNotifier {
   bool _noGlasses = false;
   bool _noSands = false;
   bool _carperOnly = false;
+  bool _woolOnly = false;
 
   int get plane => _plane;
   int get rgb => _rgb;
@@ -49,6 +50,7 @@ class Blockprov with ChangeNotifier {
   bool get noGlasses => _noGlasses;
   bool get noSands => _noSands;
   bool get carpetOnly => _carperOnly;
+  bool get woolOnly => _woolOnly;
 
   set plane(int v) {
     _plane = v;
@@ -95,6 +97,11 @@ class Blockprov with ChangeNotifier {
     notifyListeners();
   }
 
+  set woolOnly(bool v) {
+    _woolOnly = v;
+    notifyListeners();
+  }
+
   List<BlockPaletteEntry> _palette = [];
   List<BlockPaletteEntry> get palette {
     if (!_init) {
@@ -117,8 +124,10 @@ class Blockprov with ChangeNotifier {
   void refreshPalette() {
     if (_stairType) {
       _palette = PaletteParser.staircase(mapPalette3['data'] as Map<String, String>);
-    } else if (_carperOnly) {
+    } else if (_carperOnly && !_woolOnly) {
       _palette = PaletteParser.carpet(carpetPalette);
+    } else if (_woolOnly) {
+      _palette = PaletteParser.wool(blockPalette);
     } else {
       _palette = PaletteParser.block(blockPalette);
 

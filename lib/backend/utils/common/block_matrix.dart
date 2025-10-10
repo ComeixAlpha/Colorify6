@@ -9,12 +9,7 @@ class Block {
   int y;
   int z;
   BlockWithState block;
-  Block({
-    required this.x,
-    required this.y,
-    required this.z,
-    required this.block,
-  });
+  Block({required this.x, required this.y, required this.z, required this.block});
 }
 
 /// BlockMatrix class records blocks with its position
@@ -45,11 +40,7 @@ class BlockMatrix {
   int get my => _my;
   int get mz => _mz;
 
-  Vector3 get size => Vector3(
-        _mx - _lx + 1,
-        _my - _ly + 1,
-        _mz - _lz + 1,
-      );
+  Vector3 get size => Vector3(_mx - _lx + 1, _my - _ly + 1, _mz - _lz + 1);
 
   void push(Block block) {
     _blocks.add(block);
@@ -61,7 +52,11 @@ class BlockMatrix {
     _mz = max(_mz, block.z);
   }
 
-  void normalize() {
-    
+  Stream<(int, Block)> get blockStream async* {
+    int index = 0;
+    for (final block in _blocks) {
+      yield (index, block);
+      index++;
+    }
   }
 }

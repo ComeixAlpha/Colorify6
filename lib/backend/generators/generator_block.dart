@@ -25,6 +25,7 @@ import 'package:colorify/backend/utils/minecraft/functionmaker.dart';
 import 'package:colorify/backend/utils/minecraft/structure.dart';
 import 'package:colorify/frontend/components/processing/progress_indicator.dart';
 import 'package:colorify/frontend/scaffold/bottombar.dart';
+import 'package:colorify/ui/basic/xframe.dart';
 import 'package:image/image.dart';
 import 'package:path/path.dart' as path;
 import 'package:uuid/uuid.dart';
@@ -34,27 +35,28 @@ GenBlockArguments? _args;
 
 /// 参数接收器
 void blockArgumentsReceiver(SendPort sendPort) async {
-  /// 发送接收端口
   final ReceivePort receivePort = ReceivePort();
-  sendPort.send(
-    IsolateDataPack(type: IsolateDataPackType.sendPort, data: receivePort.sendPort),
-  );
+  try {
+    sendPort.send(
+      IsolateDataPack(type: IsolateDataPackType.sendPort, data: receivePort.sendPort),
+    );
 
-  /// 添加监听
-  receivePort.listen((recv) {
-    IsolateDataPack dataPack = recv as IsolateDataPack;
+    await for (var recv in receivePort) {
+      IsolateDataPack dataPack = recv as IsolateDataPack;
 
-    if (dataPack.type == IsolateDataPackType.blockArguments) {
-      /// 生成主体
-      _generate(sendPort, dataPack.data);
-      _args = dataPack.data;
-    } else if (dataPack.type == IsolateDataPackType.identiconUint8List) {
-      /// 生成 Identicon
-      packIcon(_args!.outDir.concact('colorified'), dataPack.data, erp: false);
-    } else {
-      throw Exception('Unexpected isolate data type');
+      if (dataPack.type == IsolateDataPackType.blockArguments) {
+        await _generate(sendPort, dataPack.data);
+        _args = dataPack.data;
+      } else if (dataPack.type == IsolateDataPackType.identiconUint8List) {
+        await packIcon(_args!.outDir.concact('colorified'), dataPack.data, erp: false);
+      } else {
+        throw Exception('Unexpected isolate data type');
+      }
     }
-  });
+  } finally {
+    receivePort.close();
+    _args = null;
+  }
 }
 
 /// 进度更新器
@@ -69,20 +71,53 @@ void _updateProgress(SendPort sendPort, String state, double v) {
 
 /// 像素画生成器
 Future<void> _generate(SendPort sendPort, GenBlockArguments args) async {
-  /// 图像为空
   Image? image = args.image;
-  if (image == null) {
-    sendPort.send(
-      IsolateDataPack(
-        type: IsolateDataPackType.progressUpdate,
-        data: ProgressData(state: 'Error', progress: -1),
-      ),
-    );
-    return;
-  }
+  try {
+    /// 图像为空
+    if (image == null) {
+      sendPort.send(
+        IsolateDataPack(
+          type: IsolateDataPackType.progressUpdate,
+          data: ProgressData(state: 'Error', progress: -1),
+        ),
+      );
+      return;
+    }
 
-  /// 自动尺寸
-  args.size = _autoSize(image, args.size);
+    /// 自动尺寸
+    args.size = _autoSize(image, args.size);
+
+    /// 结构阶梯式最大限制
+    if (args.useStruct && args.stairType && Platform.isAndroid) {
+      final maxSize = 256 * 256;
+      if (args.size[0]! * args.size[1]! > maxSize) {
+        XFrame.comfirm("", (v) {
+          if (v) {
+            _ensureGenerate(sendPort, image!, args);
+          } else {
+            sendPort.send(
+              IsolateDataPack(
+                type: IsolateDataPackType.progressUpdate,
+                data: ProgressData(state: 'Exited', progress: -2),
+              ),
+            );
+          }
+        });
+      }
+    } else {
+      await _ensureGenerate(sendPort, image, args);
+    }
+  } finally {
+    image = null;
+    args.image = null;
+  }
+}
+
+Future<void> _ensureGenerate(
+  SendPort sendPort,
+  Image image,
+  GenBlockArguments args,
+) async {
   final Interpolation interpolation = _getInterpolation(args.interpolation);
   image = copyResize(
     image,
@@ -137,8 +172,10 @@ Future<void> _generate(SendPort sendPort, GenBlockArguments args) async {
       await _buildPack(sendPort, args);
     }
     if (args.useStruct) {
-      _updateProgress(sendPort, '输出结构文件中', 2);
-      await _writeStructure(blmx, needPack, args);
+      _updateProgress(sendPort, '准备构造结构文件...\n此过程会花费一定时间', 0);
+      await _writeStructure(sendPort, blmx, needPack, args, (cur, all) {
+        _updateProgress(sendPort, '构造结构文件中', cur / all);
+      });
     } else {
       await _writeFunctionsAndScripts(blmx, needPack, args, (cur, all) {
         _updateProgress(sendPort, '输出函数中', cur / all);
@@ -165,7 +202,7 @@ Future<void> _generate(SendPort sendPort, GenBlockArguments args) async {
   }
 
   /// 完成
-  _updateProgress(sendPort, '', 1);
+  _updateProgress(sendPort, 'ALL_DONE', 1);
 }
 
 List<int> _autoSize(Image image, List<int?> origin) {
@@ -173,20 +210,6 @@ List<int> _autoSize(Image image, List<int?> origin) {
   final h = image.height;
   if (origin.every((e) => e == null)) {
     return [w, h];
-    // Deprecated auto size logic
-    // final zoomFactor = sqrt(20000 / w / h);
-    // final int zw = (w * zoomFactor).floor();
-    // final int zh = (h * zoomFactor).floor();
-
-    // int rw = zw - zw % 128;
-    // int rh = zh - zh % 128;
-
-    // if (zw < 128 || zh < 128) {
-    //   rw = zw;
-    //   rh = zh;
-    // }
-
-    // return [rw, rh];
   } else if (origin[0] == null) {
     final zoomFactor = origin[1]! / h;
     final int zw = (w * zoomFactor).round();
@@ -245,6 +268,8 @@ BlockMatrix _buildStaircase(
       ormx.update(x, z - 1, ormxEntry.basey + ormxEntry.offset, matched.offset);
     }
   });
+  rgbamat.clear();
+  rgbamat = [];
 
   // Dreprecated code for archiving
   // ormx.archieve();
@@ -378,18 +403,22 @@ Future<void> _buildPack(SendPort sendPort, GenBlockArguments args) async {
 }
 
 Future<void> _writeStructure(
+  SendPort sendPort,
   BlockMatrix blmx,
   bool needPack,
   GenBlockArguments args,
+  void Function(int, int) onProgress,
 ) async {
-  Structure struct;
+  Structure? struct;
   if (args.stairType) {
     struct = Structure(blmx.size);
   } else {
     final xyz = xyswitcher(args.plane, [blmx.size.x, blmx.size.y, blmx.size.z]);
     struct = Structure(Vector3(xyz[0], xyz[1], xyz[2]));
   }
-  blmx.blocks.enumerate((i, v) {
+
+  final int total = blmx.blocks.length;
+  await for (var (i, v) in blmx.blockStream) {
     if (args.stairType) {
       struct.setBlock(
         Vector3(v.x.toDouble(), v.y.toDouble() - blmx.ly, v.z.toDouble()),
@@ -402,7 +431,9 @@ Future<void> _writeStructure(
         v.block.id,
       );
     }
-  });
+    onProgress(i, total);
+  }
+  blmx.blocks.clear();
 
   Directory outDir;
   if (needPack) {
@@ -413,7 +444,15 @@ Future<void> _writeStructure(
 
   final outpath = path.join(outDir.path, 'output.mcstructure');
 
-  await struct.writeFile(outpath);
+  _updateProgress(sendPort, '准备输出结构文件中...\n此过程会花费一定时间', 0);
+  await struct.writeFile(
+    outpath,
+    onProgress: (cur, all) {
+      _updateProgress(sendPort, '输出结构文件中', cur / all);
+    },
+  );
+  struct.dispose();
+  struct = null;
 }
 
 List<String> _buildCommands(BlockMatrix blmx, GenBlockArguments args) {

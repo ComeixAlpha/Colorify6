@@ -49,6 +49,7 @@ class _NewBottombarState extends State<NewBottombar> {
   }
 
   void _showProgressDialog() {
+    Provider.of<Progressprov>(context, listen: false).reset();
     _overlayEntry = OverlayEntry(
       builder: (ctx) {
         return ProgressIndicator(
@@ -80,10 +81,14 @@ class _NewBottombarState extends State<NewBottombar> {
     _showProgressDialog();
 
     /// 生成线程
+    // ignore: use_build_context_synchronously
     final generator = ColorifyGenerator(
       type,
       args,
       onProgressUpdate: (v) {
+        if (v.state == 'ALL_DONE') {
+          Provider.of<Progressprov>(context, listen: false).reset();
+        }
         Provider.of<Progressprov>(context, listen: false).update(v);
       },
       onReceiveIdenticonData: (port, v) async {
@@ -131,6 +136,9 @@ class _NewBottombarState extends State<NewBottombar> {
       type,
       args,
       onProgressUpdate: (v) {
+        if (v.state == 'ALL_DONE') {
+          Provider.of<Progressprov>(context, listen: false).succeed();
+        }
         Provider.of<Progressprov>(context, listen: false).update(v);
       },
       onReceiveIdenticonData: (port, v) async {

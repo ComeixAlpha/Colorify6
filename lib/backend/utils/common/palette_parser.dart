@@ -3,19 +3,17 @@ import 'package:colorify/backend/utils/common/hex.dart';
 
 class PaletteParser {
   static List<BlockPaletteEntry> block(List<Map<String, Object>> v) {
-    return v.map(
-      (e) {
-        final rgbs = e['average'] as List<int>;
-        final cn = (e['cn'] ?? '未翻译') as String;
-        return BlockPaletteEntry(
-          r: rgbs[0],
-          g: rgbs[1],
-          b: rgbs[2],
-          id: e['id'] as String,
-          cn: cn,
-        );
-      },
-    ).toList();
+    return v.map((e) {
+      final rgbs = e['average'] as List<int>;
+      final cn = (e['cn'] ?? '未翻译') as String;
+      return BlockPaletteEntry(
+        r: rgbs[0],
+        g: rgbs[1],
+        b: rgbs[2],
+        id: e['id'] as String,
+        cn: cn,
+      );
+    }).toList();
   }
 
   static List<BlockPaletteEntry> staircase(Map<String, String> v) {
@@ -27,17 +25,34 @@ class PaletteParser {
         continue;
       }
       final rgbList = hexToRgb(hexString!);
-      parsed.add(BlockPaletteEntry(
-        cn: '未翻译',
-        r: rgbList[0],
-        g: rgbList[1],
-        b: rgbList[2],
-        id: key,
-      ));
+      parsed.add(
+        BlockPaletteEntry(
+          cn: '未翻译',
+          r: rgbList[0],
+          g: rgbList[1],
+          b: rgbList[2],
+          id: key,
+        ),
+      );
     }
 
     return parsed;
   }
 
-  static List<BlockPaletteEntry> carpet(List<Map<String, Object>> v) => PaletteParser.block(v);
+  static List<BlockPaletteEntry> carpet(List<Map<String, Object>> v) =>
+      PaletteParser.block(v);
+
+  static List<BlockPaletteEntry> wool(List<Map<String, Object>> v) {
+    return v.where((e) => (e["id"] as String).contains("wool")).map((e) {
+      final rgbs = e['average'] as List<int>;
+      final cn = (e['cn'] ?? '未翻译') as String;
+      return BlockPaletteEntry(
+        r: rgbs[0],
+        g: rgbs[1],
+        b: rgbs[2],
+        id: e['id'] as String,
+        cn: cn,
+      );
+    }).toList();
+  }
 }

@@ -107,8 +107,6 @@ class _BlockPaletteState extends State<BlockPalette> {
       }
     }
 
-    children.removeLast();
-
     /// Padding
     children.add(const SizedBox(height: 100));
 
@@ -149,7 +147,7 @@ class _BlockPaletteState extends State<BlockPalette> {
           ),
           LayoutBuilder(
             builder: (_, __) {
-              if (blockprov.carpetOnly || blockprov.stairType) {
+              if (blockprov.carpetOnly || blockprov.stairType || blockprov.woolOnly) {
                 return SizedBox(
                   height: widget.height - 100,
                   child: ListView.builder(

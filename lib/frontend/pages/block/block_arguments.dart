@@ -151,6 +151,19 @@ class _BlockArgumentsState extends State<BlockArguments> {
             },
           ),
           ICheckBoxTile(
+            value: blockprov.woolOnly,
+            title: '仅羊毛',
+            subtitle: '使材料全部为羊毛',
+            width: widget.width - 40,
+            onCheck: (v) {
+              blockprov.woolOnly = v;
+              if (v) {
+                blockprov.carpetOnly = false;
+              }
+              blockprov.refreshPalette();
+            },
+          ),
+          ICheckBoxTile(
             value: blockprov.noGlasses,
             title: '去除玻璃',
             subtitle: '去除调色板中所有玻璃与玻璃板',

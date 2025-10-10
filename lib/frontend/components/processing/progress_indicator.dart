@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-enum ProgressState { born, processing, success, error, disappear }
+enum ProgressState { born, processing, phasedSuccess, success, error, disappear }
 
 class ProgressData {
   String state;
@@ -32,6 +32,7 @@ class _ProgressIndicatorState extends State<ProgressIndicator> {
 
   bool get _visible => [
     ProgressState.processing,
+    ProgressState.phasedSuccess,
     ProgressState.success,
     ProgressState.error,
   ].contains(_state);
@@ -65,7 +66,32 @@ class _ProgressIndicatorState extends State<ProgressIndicator> {
           const Icon(Icons.bolt, color: Colors.white),
         ],
       );
-    } else if (_state == ProgressState.success) {
+    } else if (_state == ProgressState.phasedSuccess) {
+      final progress = Provider.of<Progressprov>(context, listen: false);
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          LayoutBuilder(
+            builder: (_, __) {
+              if (progress.progress == 2) {
+                return Text(
+                  progress.progressState,
+                  style: getStyle(color: Colors.white, size: 28),
+                );
+              } else {
+                return Text(
+                  '${progress.progressState}\n${progress.progress.toPercentString()}',
+                  style: getStyle(color: Colors.white, size: 22),
+                );
+              }
+            },
+          ),
+          const SizedBox(width: 12.0),
+          const Icon(Icons.bolt, color: Colors.white),
+        ],
+      );
+    }  else if (_state == ProgressState.success) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -121,6 +147,12 @@ class _ProgressIndicatorState extends State<ProgressIndicator> {
     final s = 100.w * 0.8;
 
     /// Process ends with success
+    if (progressprov.phasedSuccess && _state != ProgressState.disappear) {
+      setState(() {
+        _state = ProgressState.phasedSuccess;
+      });
+    }
+
     if (progressprov.success && _state != ProgressState.disappear) {
       setState(() {
         _state = ProgressState.success;
