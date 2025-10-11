@@ -148,7 +148,7 @@ class Blockprov with ChangeNotifier {
           }
         });
       } else {
-        _disabled.removeWhere((v) => v.contains('glass') || v.contains('powder'));
+        _disabled.removeWhere((v) => v.contains('glass') || v.contains('powder') && v != "powder_snow");
       }
     }
   }
