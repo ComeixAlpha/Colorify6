@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:colorify/backend/providers/socket.prov.dart';
 import 'package:colorify/backend/utils/minecraft/websocket.dart';
-import 'package:colorify/frontend/components/websocket/wstile.dart';
+import 'package:colorify/frontend/components/websocket/websocket_panel.dart';
 import 'package:colorify/frontend/pages/socket/messages.dart';
 import 'package:colorify/frontend/pages/socket/process_line_indicator.dart';
 import 'package:colorify/frontend/scaffold/colors.dart';
@@ -119,11 +119,10 @@ class _SocketPageState extends State<SocketPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('服务器正在运行', style: getStyle(color: Colors.white, size: 22)),
-            const SizedBox(height: 20),
-            Text('等待设备连接', style: getStyle(color: Colors.white, size: 22)),
-            const SizedBox(height: 20),
-            Text('在 Minecraft 中使用', style: getStyle(color: Colors.white, size: 22)),
+            Text(
+              '[等待连接] 在 Minecraft 中使用',
+              style: getStyle(color: Colors.white, size: 18),
+            ),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -157,11 +156,57 @@ class _SocketPageState extends State<SocketPage> {
               ],
             ),
             const SizedBox(height: 20),
-            Text('命令来连接', style: getStyle(color: Colors.white, size: 22)),
+            Text('命令来连接', style: getStyle(color: Colors.white, size: 18)),
+            const SizedBox(height: 50),
+            Text('提示', style: getStyle(color: Colors.white, size: 18)),
             const SizedBox(height: 20),
-            Text('对于 Windows 用户', style: getStyle(color: Colors.grey, size: 18)),
+            Text(
+              '1. Windows 用户请先解锁 UWP 应用回环',
+              style: getStyle(color: Colors.grey, size: 16),
+            ),
+            const SizedBox(height: 10),
+            Text('回环解锁方式参考下方链接', style: getStyle(color: Colors.grey, size: 16)),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  // height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withAlpha(77),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  padding: const EdgeInsets.all(12),
+                  child: SelectableText(
+                    'https://www.minebbs.com/threads/uwp.17877/',
+                    style: getStyle(color: Colors.grey, size: 10),
+                  ),
+                ),
+                SizedBox(width: 10),
+                XButton(
+                  width: 40,
+                  height: 40,
+                  backgroundColor: MyTheme.tertiary,
+                  hoverColor: MyTheme.tertiary.withAlpha(200),
+                  splashColor: Colors.white.withAlpha(100),
+                  borderRadius: BorderRadius.circular(12),
+                  child: Icon(Icons.copy_rounded, color: MyTheme.onTertiary, size: 20),
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: '/connect 127.0.0.1:8080'));
+                  },
+                ),
+              ],
+            ),
             const SizedBox(height: 20),
-            Text('请先解锁 UWP 应用回环', style: getStyle(color: Colors.grey, size: 18)),
+            Text(
+              '2. 请前往 Minecraft 设置 -> 通用',
+              style: getStyle(color: Colors.grey, size: 16),
+            ),
+            const SizedBox(height: 10),
+            Text('开启 “已启用WebSocket”', style: getStyle(color: Colors.grey, size: 16)),
+            const SizedBox(height: 10),
+            Text('关闭 “需要加密的WebSocket”', style: getStyle(color: Colors.grey, size: 16)),
           ],
         ),
       );
@@ -170,15 +215,8 @@ class _SocketPageState extends State<SocketPage> {
         padding: const EdgeInsets.all(0),
         physics: const BouncingScrollPhysics(),
         children: [
-          Container(
-            width: 100.w - 40,
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            child: Text(
-              'Tip: 在使用此功能时请在游戏设置 -> 通用\n开启此选项: 已启用WebSocket\n关闭此选项: 需要加密的WebSocket',
-              style: getStyle(color: Colors.grey, size: 16),
-            ),
-          ),
-          Wstile(
+          const SizedBox(height: 20),
+          WebSocketPanel(
             width: 100.w - 40,
             height: 110,
             title: '速度',
@@ -191,12 +229,12 @@ class _SocketPageState extends State<SocketPage> {
                 ),
                 Text(
                   'bps (block per second)',
-                  style: getStyle(color: Colors.grey, size: 20),
+                  style: getStyle(color: Colors.grey, size: 18),
                 ),
               ],
             ),
           ),
-          Wstile(
+          WebSocketPanel(
             width: 100.w - 40,
             height: 110,
             title: '进度',
@@ -206,31 +244,33 @@ class _SocketPageState extends State<SocketPage> {
               progress: socketprov.progress,
             ),
           ),
-          Wstile(
+          WebSocketPanel(
             width: 100.w - 40,
-            height: 120,
+            height: 150,
             title: '/execute 语法版本',
+            hint: '个人存档请用旧版 服务器请用新版',
             child: XMenu(
-              initValue: 0,
-              tiles: ["旧版", "新版"],
+              initValue: socketprov.socketExecuteSyntaxVersionIndex,
+              tiles: ["旧版 (execute @x ~ ~ ~ ...)", "新版 (execute as @x at @s run ...)"],
               width: 100.w - 60,
               height: 50,
               gapHeight: 8,
               backgroundColor: MyTheme.button,
               splashColor: Colors.white.withAlpha(26),
               hoverColor: MyTheme.buttonHover,
-              textStyle: getStyle(color: Colors.white, size: 18),
+              textStyle: getStyle(color: MyTheme.onButton, size: 16),
               duration: const Duration(milliseconds: 180),
               onSelect: (v) => socketprov.updateExecuteSyntaxVersion(
                 WebSocketExecuteSyntaxVersion.values[v],
               ),
             ),
           ),
-          Wstile(
+          WebSocketPanel(
             width: 100.w - 40,
             height: 400,
             title: '日志（最近20条）',
-            child: SocketMessages(width: 100.w - 64, height: 340, logs: socketprov.logs),
+            style: WebSocketPanelStyle.leading,
+            child: SocketMessages(width: 100.w - 40, height: 340, logs: socketprov.logs),
           ),
           LayoutBuilder(
             builder: (_, __) {

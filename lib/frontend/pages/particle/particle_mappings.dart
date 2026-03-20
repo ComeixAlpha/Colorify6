@@ -29,7 +29,7 @@ class _ParticleMappingsState extends State<ParticleMappings> {
 
   XButton _newMappingButton() {
     return XButton(
-      width: 150,
+      width: 140,
       height: 60,
       backgroundColor: MyTheme.tertiary,
       hoverColor: MyTheme.tertiary.withAlpha(200),
@@ -47,10 +47,7 @@ class _ParticleMappingsState extends State<ParticleMappings> {
                 setState(() {
                   _mappings.add(v);
                 });
-                Provider.of<Particleprov>(
-                  context,
-                  listen: false,
-                ).setMappings(_mappings);
+                Provider.of<Particleprov>(context, listen: false).setMappings(_mappings);
                 _overlayEntry?.remove();
               },
               onCancel: () => _overlayEntry?.remove(),
@@ -64,9 +61,9 @@ class _ParticleMappingsState extends State<ParticleMappings> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(Icons.add, color: MyTheme.onTertiary, size: 28),
+            Icon(Icons.add, color: MyTheme.onTertiary, size: 24),
             SizedBox(width: 10),
-            AutoSizeText('新建映射', style: getStyle(color: MyTheme.onTertiary, size: 20)),
+            AutoSizeText('新建映射', style: getStyle(color: MyTheme.onTertiary, size: 18)),
           ],
         ),
       ),
@@ -80,7 +77,7 @@ class _ParticleMappingsState extends State<ParticleMappings> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('还没有映射?', style: getStyle(color: Colors.white, size: 24)),
+            Text('还没有映射?', style: getStyle(color: Colors.white, size: 20)),
             const SizedBox(width: 20),
             _newMappingButton(),
           ],

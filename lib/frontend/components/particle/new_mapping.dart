@@ -89,7 +89,7 @@ class _NewParticleMappingDialogState extends State<NewParticleMappingDialog> {
                 height: widget.height,
                 decoration: BoxDecoration(
                   color: MyTheme.card,
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(16),
                 ),
                 padding: const EdgeInsets.all(24),
                 child: Column(
@@ -139,16 +139,17 @@ class _NewParticleMappingDialogState extends State<NewParticleMappingDialog> {
                         hintStyle: getStyle(color: Colors.grey, size: 18),
                       ),
                     ),
+                    SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         XButton(
                           width: singleFieldWidth / 2 - 20,
                           height: singleFieldHeight - 16,
-                          backgroundColor: MyTheme.tertiary,
-                          hoverColor: MyTheme.tertiary.withAlpha(200),
+                          backgroundColor: Colors.transparent,
+                          hoverColor: Colors.white.withAlpha(50),
                           splashColor: Colors.white.withAlpha(100),
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(16),
                           onTap: () {
                             setState(() {
                               _state = 2;
@@ -158,7 +159,7 @@ class _NewParticleMappingDialogState extends State<NewParticleMappingDialog> {
                           child: Center(
                             child: Text(
                               '取消',
-                              style: getStyle(color: Colors.black, size: 20),
+                              style: getStyle(color: Colors.grey, size: 20),
                             ),
                           ),
                         ),
@@ -168,7 +169,7 @@ class _NewParticleMappingDialogState extends State<NewParticleMappingDialog> {
                           backgroundColor: MyTheme.tertiary,
                           hoverColor: MyTheme.tertiary.withAlpha(200),
                           splashColor: Colors.white.withAlpha(100),
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(16),
                           onTap: () {
                             final r = tecr.text.toInt();
                             final g = tecg.text.toInt();
@@ -204,7 +205,7 @@ class _NewParticleMappingDialogState extends State<NewParticleMappingDialog> {
                           child: Center(
                             child: Text(
                               '确定',
-                              style: getStyle(color: Colors.black, size: 20),
+                              style: getStyle(color: MyTheme.onTertiary, size: 20),
                             ),
                           ),
                         ),

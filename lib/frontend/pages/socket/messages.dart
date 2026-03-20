@@ -25,18 +25,15 @@ class _SocketMessagesState extends State<SocketMessages> {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.black,
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(4),
+          bottomRight: Radius.circular(4),
+        ),
       ),
       child: ListView.builder(
         itemCount: widget.logs.length,
         itemBuilder: (_, index) {
-          return Text(
-            widget.logs[index],
-            style: getStyle(
-              size: 14,
-              color: Colors.white,
-            ),
-          );
+          return Text(widget.logs[index], style: getStyle(size: 14, color: Colors.white));
         },
       ),
     );

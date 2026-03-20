@@ -23,36 +23,49 @@ class RGBMappingTile extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            width: 64,
-            height: 64,
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.circular(32),
-            ),
-            child: Center(
-              child: Icon(Icons.auto_awesome_rounded, size: 24, color: Colors.white),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 64,
+                height: 64,
+                decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: BorderRadius.circular(32),
+                ),
+                child: Center(
+                  child: Icon(Icons.auto_awesome_rounded, size: 24, color: Colors.white),
+                ),
+              ),
+              SizedBox(width: 20),
+              SizedBox(
+                height: 64,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AutoSizeText(
+                      'RGB (${mapping.r}, ${mapping.g}, ${mapping.b})',
+                      style: getStyle(color: Colors.white, size: 18),
+                    ),
+                    AutoSizeText(
+                      mapping.id,
+                      style: getStyle(color: Colors.white70, size: 16),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          SizedBox(width: 20),
-          SizedBox(
-            height: 64,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AutoSizeText(
-                  'RGB (${mapping.r}, ${mapping.g}, ${mapping.b})',
-                  style: getStyle(color: Colors.white, size: 18),
-                ),
-                AutoSizeText(
-                  mapping.id,
-                  style: getStyle(color: Colors.white70, size: 16),
-                ),
-              ],
+          GestureDetector(
+            onTap: onDelete,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Icon(Icons.close, color: Colors.grey),
             ),
           ),
         ],

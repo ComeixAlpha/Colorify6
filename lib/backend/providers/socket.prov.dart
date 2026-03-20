@@ -17,6 +17,14 @@ class Socketprov with ChangeNotifier {
 
   WebSocketExecuteSyntaxVersion get socketExecuteSyntaxVersion =>
       _socketExecuteSyntaxVersion;
+  int get socketExecuteSyntaxVersionIndex {
+    if (_socketExecuteSyntaxVersion == WebSocketExecuteSyntaxVersion.executeOld) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
+
   WebSocketState get socketState => _socketState;
 
   bool get unactivated => _socketState == WebSocketState.unactivated;
@@ -197,7 +205,7 @@ class Socketprov with ChangeNotifier {
 }
 
 String titleBuilder(List<int> exeLoc, int executed, int len, int speed) {
-  const String line1 = '§bColorify§f - v6.1.6 - Comeix Alpha';
+  const String line1 = '§bColorify§f - v6.1.7 - Comeix Alpha';
   final String line2 =
       'Executing at: [§6${exeLoc[0]}§f, §6${exeLoc[1]}§f, §6${exeLoc[2]}§f]';
   final String line3 =
