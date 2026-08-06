@@ -445,13 +445,20 @@ Future<void> _writeStructure(
   final outpath = path.join(outDir.path, 'output.mcstructure');
 
   _updateProgress(sendPort, '准备输出结构文件中...\n此过程会花费一定时间', 0);
+  // await struct.writeFile(
+  //   outpath,
+  //   onProgress: (cur, all) {
+  //     _updateProgress(sendPort, '输出结构文件中', cur / all);
+  //   },
+  // );
   await struct.writeFile(
     outpath,
     onProgress: (cur, all) {
       _updateProgress(sendPort, '输出结构文件中', cur / all);
     },
   );
-  struct.dispose();
+
+  // struct.dispose();
   struct = null;
 }
 

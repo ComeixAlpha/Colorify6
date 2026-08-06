@@ -1,13 +1,14 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:colorify/backend/utils/minecraft/streamed_nbt_writer.dart';
 import 'package:dart_minecraft/dart_nbt.dart';
 import 'package:vector_math/vector_math.dart';
 
 class Structure {
   late final Vector3 _size;
-  final List<NbtInt> _blockIndices = [];
-  final List<NbtInt> _blockIndicesInner = [];
+  late final Int32List _blockIndices;
+  late final Int32List _blockIndicesInner;
   final List<String> _blockPaletteTypeId = [];
   final List<NbtCompound<NbtTag>> _blockPalette = [];
 
@@ -25,10 +26,12 @@ class Structure {
 
   void _initBlockIndices(Vector3 size) {
     final int amount = (_size.x * _size.y * _size.z).toInt();
-    for (int i = 0; i < amount; i++) {
-      _blockIndices.add(NbtInt(name: "None", value: -1));
-      _blockIndicesInner.add(NbtInt(name: "None", value: -1));
-    }
+
+    _blockIndices = Int32List(amount);
+    _blockIndicesInner = Int32List(amount);
+
+    _blockIndices.fillRange(0, amount, -1);
+    _blockIndicesInner.fillRange(0, amount, -1);
   }
 
   int _getIndexFromPos(Vector3 pos) {
@@ -81,167 +84,82 @@ class Structure {
     }
 
     final int newPaletteIndex = _blockPaletteTypeId.indexOf(typeId);
-    _blockIndices[indicesIndex] = NbtInt(name: "None", value: newPaletteIndex);
+
+    _blockIndices[indicesIndex] = newPaletteIndex;
   }
 
-  NbtCompound _getTemplate() {
-    return NbtCompound(
-      name: '',
-      children: [
-        NbtInt(name: 'format_version', value: 1),
-        NbtList<NbtInt>(
-          name: "size",
-          children: [
-            NbtInt(name: "None", value: 2),
-            NbtInt(name: "None", value: 2),
-            NbtInt(name: "None", value: 2),
-          ],
-        ),
-        NbtCompound(
-          name: 'structure',
-          children: [
-            NbtList<NbtList>(
-              name: "block_indices",
-              children: [
-                NbtList<NbtInt>(
-                  name: "None",
-                  children: [
-                    NbtInt(name: "None", value: -1),
-                    NbtInt(name: "None", value: -1),
-                    NbtInt(name: "None", value: -1),
-                    NbtInt(name: "None", value: -1),
-                    NbtInt(name: "None", value: -1),
-                    NbtInt(name: "None", value: -1),
-                    NbtInt(name: "None", value: -1),
-                    NbtInt(name: "None", value: 0),
-                  ],
-                ),
-                NbtList<NbtInt>(
-                  name: "None",
-                  children: [
-                    NbtInt(name: "None", value: -1),
-                    NbtInt(name: "None", value: -1),
-                    NbtInt(name: "None", value: -1),
-                    NbtInt(name: "None", value: -1),
-                    NbtInt(name: "None", value: -1),
-                    NbtInt(name: "None", value: -1),
-                    NbtInt(name: "None", value: -1),
-                    NbtInt(name: "None", value: -1),
-                  ],
-                ),
-              ],
-            ),
-            NbtList<NbtCompound>(name: "entities", children: []),
-            NbtCompound(
-              name: "palette",
-              children: [
-                NbtCompound(
-                  name: "default",
-                  children: [
-                    NbtList<NbtCompound>(
-                      name: "block_palette",
-                      children: [
-                        NbtCompound(
-                          name: "None",
-                          children: [
-                            NbtString(name: "name", value: "minecraft:concrete"),
-                            NbtCompound<NbtTag>(name: "states", children: []),
-                            NbtInt(name: "version", value: 18090528),
-                          ],
-                        ),
-                      ],
-                    ),
-                    NbtCompound<NbtTag>(name: "block_position_data", children: []),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-        NbtList<NbtInt>(
-          name: "structure_world_origin",
-          children: [
-            NbtInt(name: "None", value: 2),
-            NbtInt(name: "None", value: 2),
-            NbtInt(name: "None", value: 2),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Future<void> writeFile(
-    path, {
-    int chunkSize = 4 * 1024 * 1024,
-    void Function(int, int)? onProgress,
-  }) async {
-    final NbtCompound template = _getTemplate();
-    // ! Apply custom data
-    template.children[0] = NbtInt(name: "format_version", value: 1);
-    template.children[1] = NbtList<NbtInt>(
-      name: "size",
-      children: [
-        NbtInt(name: "None", value: _size.x.toInt()),
-        NbtInt(name: "None", value: _size.y.toInt()),
-        NbtInt(name: "None", value: _size.z.toInt()),
-      ],
-    );
-
-    (template.children[2] as NbtList)[0] = NbtList<NbtList>(
-      name: "block_indices",
-      children: [
-        NbtList<NbtInt>(name: "None", children: _blockIndices),
-        NbtList<NbtInt>(name: "None", children: _blockIndicesInner),
-      ],
-    );
-
-    (template.children[2] as NbtList)[1] = NbtList<NbtCompound>(
-      name: "entities",
-      children: [],
-    );
-
-    (template.children[2] as NbtList)[2] = NbtCompound(
-      name: "palette",
-      children: [
-        NbtCompound(
-          name: "default",
-          children: [
-            NbtList<NbtCompound>(name: "block_palette", children: _blockPalette),
-            NbtCompound<NbtTag>(name: "block_position_data", children: []),
-          ],
-        ),
-      ],
-    );
-
-    NbtWriter? writer = NbtWriter(nbtCompression: NbtCompression.none);
-    writer.setEndianness = Endian.little;
-
-    final bytes = writer.write(template);
+  Future<void> writeFile(String path, {void Function(int, int)? onProgress}) async {
     final file = File(path);
     final sink = file.openWrite();
+    final writer = StreamedNbtWriter(sink);
 
-    final total = bytes.length;
-    int offset = 0;
-    while (offset < total) {
-      final end = (offset + chunkSize < total) ? offset + chunkSize : total;
-      sink.add(Uint8List.fromList(bytes.sublist(offset, end)));
-      offset = end;
+    final int totalBlocks = _blockIndices.length + _blockIndicesInner.length;
 
-      onProgress?.call(offset, total);
-      await Future.delayed(Duration.zero);
+    // Root
+    writer.writeCompoundHeader("");
+
+    writer.writeIntTag("format_version", 1);
+
+    writer.writeListHeader("size", StreamedNbtWriter.TAG_INT, 3);
+    writer.writeNamelessInt(_size.x.toInt());
+    writer.writeNamelessInt(_size.y.toInt());
+    writer.writeNamelessInt(_size.z.toInt());
+
+    writer.writeCompoundHeader("structure");
+
+    writer.writeListHeader("block_indices", StreamedNbtWriter.TAG_LIST, 2);
+
+    writer.writeNamelessListHeader(StreamedNbtWriter.TAG_INT, _blockIndices.length);
+    await writer.writeMassiveIntList(
+      _blockIndices,
+      onProgress: onProgress,
+      progressOffset: 0,
+      totalElements: totalBlocks,
+    );
+
+    writer.writeNamelessListHeader(StreamedNbtWriter.TAG_INT, _blockIndicesInner.length);
+    await writer.writeMassiveIntList(
+      _blockIndicesInner,
+      onProgress: onProgress,
+      progressOffset: _blockIndices.length,
+      totalElements: totalBlocks,
+    );
+
+    // Empty entities list
+    writer.writeListHeader("entities", StreamedNbtWriter.TAG_END, 0);
+
+    writer.writeCompoundHeader("palette");
+    writer.writeCompoundHeader("default");
+
+    writer.writeListHeader(
+      "block_palette",
+      StreamedNbtWriter.TAG_COMPOUND,
+      _blockPaletteTypeId.length,
+    );
+    for (var typeId in _blockPaletteTypeId) {
+      writer.writeStringTag("name", typeId);
+      writer.writeCompoundHeader("states");
+      writer.writeCompoundEnd();
+      writer.writeIntTag("version", 18090528);
+      writer.writeCompoundEnd();
     }
+
+    writer.writeCompoundHeader("block_position_data");
+    writer.writeCompoundEnd();
+
+    writer.writeCompoundEnd();
+    writer.writeCompoundEnd();
+
+    writer.writeCompoundEnd();
+
+    writer.writeListHeader("structure_world_origin", StreamedNbtWriter.TAG_INT, 3);
+    writer.writeNamelessInt(2);
+    writer.writeNamelessInt(2);
+    writer.writeNamelessInt(2);
+
+    writer.writeCompoundEnd();
 
     await sink.flush();
     await sink.close();
-
-    template.children.clear();
-    writer = null;
-  }
-
-  void dispose() {
-    _blockIndices.clear();
-    _blockIndicesInner.clear();
-    _blockPaletteTypeId.clear();
-    _blockPalette.clear();
   }
 }

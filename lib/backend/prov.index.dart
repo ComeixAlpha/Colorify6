@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 final List<SingleChildWidget> providers = [
   ChangeNotifierProvider<Pageprov>(create: (_) => Pageprov()),
-  ChangeNotifierProvider<Particleprov>(create: (_) => Particleprov()),
+  ChangeNotifierProvider<Particleprov>(create: (_) => Particleprov()..init()),
   ChangeNotifierProvider<Blockprov>(create: (_) => Blockprov()),
   ChangeNotifierProvider<Progressprov>(create: (_) => Progressprov()),
   ChangeNotifierProvider<Socketprov>(create: (_) => Socketprov()),

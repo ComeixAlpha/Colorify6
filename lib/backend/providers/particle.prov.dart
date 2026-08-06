@@ -1,18 +1,16 @@
+import 'dart:convert';
+
 import 'package:colorify/backend/abstracts/rgbmapping.dart';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-enum GenerateMode {
-  match,
-  dust,
-}
+enum GenerateMode { match, dust }
 
 class Particleprov with ChangeNotifier {
+  static const String _mappingsPrefsKey = 'particle_mappings';
+
   /// AVC: Arguments Validity Check
-  final Map<String, bool> _avcmap = {
-    'resize': true,
-    'height': true,
-    'rotate': true,
-  };
+  final Map<String, bool> _avcmap = {'resize': true, 'height': true, 'rotate': true};
   bool avcWhere(String key) {
     return _avcmap[key]!;
   }
@@ -49,7 +47,33 @@ class Particleprov with ChangeNotifier {
   }
 
   void setMappings(List<RGBMapping> v) {
-    _mappings = v;
+    _mappings = List.of(v);
+    _saveMappings();
     notifyListeners();
+  }
+
+  Future<void> init() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString(_mappingsPrefsKey);
+      if (raw == null || raw.isEmpty) return;
+      final decoded = jsonDecode(raw) as List<dynamic>;
+      _mappings = decoded
+          .map((e) => RGBMapping.fromJson(e as Map<String, dynamic>))
+          .toList();
+      notifyListeners();
+    } catch (_) {
+    }
+  }
+
+  Future<void> _saveMappings() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(
+        _mappingsPrefsKey,
+        jsonEncode(_mappings.map((e) => e.toJson()).toList()),
+      );
+    } catch (_) {
+    }
   }
 }

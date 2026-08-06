@@ -1,10 +1,7 @@
 import 'package:colorify/frontend/components/processing/progress_indicator.dart';
 import 'package:flutter/material.dart';
 
-final progressErrors = {
-  -1: '文件选择错误：未选中任何文件',
-  -2: '已取消'
-};
+final progressErrors = {-1: '文件选择错误：未选中任何文件', -2: '已取消'};
 
 class Progressprov with ChangeNotifier {
   /// 2 means unknown
@@ -30,11 +27,16 @@ class Progressprov with ChangeNotifier {
   void update(ProgressData v) {
     _progress = v.progress;
     _progressState = v.state;
+    if (v.state != 'ALL_DONE') {
+      _success = false;
+    }
     notifyListeners();
   }
 
   void reset() {
     _progress = 0;
+    _progressState = '';
+    _success = false;
     notifyListeners();
   }
 }

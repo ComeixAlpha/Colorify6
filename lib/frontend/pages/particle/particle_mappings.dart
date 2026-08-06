@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:colorify/backend/abstracts/rgbmapping.dart';
 import 'package:colorify/backend/providers/particle.prov.dart';
 import 'package:colorify/frontend/components/particle/new_mapping.dart';
 import 'package:colorify/frontend/components/particle/rgbmapping_tile.dart';
@@ -21,10 +20,6 @@ class ParticleMappings extends StatefulWidget {
 }
 
 class _ParticleMappingsState extends State<ParticleMappings> {
-  final List<RGBMapping> _mappings = [
-    RGBMapping(r: 0, g: 0, b: 0, id: 'minecraft:endrod'),
-  ];
-
   OverlayEntry? _overlayEntry;
 
   XButton _newMappingButton() {
@@ -44,10 +39,8 @@ class _ParticleMappingsState extends State<ParticleMappings> {
               width: w,
               height: h,
               onDone: (v) {
-                setState(() {
-                  _mappings.add(v);
-                });
-                Provider.of<Particleprov>(context, listen: false).setMappings(_mappings);
+                final prov = Provider.of<Particleprov>(context, listen: false);
+                prov.setMappings([...prov.mappings, v]);
                 _overlayEntry?.remove();
               },
               onCancel: () => _overlayEntry?.remove(),
@@ -70,9 +63,15 @@ class _ParticleMappingsState extends State<ParticleMappings> {
     );
   }
 
+  void _removeMappingAt(int i) {
+    final prov = Provider.of<Particleprov>(context, listen: false);
+    prov.setMappings([...prov.mappings]..removeAt(i));
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (_mappings.isEmpty) {
+    final mappings = context.watch<Particleprov>().mappings;
+    if (mappings.isEmpty) {
       return Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -88,10 +87,10 @@ class _ParticleMappingsState extends State<ParticleMappings> {
         width: widget.width,
         height: widget.height,
         child: ListView.builder(
-          itemCount: _mappings.length + 1,
+          itemCount: mappings.length + 1,
           padding: const EdgeInsets.all(0),
           itemBuilder: (ctx, i) {
-            if (i == _mappings.length) {
+            if (i == mappings.length) {
               return Column(
                 children: [
                   const SizedBox(height: 20),
@@ -110,16 +109,8 @@ class _ParticleMappingsState extends State<ParticleMappings> {
                   const SizedBox(height: 20),
                   RGBMappingTile(
                     width: widget.width,
-                    mapping: _mappings[i],
-                    onDelete: () {
-                      setState(() {
-                        _mappings.removeAt(i);
-                        Provider.of<Particleprov>(
-                          context,
-                          listen: false,
-                        ).setMappings(_mappings);
-                      });
-                    },
+                    mapping: mappings[i],
+                    onDelete: () => _removeMappingAt(i),
                   ),
                 ],
               );
@@ -127,16 +118,8 @@ class _ParticleMappingsState extends State<ParticleMappings> {
 
             return RGBMappingTile(
               width: widget.width,
-              mapping: _mappings[i],
-              onDelete: () {
-                setState(() {
-                  _mappings.removeAt(i);
-                  Provider.of<Particleprov>(
-                    context,
-                    listen: false,
-                  ).setMappings(_mappings);
-                });
-              },
+              mapping: mappings[i],
+              onDelete: () => _removeMappingAt(i),
             );
           },
         ),

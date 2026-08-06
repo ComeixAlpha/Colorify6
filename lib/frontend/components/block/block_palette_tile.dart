@@ -19,7 +19,7 @@ class _BlockPaletteTileState extends State<BlockPaletteTile> {
   Widget build(BuildContext context) {
     final entry = widget.entry;
     final blockprov = Provider.of<Blockprov>(context, listen: false);
-    final enabled = !blockprov.disabled.contains(entry.id);
+    final enabled = !blockprov.isDisabled(entry.id);
     return Stack(
       children: [
         Container(

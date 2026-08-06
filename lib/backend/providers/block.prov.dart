@@ -112,16 +112,24 @@ class Blockprov with ChangeNotifier {
   }
 
   List<BlockPaletteEntry> get filteredPalette {
-    return palette.where((e) => !_disabled.contains(e.id)).toList();
+    return palette.where((e) => !isDisabled(e.id)).toList();
   }
+
+  /// 是否被禁用:手动禁用(_disabled)或开关自动禁用(_autoDisabled)
+  bool isDisabled(String id) => _disabled.contains(id) || _autoDisabled.contains(id);
 
   List<String> _disabled = [];
   List<String> get disabled => _disabled;
+
+  /// 由「去除玻璃 / 去除沙子与混凝土粉末」开关自动禁用的条目,
+  /// 与手动禁用(_disabled)分离,避免开关切换时误删手动禁用记录。
+  final Set<String> _autoDisabled = {};
 
   final List<String> _expandedClasses = [];
   List<String> get expandedClasses => _expandedClasses;
 
   void refreshPalette() {
+    _autoDisabled.clear();
     if (_stairType) {
       _palette = PaletteParser.staircase(mapPalette3['data'] as Map<String, String>);
     } else if (_carperOnly && !_woolOnly) {
@@ -134,21 +142,17 @@ class Blockprov with ChangeNotifier {
       if (_noGlasses) {
         _palette.enumerate((i, v) {
           if (v.id.contains('glass')) {
-            _disabled.add(v.id);
+            _autoDisabled.add(v.id);
           }
         });
-      } else {
-        _disabled.removeWhere((v) => v.contains('glass'));
       }
 
       if (_noSands) {
         _palette.enumerate((i, v) {
           if (v.id.contains('sand') || v.id.contains('powder')) {
-            _disabled.add(v.id);
+            _autoDisabled.add(v.id);
           }
         });
-      } else {
-        _disabled.removeWhere((v) => v.contains('glass') || v.contains('powder') && v != "powder_snow");
       }
     }
   }

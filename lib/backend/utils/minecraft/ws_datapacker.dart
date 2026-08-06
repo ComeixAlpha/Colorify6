@@ -1,52 +1,48 @@
+import 'dart:convert';
+
 sealed class DatapackUtilities {
+  static const String _defaultUuid = '00000000-0000-0000-0000-000000000000';
+
   static String subscribe(String eventName, {String? uuid}) {
-    uuid ??= '00000000-0000-0000-0000-000000000000';
-    return '''
-{
-	"body": {
-		"eventName": "$eventName"
-	},
-	"header": {
-		"requestId": "$uuid",
-		"messagePurpose": "subscribe",
-		"version": 1,
-		"messageType": "commandRequest"
-	}
-}
-''';
+    return jsonEncode({
+      'body': {
+        'eventName': eventName,
+      },
+      'header': {
+        'requestId': uuid ?? _defaultUuid,
+        'messagePurpose': 'subscribe',
+        'version': 1,
+        'messageType': 'commandRequest',
+      },
+    });
   }
 
-  static String unsubscribe(String eventName) {
-    return '''
-{
-	"body": {
-		"eventName": "$eventName"
-	},
-	"header": {
-		"requestId": "00000000-0000-0000-0000-000000000000",
-		"messagePurpose": "unsubscribe",
-		"version": 1,
-		"messageType": "commandRequest"
-	}
-}
-''';
+  static String unsubscribe(String eventName, {String? uuid}) {
+    return jsonEncode({
+      'body': {
+        'eventName': eventName,
+      },
+      'header': {
+        'requestId': uuid ?? _defaultUuid,
+        'messagePurpose': 'unsubscribe',
+        'version': 1,
+        'messageType': 'commandRequest',
+      },
+    });
   }
 
   static String commandRequest(String command, {String? uuid}) {
-    uuid ??= '00000000-0000-0000-0000-000000000000';
-    return '''
-{
-	"body": {
-		"commandLine": "$command",
-		"version": 1
-	},
-	"header": {
-		"requestId": "$uuid",
-		"messagePurpose": "commandRequest",
-		"version": 1,
-		"messageType": "commandRequest"
-	}
-}
-''';
+    return jsonEncode({
+      'body': {
+        'commandLine': command,
+        'version': 1,
+      },
+      'header': {
+        'requestId': uuid ?? _defaultUuid,
+        'messagePurpose': 'commandRequest',
+        'version': 1,
+        'messageType': 'commandRequest',
+      },
+    });
   }
 }

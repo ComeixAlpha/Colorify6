@@ -70,18 +70,16 @@ final class WebSocket {
     assert(_server == null);
     final stdio.HttpServer server = await stdio.HttpServer.bind(_address, _port);
     _server = server;
-    server.listen(
-      (stdio.HttpRequest request) {
-        if (stdio.WebSocketTransformer.isUpgradeRequest(request)) {
-          _handleWebSocket(request);
-        } else {
-          request.response
-            ..statusCode = stdio.HttpStatus.notFound
-            ..write('Not Found');
-          request.response.close();
-        }
-      },
-    );
+    server.listen((stdio.HttpRequest request) {
+      if (stdio.WebSocketTransformer.isUpgradeRequest(request)) {
+        _handleWebSocket(request);
+      } else {
+        request.response
+          ..statusCode = stdio.HttpStatus.notFound
+          ..write('Not Found');
+        request.response.close();
+      }
+    });
   }
 
   /// Drops connection from local server on 127.0.0.1:8080.
@@ -91,8 +89,10 @@ final class WebSocket {
     assert(_server != null);
 
     for (var c in _channels) {
-      () async => await c.close();
+      await c.close();
     }
+
+    _channels.clear();
 
     await (_server as stdio.HttpServer).close();
     _server = null;
@@ -111,11 +111,7 @@ final class WebSocket {
       onJoin!(channel);
     }
 
-    channel.listen(
-      onMessage,
-      onDone: onDone,
-      cancelOnError: true,
-    );
+    channel.listen(onMessage, onDone: onDone, cancelOnError: true);
   }
 
   /// Broadcasts a single command request to each channel
