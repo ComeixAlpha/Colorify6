@@ -1,3 +1,8 @@
+> [!IMPORTANT]
+> **Colorify 7 is out now at [ComeixAlpha/Colorify7](https://github.com/ComeixAlpha/Colorify7) !**
+>
+> This is the legacy version of Colorify. It will no longer receive any updates or bug fixes.
+
 ![](assets/c6mask2.png)
 
 Particle/Block Painting Generator for Minecraft BE made with Flutter.
